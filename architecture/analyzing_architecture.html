@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Architecture Books and References</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>Analyzing Architecure</h1>
+    <div class="">
+      <h2>Structural Decay</h2>
+      <p>Contineoual analsis of architectural vitality to say, business is changed, technology changes. Are the archtectures that we have currently in place,
+         suitable for the kids of load and requests and the kind of business we are doing?.</p>
+      <p>The structure refers to the architecture style that your application built with, to support the architectural characteristics (lities).
+        Are we deterioarating these characteristics that must be supported irrespective of the functionality and load?
+      <h4>Analyzing Components (building block) :</h4>
+      <p>communication and coupling levels between the components needs to be analyzed.</p>
+
+      <h4>Macro techniques:</h4>
+        Static coupling:
+        <p>
+          Afferent coupling (who talks to me?), Efferent coupling (who am I dependent?) <br>
+          Every one of the components that I talk to forms a coupling level between those components which starts tearing down all these kind of -ilities.
+        </p>
+        Temporal coupling:
+        <p>
+          Runtime coupling between the components. It is dangerous, no tool exists to analyze.<br>
+        </p>
+        Component size
+      </ul>
+    </div>
+
+    <div class="">
+      <h4>Analyzing Microservices</h4>
+      <p>
+      Shared Libraries <br>
+      Too much interservice communication: <em>If it is too much, better to move back to monolith.</em> <br>
+      Microservice orchestrator <br>
+      Too many aggegation requests <br>
+      Periodic Async processes <br>
+      </p>
+    </div>
+
+    <div class="">
+      <h4>Micro techniques</h4>
+      Cyclomatic complexity <br>
+      Core Metrics <br>
+          <span class="tabspace">Number of classes per package</span><br>
+          <span class="tabspace">Number of lines of souce code (based on context) </span><br>
+          <span class="tabspace">Avereage complexity</span><br>
+          <span class="tabspace">DIT (Depth of Inheritance Tree)</span><br>
+          <span class="tabspace">WMC (Weight methods/class; sum of Cyclomatic complexity)</span><br>
+          <span class="tabspace">CE (Efferent Coupling count)</span><br>
+          <span class="tabspace">CA (Afferent Coupling count)</span><br>
+    </div>
+  </body>
+</html>

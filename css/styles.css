@@ -1,0 +1,55 @@
+body{
+  /* background-color: gray;
+  color: white; */
+  padding: 0px;
+}
+
+h1{
+  text-align: center;
+  padding-top: 20px;
+}
+
+h3{
+  padding-top: 10px;
+}
+
+ul{
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+li{
+  padding-top: 5px;
+}
+
+a{
+  text-decoration: none;
+}
+
+th{
+  text-align: center;
+  padding-right: 40px;
+}
+td{
+  padding-right: 40px;
+}
+
+p{
+  padding-left: 40px;
+}
+
+.tabspace{
+  margin-left: 40px;
+}
+
+.btn_back{
+  position: absolute;
+  left:20px;
+  font-size: 1em;
+}
+
+.btn_home{
+  position: absolute;
+  font-size: 1em;
+  right:20px;
+}

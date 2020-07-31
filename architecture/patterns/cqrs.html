@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Technology</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>Command Query Responsibility Segregation</h1>
+    <p>Seperating Commads from Queries.</p>
+    <p>Prodblem 1: Reads and Writes have different concerns. Usually when we write to a database, we write an entity, but when we read, we read an agregated data.</p>
+    <p>Prodblem 2: We can optimize for reads and writes.</p>
+    <p>Soution Stage 1: Seperate objet models for read and writes, but this does't solve the database optimization</p>
+    <p>Soution Stage 2: Seperate database read and writes, but database synchronization is an concern. </p>
+
+
+  </body>
+</html>
