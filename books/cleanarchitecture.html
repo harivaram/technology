@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Architecture Books and References</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>Clean Architecure</h1>
+
+    <div class="">
+      <h3>Chapters:</h3>
+      <ol>
+        <li><a href="#chapter1">What is Design and Architecture</a></li>
+        <li><a href="#chapter3">Paradigm Overview</a></li>
+        <li><a href="#chapter4">Design Principles</a></li>
+        <li><a href="#chapter5">Component Principles</a></li>
+        <li><a href="#chapter6">Architecture</a></li>
+        <li><a href="#chapter7">Details</a></li>
+      </ol>
+    </div>
+
+
+
+    <div id="chapter1">
+      <h2 calss="heading">Part I: Introduction</h2>
+      <h3>What is Design and Architecture</h3>
+      <p>The word “architecture” is often used in the context of something at a high level that is divorced from lower-level details., where as “design” more often seems to imply structures and decisions at a lower level. But this usage is nonsensical when you look at what a real architect does.</p>
+      <p><em>The goal of a software architecture is to minimize the human resources required to build and maintain the required system</em></p>
+      <p>When systems are thrown together in a hurry, when the sheer number of programmers is the sole driver of output, and when little or no thought is given to the cleanliness of the code or the structure of the design, then you can bank on riding this curve to its ugly end.</p>
+      <p>Most modern developers work their butts off. But a part of their brain does sleep- the part that knows that good, clean, well-designed code matters.</p>
+      <p>The developers buy in to familiar lie: “We can clean it up later; we just have to get to market first!”. Of course, things never do get cleaned up later, because market pressure never abate. Getting to market first simply means that you’ve now got a horde of competitors on you trail, and you have to stay ahead of them by running as fast as you can.</p>
+      <p>The bigger lie that developers buy into is that notion that writing messy code makes them go fast in the short term and just slow them down in the long term. Developers who accept this lie exhibit the hare’s overconfident in their ability to switch modes from making messes to cleaning up messes sometime in the future, but they also make a simple error of fact. The fact is that making messes is always slower than staying clean, no matter which time scale you are using.</p>
+      <p><em>The only way to go fast, is to go well.</em></p>
+      <p>The developers may think the answer is to start over from scratch and redesign the whole system – But that’s just the Hare talking again. The same overconfidence that led to the mess is now telling them that they can build it better if only they can start the race over. The reality is less rosy</p>
+      <p>The overconfidence will drive the redesign in to the same mess as the original project.</p>
+    </div>
+
+    <div>
+      <h3>The tale of two values</h3>
+      <p>Every software system provides two different values to the stakeholders: behaviour and structure. Software developers are responsible for ensuring that both those values remain high. Unfortunately, they often focus on one to the exclusion of the other. Even more unfortunately, they often focus on the lesser of the two values, leaving the software system eventually valueless.</p>
+      <p>Software must be soft – that is, it must be easy to change. The difficulty in making such a change should be proportional only to the scope of the change, and not to the shape of the change.</p>
+      <p>Function or architecture? Which of these two provides the greater values? Is it more important for the software system to work, or is it more important for the software system to be easy to change?</p>
+      <p><em>If you give a programme that works perfectly but is impossible to change then it won’t work then the requirement change, and I won’t be able to make to work. Therefor the program will become useless.</em></p>
+      <p><em>If you give me a program that doesn’t work but is easy to change, then I can make it work, and keep it working as requirement change. Therefore, the program will remain continually useful.</em></p>
+      <p>There are systems that are practically impossible to change, because the cost of change exceeds the benefit of change.</p>
+      <p><em>I have two kinds of problems, the urgent and the important. The urgent are not important, and the important are never urgent.</em> <br>
+        The first value of software – behaviour – is urgent but not always particularly important. <br>
+        The second value of software – architecture – is important but never particularly urgent. <br>
+        In the Eisenhower matrix, the architecture code – the important stuff in (Urgent and important / Not urgent and important), where are behaviour of the code occupies in Urgent and important/ not Urgent and not important)
+      </p>
+      <p>The dilemma for software developers is that business managers are not equipped to evaluate the importance of architecture. That’s what software developers were hired to do.</p>
+    </div>
+
+    <div id="chapter3">
+      <h2 class="heading"> Part II: Paradigm Overview</h2>
+      <p>Paradigms are ways of programming, relatively unrelated to languages. A paradigm tells you which programming structure to use, and when to use them.</p>
+      <p><em>Structured programming</em> imposes discipline and direct transfer of control.</p>
+      <p>Structure programming allows modules to be recursively decomposed into provable units, which in turn means that modules can functionally decomposed. That is, you can take a large-scale problem statement and decompose in to high level functions. Each of those functions can then be decomposed in to lower-level functions, ad infinitum. Moreover, each of those decomposed functions can be represented using the restricted control structures of the structured programming.</p>
+      <p><em>Object-oriented programming</em> imposes discipline of the indirect transfer of control.</p>
+      <p>OO is combination of data and functions.</p>
+      <p>OO provides easy and effective encapsulation of data and function. As a result, a line can be drawn around a cohesive set of data and functions. Outside of that line, the data is hidden and only some of the functions are known. We see this concept as the private data members and the public member functions of a class.</p>
+      <p>Inheritance is simply the redeclaration of a group of variables and functions within an enclosing scope.</p>
+      <p>OO allows the plugin architecture to be use anywhere, for anything.</p>
+      <p>The source code dependency (the inheritance relationship) between implementation class and interface points in the opposite direction compared to the flow of control. This is called dependency inversion.</p>
+      <p>The fact that OO languages provide safe and convenient polymorphism means that any source code dependency, no matter where it is, can be inverted.</p>
+      <p>Software architects working in systems written in OO language have absolute control over the direction of all source code dependencies in the system. They are not constrained to align those dependencies with the flow of control. No matter which module does the calling and which module is called, the software architect can point the source code dependency in either direction. That is the power of OO.</p>
+      <p><em>Functional programming</em> imposes discipline upon assignment.</p>
+      <p>Variables in functional languages do not vary.</p>
+      <p>All race conditions, deadlock conditions and concurrent update problems are due to mutable variables.</p>
+      <p>Event sourcing is a strategy wherein we store the transactions, but not the state. When state is required, we simply apply all the transactions from the beginning of the time.</p>
+      <p>If we have enough storage and enough processor power, we can make our applications entirely immutable – and therefore, entirely functional.</p>
+    </div>
+
+    <div id="chapter4">
+      <h2 class="heading">Part III: Design Principles</h2>
+      <p>SOLID principles tell us how to arrange our functions and data structures in to classes, and how those classes should be interconnected.<br>
+      The goal of the principle is the creation of mid-level software structure that tolerate change, are easy to understand and are the basis of components that can be used in many software systems.</p>
+
+      <h4>SRP: The Single Responsibility Principle</h4>
+      <p>An active corollary to Conway’s law: The best structure of a software system is heavily influenced by the social structure of the organization that uses it so that each software module has one, and only one, reason to change.</p>
+      <p>This is at the level of function and classes</p>
+      <p>A module should be responsible to one, and only one actor. Separate the code that different actors depend on.</p>
+
+      <h4>OCP: The Open-Closed Principle</h4>
+      <p>Software systems to be easy to change, they must be designed to allow the behaviour of those system to be changed by adding new code, rather than changing existing code.</p>
+      <p><em>A software artefact should be open for extension but closed for modification.</em></p>
+      <p>OCP is one of the driving forces behind the architecture of systems. The goal is to make the system easy to extend without incurring a high impact of change. The goal is accomplished by partitioning the system into components and arranging those components in to a dependency hierarchy that protects higher-level components from changes in lower-level components.</p>
+
+      <h4>LSP: The Liskov Substitution Principle</h4>
+      <p>To build software system from interchangeable parts, those parts must adhere to a contract that allows those parts to be substituted one for another.</p>
+      <p>A system violation of substitutability, can cause a system’s architecture to be polluted with a significant amount of extra mechanisms. </p>
+
+      <h4>ISP: The Interface Segregation Principle</h4>
+      <p>Avoid depending on things that they don’t use.</p>
+      <p>In dynamically typed languages like Ruby and Python, such declarations don’t exist in source code. Instead, they are inferred at runtime. Thus, there are no source code dependencies to force recompilation and redeployment. This is the primary reason that dynamically typed languages create systems that are more flexible and less tightly coupled than statically typed languages.</p>
+      <p>Depending on something that carries baggage that you don’t need can cause you troubles that you don’t expect.</p>
+
+      <h4>DIP: The Dependency Inversion Principle</h4>
+      <p>The code that implements high-level policy should not depend on the code that implements low-level details. Rather, details should depend on policies.</p>
+      <p>DIP tells that most flexible systems are those in which source code dependencies refer only to abstractions, not to concretions.</p>
+      <p>Interfaces are less volatile than implementations</p>
+      <p>Stable software architectures are those that avoid depending on volatile concretions, and that favour the use of stable abstract interfaces. This implication boils down to a set of very specific coding practices:<br>
+          Don’t refer to volatile concrete classes.</br>
+          Don’t derive from volatile concrete classes.</br>
+          Don’t override concrete functions.</br>
+          Never mention the name of anything concrete and volatile.</br>
+
+      </p>
+    </div>
+
+    <div id="chapter5">
+      <h2 class="heading">Part IV :Component Principles</h2>
+      <p>If SOLID principles tell us how to arrange the bricks into walls and rooms, then the component principles tell us how to arrange the rooms in to building.</p>
+      <p>Components are the unit of deployment. They are the smallest entities that can be deployed as part of a system.</p>
+      <p>Murphy’s law: Programs will grow to fill all available compile and link time.</p>
+      <p>The dynamically linked files, which can be plugged together at runtime, are the software components of our architecture. It has taken 50 years, but we have arrived at a place where component plugin architecture can be the casual default as opposed to the herculean effort it once was.</p>
+
+      <h3>Component Cohesion</h3>
+      <h4>REP: The Reuse/Release Equivalence Principle:</h4>
+      <p><em>The granule of reuse is the granule of release.</em></p>
+      <p>The classes and modules that are formed into a component much belong to a cohesive group. The component cannot simply consist of a random hodgepodge of classes and modules; instead, there must be some overarching theme or purpose that those modules all share.</p>
+      <p>Classes and modules that are grouped together into a component should be releasable together. The fact that they share the same version number and the same release tracking, and are included under the same release documentation, should make sense both to the author and to the user.</p>
+
+      <h4>CCP: The Common Closure Principle</h4>
+      <p><em>Gather into components those classes that change for the same reasons and at the same times. Separate into different components those classes that change different times and for different reasons.</em></p>
+      <p>This is Single Responsibility Principle restated for components.</p>
+
+      <h4>CRP: The Common Reuse Principle</h4>
+      <p><em>Don’t force users of a component to depend on things they don’t need</em></p>
+      <p>CRP tells us more about which classes shouldn’t be together than about which classes should be together.</p>
+      <p>CRP says that classes that are not tightly bound to each other should not be in the same component.</p>
+      <p>CRP is the generic version of the ISP.</p>
+      <p>The REP and CCP ae inclusive principles: Both tend to make components larger. CRP is an exclusive principle, driving components to be smaller. It is the tension between these principles that good architect seeks to resolve.</p>
+
+      <h3>Component Coupling:</h3>
+      <p>These principles deal with the relationship between components.</p>
+
+      <h4>The Acyclic Dependencies Principle:</h4>
+      <p><em>Allow no cycles in the component dependency graph.</em></p>
+
+      <h4>The Stable Dependencies Principle:</h4>
+      <p><em>Depend in the direction of stability.</em></p>
+      <p>By Confirming SDP, we ensure that modules that are intended to be easy to change are not depended on by modules that are harder to change.</p>
+      <p>Webster’s Dictionary says that something is stable if it is “not easily moved.”. Stability is related to the amount of work required to make a change.</p>
+      <p>One sure way to make a software component difficult to change, is to make lots of other software components depend on it.</p>
+      <p><em>Instability (I) = Fan-out / (Fan-in + Fan-out)</em></p>
+      <p>Not All Components should be Stable. </p>
+      <p>Putting the unstable components at the top of the diagram is a useful convention because any arrow that points up is violating the SDP and ADP.</p>
+      <p>Abstract Component contains nothing but an interface, contains no executable code.</p>
+
+      <h4>The Stable Abstractions Principle:</h4>
+      <p><em>A component should be as abstract as it is stable.</em></p>
+      <p>The software that encapsulates the high-level policies of the system should be placed into stable components (I=0)</p>
+      <p>However, if the high-level policies are placed into stable components, then the source code that represents those policies will be difficult to change. This could make the overall architecture inflexible. How can a component that is maximally stable (I=0) be flexible enough to withstand change? The answer is found in the OCP. This principle tells us that it is possible and desirable to create classes that are flexible enough to be extended without acquiring modification. Which kind of classes conform to this principle? Abstract classes.</p>
+      <p>The Stable Abstractions Principle (SAP) sets up a relationship between stability and abstractness. On the one hand it says that stable component should also be abstract so that its stability does not prevent it from being extended. On the other hand, it says that an unstable component should be concrete since it its instability allows the concrete code within it to be easily changed.</p>
+      <p>Abstraction (A) = The number of abstract classes and Interfaces in the component (Na) / The number of classes in the component.</p>
+      <p>The I/A Graph <br>
+         The Zone of Pain <br>
+         The Zone of Uselessness <br>
+         Main Sequence <br>
+         Distance from the Main Sequence : D = | A + I -1 |
+      </p>
+      <p>The dependency management metrics described in this chapter measure the conformance of a design to a pattern of dependency and abstraction that I thing is a “good” pattern. Experience has shown that certain dependencies are good and others are bad. This pattern reflects that experience. However, a metric is not a god; it is merely a measurement against an arbitrary standard. These metrics are imperfect, at best, but it is my hope that you find them useful.</p>
+    </div>
+
+    <div id="chapter6">
+      <h2 class="heading">Part V: Architecture</h2>
+      <p>A software architect is a programmer; and continues to be a programmer. They continue to take programming tasks, while they also guide the rest of the team toward a design that maximizes productivity.</p>
+      <p>The architecture of a software system is the shape given to the system by those who build it. The form of that shape is in the division of that system into components, the arrangement of those components, and the ways in which those components communicate with each other.</p>
+      <p>The purpose of that shape is to facilitate the development, deployment, operation, and maintenance of the software system contained within it.</p>
+      <p><em>The strategy behind that facilitation is to leave as many options open as possible, for as long as possible.</em></p>
+      <p>The primary purpose of architecture is to support the life cycle of the system. Good architecture makes the system easy to understand, easy to develop, easy to maintain, and easy to deploy. The goal is to minimize the lifetime cost of the system and to maximizing programmer productivity.</p>
+      <p>A goal of software, then should be to make a system that can be easily deployed with a single action.</p>
+      <p>Almost any operational difficulty can be resolved by throwing more hardware at the system without drastically impacting the software architecture.</p>
+      <p>A good software architecture communicates the operational needs of the system.</p>
+      <p>The architecture of a system makes the operation of the system readily apparent to the developers. Architecture should reveal operation. The architecture of the system should elevate the use cases, the features and the required behaviours of the system to first-class entities that are visible landmarks for the developers.</p>
+      <p>Of all the aspects of software system, maintenance is the most costly. The never-ending parade of new features and the inevitable trail of defects and corrections consume vast amount of human resources</p>
+      <p>The primary cost of maintenance is spelunking and risk. Spelunking is the cost of digging through the existing software, trying to determine the best place and best strategy to add new feature or to repair a defect.</p>
+      <p>Software has two types of value: the value of its behaviour and the values of its structure. The second of these is the greater of the two because is this value that makes software soft.</p>
+      <p>The way you keep software soft is to leave as many options open as possible, for as long as possible. What are the options that we need to leave open? They are the details that don’t matter.</p>
+      <p>All software systems can be decomposed into two major elements: Policy and details. The policy element embodies all the business rules and procedures. The policy is where the true value of the system lives.</p>
+      <p>The details are those things that are necessary to enable humans, other systems and programmers to communicate with the policy, but that do not impact the behaviour of the policy at all. They include IO devices, databases, web systems, servers, frameworks, communication protocols and so forth.</p>
+      <p>The goal of the architect is to create a shape for the system that recognizes policy as the most essential element of the system while making the details irrelevant to the policy. This allows decisions about those details to be delayed and deferred. The longer you wait to make those decisions, the more information you have with which to make them properly.</p>
+      <p><em>A good architect maximizes the number of decisions not made</em></p>
+      <h3>A good architecture must support: </h3>
+      <p>
+        <strong>The use cases and operation of the system:</strong><br>
+        Architecture of the system must support the intent of the system.<br>
+        The most important thing a good architecture can do to support behaviour is to clarify and expose that behaviour so that the intent of the system is visible at the architectural level.
+      </p>
+      <p>
+        <strong>The maintenance of the system</strong><br>
+        Architecture plays a more substantial, and less cosmetic, role in supporting the operation of the system.<br>
+        As strange as it may seem, this decision is one of the options that a good architect leaves open.
+      </p>
+      <p>
+        <strong>The development of the system</strong><br>
+        <em>Any organization that designs a system will produce a design whose structure is a copy of the organization’s communication structure.</em>
+      </p>
+      <p>A good architect makes the system easy to change, in all the ways that it must change, by leaving options open.</p>
+      <p>We find the system divided in to decoupled horizontal layer – The UI, application-specific business rules, application-independent business rules, and the database, just to mention a few.</p>
+      <p>Use cases are a very natural way to divide the system, use cases are narrow vertical slices that cut through the horizontal layers of the system. Each use case uses some UI, some application-specific business rules, some application-independent rules and some database functionality.</p>
+      <p>If you decouple the elements of the system that change for different reason, then you can continue to add new use cases without interfering with old ones.</p>
+      <p>If the different aspects of the use cases are separated, then those that must run at a high throughput are likely already separated from those that must run at a low throughput.</p>
+      <p>The decoupling that we did for the sake of the use cases also helps with operations. However, to take advantage of the operational benefit, the decoupling must have the appropriate mode.</p>
+      <p>Many architects call such components “services” or “micro-services” depending upon some vague notion of line count. Indeed, an architecture based on services is often called a service-oriented architecture.</p>
+      <p>When components are strongly decoupled, the interference between teams is mitigated.</p>
+      <p>So long as the layers and use cases are decoupled, the architecture of the system will support the organization of the teams, irrespective of whether they are organized as feature teams, component teams, layer teams, or some other variation.</p>
+      <p>The decoupling use cases and layers also affords a high degree of flexibility in deployment. Indeed, if the decoupling is done well, then it should be possible to hot-swap layers and use cases in running systems. Adding a new use case could be a simple as adding a few new jar files or services to the system while leaving the rest alone.</p>
+      <p>Duplication is generally a bad thing in software. We don’t like duplicated code. When code is truly duplicated, we are honour-bound as professionals to reduce and eliminate it. But there are different kinds of duplication. There is true duplication, in which every change to one instance necessitates the same change to every duplicate of that instance. There is false or accidental duplication. If two apparently duplicated sections of the code evolve along different paths – if they change at different rates, and for different reasons – then they are not true duplicates. Return to them in a few years, and you’ll find that they are very different from each other.</p>
+      <p>Decoupling Modes:<br>
+        <span class="tabspace">Source level</span> <br>
+        <span class="tabspace">Deployment level</span> <br>
+        <span class="tabspace">Service level</span>
+      </p>
+      <p>One solution (which seems to be popular at the moment) is to simply decouple at the service level by default. A problem with this approach is that it is expensive and encourages coarse-gained decoupling. No matter how “micro” the micro-services get, the decoupling is not likely to be fine-grained enough.</p>
+      <p>My preference is to push decoupling to the point where a service could be formed. Should it become necessary; but then to leave the components in the same address space as long as possible. This leaves the option for a service open.</p>
+      <p>A good architecture will allow a system to be born as a monolith, deployed in a single file, but then to grow into set of independently deployable units, add then all the way to independent services and/or micro-services. Later, as things change, it should allow for reversing that progression and sliding all the way back down into a monolith.</p>
+
+      <h3>Boundaries:</h3>
+      <p>Software architecture is the art of drawing lines that I call boundaries. Those boundaries separate software elements from one another, and restrict those on one side from knowing about those on the other.</p>
+      <p>You draw lines between things that matter and thing that don’t.</p>
+      <p>To draw boundary lines in a software architecture, you first partition the system in to components. Some of those components are core business rules; others are plugins that contains necessary functions that are not directly related to the core business. Then you arrange the code in those components such that the arrows between the point in one direction—toward the code business.</p>
+      <p>You should recognize this as an application of the Dependency Inversion Principle and the Stable Abstraction Principle. Dependency arrows are arranged to point from lower-level details to higher-level abstractions.</p>
+
+      <h3>Boundary Anatomy:</h3>
+      <p>At runtime, a boundary crossing is nothing more than the function on one side of the boundary calling a function on the other side and passing along some data. The trick to recreating an appropriate boundary crossing is to manage the source code dependencies.</p>
+      <p>The simple possible boundary crossing is a function call from a lower-level client to a higher-level service. Both the runtime dependency and the compile-time dependency point in the same direction, toward the higher-level component.</p>
+      <p>Most systems, other than monoliths, use more than one boundary strategy. A system that makes use of service boundaries may also have some local process boundaries. Indeed, a service boundary may also have some local process boundaries. Indeed, a service is often just a façade for a set of interacting local professes. A service or a local profess, will almost certainly be either a monolith composed of source code components or a set of dynamically linked deployment components.</p>
+
+      <h3>Policy and Level:</h3>
+      <p>Software systems are statements of policy. A computer program is a detailed description of the policy by which inputs are transformed into outputs.</p>
+      <p>“Level” is the distance from the inputs and outputs.</p>
+      <p>We want source code dependencies to be decoupled from data flow and coupled to level.</p>
+      <p>Policies are grouped into components based on the way that they change.</p>
+      <p>Keeping these policies separate, with all source code dependencies pointing in the direction of the higher-level policies, reduces the impact of change.</p>
+
+      <h3>Business Rules:</h3>
+      <p>Strictly speaking, business rules or procedures that make or save the business money.</p>
+      <p>Critical Business Rules usually require some data to work with.</p>
+      <p>We shall call this data Critical Business Data.</p>
+      <p>The critical rules and critical data are inextricably bound, so they are a good candidate for an object. We’ll call this kind of object an Entity.</p>
+      <p>An Entity is an object within our computer system that embodies a small set of critical business rules operating on Critical Business Data. The Entity object either contains the Critical Business Data or has very easy access to that data. The interface of Entity consists of the functions that implement the Critical Business Rules that operate on that data.</p>
+      <p>When we create a class gathering together the software that implements a concept that is critical to the business, and separating it from every other concern in the automated system we are building. This class stands alone as a representative of the business. It is unsullied with concerns about database, user interface, or third-party frameworks. It could serve the business in any system, irrespective of how that system was presented, or how the data was stored, or how the computers in that system were arranged. The Entity is a pure business and nothing else.</p>
+      <p>Not all business rules are a pure as Entities. Some business rules make or save money for the business for defining a constraining the way that an automated system operates.</p>
+      <p>A use case is a description of the way that an automated system is used. It specifies the input to be provided by the use, the output to be returned to the user, and the processing steps involved in producing that output.</p>
+      <p>Use cases do not describe how the system appears to the user. Instead, they describe the application-specific rules that govern the interaction between the users and the Entities.</p>
+      <p>A use case is an object. It has one or more functions that implement that application-specific business rules.</p>
+      <p>Entities have no knowledge of the use cases that control them. This is another example of the direction of the dependencies following the Dependency Inversion Principle. High-level concepts, such as use cases, Instead, the lower-level use cases know about the high-level Entities.</p>
+
+      <h3>Screaming Architecture:</h3>
+      <p>What does the architecture of your application screams? When you look at the top-level directory structure, and the source files in the highest-level package, do they scream “Health Care System”, or “Accounting System” or “Inventory Management System”? Or do they scream “Rails” or “Spring/Hibernate” or “ASP”?</p>
+      <p>Software architecture are structure that support the use cases of the system.</p>
+      <p>Good architectures are centred on use cases so that architects can safely describe the structure that support those use cases without committing to frameworks, tools and environments.</p>
+      <p>A good software architecture allows decisions about framework, databases, web servers, and other environmental issues and tools to be deferred and delayed. Frameworks are options to be left open.</p>
+      <p>A good architecture makes it easy to change you mind about those decisions, too. A good architecture emphasizes the use cases and decouples them from peripheral concerns.</p>
+      <p>Develop a strategy that prevents the framework from taking over that architecture.</p>
+      <p>Testable Architecture: If your system architecture is all about the use cases, and if you have kept your framework at arm’s length, then you should be able to unit-test all those use cases without any of the frameworks in place. You shouldn’t need the web server running to run your tests. You shouldn’t need the database connected to run your tests. Your Entity objects should be plain old objects that have no dependencies on frameworks or database or other complications. Your use case objects should coordinate you Entity objects. Finally, all of them together should be testable in situ, without any of the complications of frameworks.</p>
+
+
+      <h3>Clean Architecture: </h3>
+      <p>
+      <strong>Ideas regarding the architecture of system:</strong> <br>
+      <span class="tabspace">Hexagonal Architecture (also known as Ports and Adapters)</span><br>
+      <span class="tabspace">DCI</span><br>
+      <span class="tabspace">BCE</span>
+      </p>
+      <p>They all have the same objective, which is the separation of concerns. They all achieve this separation by dividing the software into layers.</p>
+      <p>Each of these architectures produce systems that have following characteristics: <br>
+      <span class="tabspace">Independent of frameworks</span><br>
+      <span class="tabspace">Testable</span><br>
+      <span class="tabspace">Independent of the UI</span><br>
+      <span class="tabspace">Independent of the database</span><br>
+      <span class="tabspace">Independent of any external agency</span><br>
+      </p>
+      <p>Source code dependencies must point only inward, toward higher-level policies.</p>
+      <p>Nothing in an inner circle can know anything at all about something in an outer circle.</p>
+      <p>Entities: Entities encapsulate enterprise-wide Critical Business Rules. An Entity can be an object with methods, or it can be set of data structures and functions. It doesn’t matter so long as the entities can be used by many different applications in the enterprise.</p>
+      <p>Use Cases: The software in the use cases layer contains application-specific business rules. It encapsulates and implements all of the use-cases of the system. These use cases orchestrate the flow of data to and from the entities. And direct those entities to use their Critical Business Rules to achieve the goals of the use case.</p>
+      <p>Interface Adapters: The software in the interface adapters layer is a set of adapters that convert data from the format most convenient for the use cases and entities to, to the format most convenient for some external agency such as the database or the web. The presenters, views, and controllers all belong in the interface adapter layer.</p>
+      <p>Frameworks and Drivers: The outermost layer of the model is generally composed of the frameworks and tools such as the database and web framework.</p>
+      <p>The dependency Rule always applies. Source code dependencies always point inward. As you move inward, the level of abstraction and policy increases. The outermost circle consists of low-level concrete details. As you move inward, the software grows more abstract and encapsulate higher-level policies. The innermost circle is the most general and highest level.</p>
+      <p>We take advantage of dynamic polymorphism to create source code dependencies that oppose the flow of control so that we can conform to the Dependency Rule, no matter which direction the flow of control travels.</p>
+      <p>Typically, the data that crosses the boundaries consists of simple data structures.</p>
+
+      <h3>Presenters and Humble Objects</h3>
+      <p>Humble Object Pattern is a design pattern that was originally identified as a way to help unit tests to separate behaviours that are hard to test from behaviours that are easy to test.</p>
+      <p>The View is the humble object that is hard to test.</p>
+      <p>The Presenter is the testable object. Its job is to accept data from the application and format it for presentation so that the View can simply move it to the screen.</p>
+      <p>Database Gateways are polymorphic interfaces that contain methods for every create, read, update or delete operation that can be performed by the application on the database.</p>
+      <p>Service Listeners: It receives data from the service interface and format into a simple data structure that can be used by the application. That data structure is then passed across the service boundary.</p>
+
+      <h3>Partial Boundaries:</h3>
+      <p>Full-fledged architectural boundaries are expensive. They require reciprocal polymorphic Boundary interface, Input and Output data structures and all of the dependency management necessary to isolate the two sides into independently compilable and deployable components. That takes a lot of work. It’s also a lot of work to maintain.</p>
+      <p>In many situations, a good architect might judge that the expense of such a boundary is too high – but might still want to hold a place for such a boundary in case it is needed later.</p>
+      <p>One way to construct a partial boundary is to do all the work necessary to create independently compilable and deployable components and then simply keep them together in the same component.</p>
+      <p>The full-fledged architectural boundary uses reciprocal boundary interfaces to maintain isolation in both directions. It exemplifies the traditional Strategy pattern.</p>
+      <p>An even simpler boundary is Façade pattern. The boundary is simply defined by the Façade class, which lists all the services as methods, and deploys the service calls to classes that the client is not supposed to access.</p>
+
+      <h3>Main Component:</h3>
+      <p>In every system, there is at least one component that creates, coordinates and oversees the others. i.e. Main Component.</p>
+      <p>The Main component is the ultimate details—the lowest-level policy. It is the initial entry point of the system. Nothing, other than the operating system, depends on it. Its job is to create all the Factories, Strategies and other global facilities, and then hand control over to the high-level abstract portions of the system.</p>
+      <p>Think of Main as a plugin to the application – a plugin that sets up the initial conditions and configurations, gathers all the outside resources, and then hands control over to the high-level policy of the application. Since it is a plugin, it is possible to have many Main components, one for each configuration of your application.</p>
+      <p>When you think about Main as a plugin component, sitting behind an architectural boundary, the problem of configuration become a lot easier to solve.</p>
+
+      <h3>Services: Great and Small:</h3>
+      <p>Service-oriented “architecture” and micro-services “architecture” have become very popular of late. The reasons for their current popularity include the following.<br>
+        <span class="tabspace">Services seem to be strongly decoupled from each other. As we shall see, this is only partially true.</span> <br>
+        <span class="tabspace">Services appear to support independence of development and deployment. Again, it is partially true.</span>
+      </p>
+      <p>Service Architecture: The architecture of a system is defined by boundaries that separate high-level policy from low-level detail for flow the Dependency Rule. Services that simply separate application behaviours are little more that expensive function calls, and are not necessarily architecturally significant.</p>
+      <p>This is not to say that all services should be architecturally significant. There are often substantial benefits to creating services that separate functionality across processes and platforms – whether they obey the Dependency Rule or not. It’s just that services, in and of themselves, do not define an architecture.</p>
+      <p>So it is with services. Services are, after all, just function call across process and/or platform boundaries. Some of those services are architecturally significant and some aren’t. </p>
+
+      <span class="tabspace"><strong>The Decoupling Fallacy:</strong></span>
+      <p>One of the big supposed benefits of breaking a system up in to services is that services are strongly decoupled from each other. After all, each service runs in a different process, or even a different processor; therefore, those services do not have access to each other’s variables. What’s more, the interface of each service must be well defined.</p>
+      <p>There is certainly some truth to this – but not very much truth. Yes, services are decoupled a the level of individual variables. However, they can still coupled by shared resources within a processor, or the network, What’s more they are strongly coupled by the data they share.</p>
+      <span class="tabspace"><strong>The Fallacy of independent development and deployment</strong></span>
+      <p>Another of the supposed benefits of services is that they can be owned and operated by a dedicated team, that team can be responsible for writing, maintaining, and operating the service as part of a dev-ops strategy. This independence of development and deployment is presumed to be scalable. It is believed that large enterprise systems can be created from dozens, hundreds, or even thousands of independently developable and deployable services. Development, maintenance, and operation of the system can be partitioned between similar number of independent teams.</p>
+      <p>There is some truth to this belief – but only some. First, history has shown that large enterprise systems can be built from monoliths and component -based systems as well as service-based systems. Thus, services are not the only option for building scalable system.</p>
+      <p>Second, the decoupling fallacy means that services cannot always be independently developed, deployed and operated. To the extent that they are coupled by data or behaviour, the development and operation must be coordinated.</p>
+      <p>Cross-Cutting Concerns: Architectural boundaries do not fall between services. Rather, those boundaries run through the service, dividing them into components.</p>
+
+      <h3>The Test Boundary:</h3>
+      <p>There is a great deal of confusion about tests. Are they part of the system? Are they separate from the system? Which kinds of tests are there? Are unit tests and integration tests different things? What about acceptance tests, functional tests, Cucumber tests, TDD tests, BDD tests, component tests, and so on?</p>
+      <p>Tests, by their very nature, follow the Dependency Rule; they are very detailed and concrete; and they always depend inward toward the code being tested. In fact, you can think of the tests as the outermost circle in the architecture. Nothing within the system depends on the tests, and tests always depend inward on the components of the system.</p>
+      <p>Tests are the most isolated system component. Their role is to support development, not operation.</p>
+      <p></p>
+
+      <span class="tabspace"><strong>Design for Testability:</strong></span>
+      <p>Tests that are not well integrated into the design of the system tend to be fragile, and they make the system rigid and difficult to change.</p>
+      <p>This situation can become acute. Changes to common system components can cause hundreds, or even thousands, of tests to break. This is known as the <em>Fragile Tests Problem.</em></p>
+      <p>The solution is to design for testability. The first rule of software design whether for testability or for any other reason – is always same: Don’t depend on volatile things. GUIs are volatile. Test suites that operate the system through the GUI must be fragile. Therefore, design the system, and the tests, so that the business rules can be tested without using the GUI.</p>
+
+      <span class="tabspace"><strong>The Testing API:</strong></span>
+      <p>The way to accomplish this goal is to create a specific API that the tests can use to verify all the business rules. This API should have superpowers that allow the tests to avoid security constraints, bypass expensive resources (such as database), and force the system in to particular testable states. This API will be a superset of the suite of interactors and interface adapters that are used by the user interface.</p>
+      <p>The purpose of the testing API is to decouple the tests from the application. This decoupling encompasses more than just detaching the tests from the UI: The goal is to decouple the structure of the tests from the structure of application.</p>
+      <p>The role of testing API is to hide the structure of the application from the tests. This allows the production code to be refactored and evolved in ways that don’t affect the tests. It also allows the tests to be refactored and evolved in ways that don’t affect the production code</p>
+      <p>Tests are not outside the system; rather, they are parts of the system that must be well designed if they are to provide the desired benefits of stability and regression. Tests that are not designed as part of the system tend to be fragile and difficult to maintain. Such tests often wind up on the maintenance room floor – discarded because they are too difficult to maintain.</p>
+
+      <h3>Clean Embedded Architecture:</h3>
+      <p><em>“Although software does not wear out, firmware and hardware become obsolete, thereby requiring software modifications”</em></p>
+      <p><em>“Although software does not wear out, it can be destroyed from within by unmanaged dependencies on firmware and hardware”</em></p>
+      <p>What we really need is less firmware and more software.</p>
+      <p>Embedded development is not so special that the principles in the book are not applicable to embedded systems.</p>
+      <p>One of the special embedded problems is the target-hardware bottleneck. </p>
+      <p>Software and firmware intermingling is an anti-pattern.</p>
+      <p>A successful Hardware Abstraction Layer provides that seem to set of substitution points that facilitate off-target testing.</p>
+    </div>
+
+    <div id="chapter7">
+      <h2 class="heading"> Part VI : Details</h2>
+      <h3>The Database is a Detail:</h3>
+      <p>The structure you give to the data within your application is highly significant to the architecture of your system. But the database is not the data model.</p>
+      <p>The relational model is elegant, disciplined and robust. It is an excellent data storage and access technology.</p>
+      <p>Many data access frameworks allow database rows and tables to be passed around the system as objects. Allowing this is an architectural error. It couples the use cases, business rules, and in some cases, business rules, and in some cases even the UI to the relational structure of the data.</p>
+      <p>If the data was not on a disk, it could be accessed in nanoseconds, instead of milliseconds.</p>
+      <p>File systems are document based. And Database systems are content based.</p>
+      <p>Both systems organize the data on the disk so that it can be stored and retrieved in as efficient a way as possible, given their particular access needs. Each has their own scheme for indexing and arranging the data. In addition, each eventually brings the relevant data into RAM, where it can be quickly manipulated.</p>
+      <p>The data is significant. The database is detail.</p>
+
+      <h3>The Web is a Detail:</h3>
+      <p>We have seen several of these oscillations just in last decade or so since the web became prominent. At first we thought all the computer power would be in server farms, and the browsers would stupid. Then we started putting applets in the browsers. But we didn’t like that, so we moved dynamic content back to the servers. But then we didn’t like that, so we invented Web2.0 and moved lots of processing back in to the browser with Ajax and JavaScript. We went so far as to create whole huge application written to execute in the browsers. And now we’re all excited about pulling that JavaScript back in to the server with Node.</p>
+      <p>The upshot is simply this: The GUI is detail. The web is GUI. So, the web is a detail. And, as an architect, you want to put details like that behind boundaries that keep them separate from your core business logic.</p>
+
+      <h3>Frameworks are Details:</h3>
+      <p>Don’t marry the framework!</p>
+      <p>Don’t let frameworks into your core code. Instead, integrate them into components that plug in to your core code, following the Dependency Rule.</p>
+
+      <h3>The Missing Chapters:</h3>
+      <p><strong>Layered Architecture:</strong><br>
+        It is a good way to get started. Once your software grows in scale and complexity, you will need to think about modularizing further. <br>
+        Layered Architecture doesn’t scream about the business domain.
+      </p>
+      <p><strong>Package by Feature:</strong><br>
+        This is a vertical slicing, based on related features, domain concepts, or aggregate roots (to use domain-driven design terminology). In this typical implementation that I’ve seen, all of the types are placed into a single Java package, which is named to reflect the concept that is being grouped.
+      </p>
+      <p><strong>Ports and Adapters:</strong><br>
+        The “hexagonal architecture”, “boundaries. Controllers, entities” and son on aim to create architecture where business/domain-focused code is independent and separate from the technical implementation details such as framework and databases. To summarize, you often see such code bases being composed of an “inside” (domain) and an “outside” (infrastructure).
+      </p>
+      <p><strong>Package by Component:</strong><br>
+        A component is group of related functionalities behind a nice clean interface which resides inside an execution environment like an application.” This definition comes from my C4 software architecture model, which is a simple hierarchical way to think about the static structures of a software system in terms of containers, components and classes (or code). It says that a software system is made up of one or more container (e.g.., web applications, mobile apps, stand-alone applications, database, file systems), each of which contains one of more components, which in turn are implemented by one or more classes (or code). Whether each component resides in sperate jar file in an orthogonal concern.
+      </p>
+    </div>
+
+
+
+
+  </body>
+</html>
