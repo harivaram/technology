@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Kubernates In Action</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>Kubernates In Action</h1>
+
+    <div class="">
+      <h3>Chapters:</h3>
+      <ol>
+        <li><a href="#chapter3">Introduction</a></li>
+        <li><a href="#chapter3">quick</a></li>
+        <li><a href="#chapter3">Pods</a></li>
+      </ol>
+    </div>
+
+
+    <div id="chapter3">
+      <h2 calss="heading">3. Pods</h2>
+      <h3>What is Design and Architecture</h3>
+      <p>The central, most important, concept in Kubernetes. Everything else either manages, exposes, or is used by pods</p>
+      <p>Pod is a co-located group of containers and represents the basic building block in Kubernetes.</p>
+      <p>Instead of deploying containers individually, you always deploy and operate on a pod of containers.</p>
+      <p>We’re not implying that a pod always includes more than one container—it’s common for pods to contain only a single container.</p>
+      <p>Containers are designed to run only a single process per container.</p>
+      <p>A pod of containers allows you to run closely related processes together and provide them with (almost) the same environment as if they were all running in a single container, while keeping them somewhat isolated. This way, you get the best of both worlds. You can take advantage of all the features containers provide, while at the same time giving the processes the illusion of running together.</p>
+      <p>Kubernetes achieves this by configuring Docker to have all containers of a pod share the same set of Linux namespaces instead of each container having its own set.</p>
+      <p>It’s possible to have them share file directories using a Kubernetes concept called a Volume</p>
+      <p>Containers in a pod run in the same Network namespace, they share the same IP address and port space</p>
+      <p>All the containers in a pod also have the same loopback network interface, so a container can communicate with other containers in the same pod through localhost.</p>
+      <p>All pods in a Kubernetes cluster reside in a single flat, shared, network-address space (shown in figure 3.2), which means every pod can access every other pod at the other pod’s IP address. No NAT (Network Address Translation) gateways exist between them.</p>
+      <p>Pods are logical hosts and behave much like physical hosts or VMs in the non-container world. Processes running in the same pod are like processes running on the same physical or virtual machine, except that each process is encapsulated in a container.</p>
+      <p>A pod is also the basic unit of scaling. Kubernetes can’t horizontally scale individual containers; instead, it scales whole pods.</p>
+      <p>The main reason to put multiple containers into a single pod is when the application consists of one main process and one or more complementary processes.</p>
+      <p>Deciding whether to put two containers into a single pod or into two separate pods <br>
+        <span class="tabspace">Do they need to be run together or can they run on different hosts?</span> <br>
+        <span class="tabspace">Do they represent a single whole or are they independent components?</span> <br>
+        <span class="tabspace">Must they be scaled together or individually?</span>
+      </p>
+      <p>Pods and other Kubernetes resources are usually created by posting a JSON or YAML manifest to the Kubernetes REST API endpoint. Also, you can use other, simpler ways of creating resources, such as the kubectl run command</p>
+      <p>YAML definition: <br>
+        <span class="tabspace">Kubernetes API version used in this YAML descriptor</span><br>
+        <span class="tabspace">Type of Kubernetes object/resource</span><br>
+        <span class="tabspace">Pod metadata (name, labels, annotations, and so on)</span><br>
+        <span class="tabspace">Pod specification/contents (list of pod’s containers, volumes, and so on)</span><br>
+        <span class="tabspace">Detailed status of the pod and its containers</span>
+      </p>
+
+      <p>Commands: <br>
+        <span class="tabspace"><em>kubectl explain pods</em></span><br>
+        <span class="tabspace"><em>kubectl explain pod.spec</em></span><br>
+        <span class="tabspace"><em>kubectl create -f kubia-manual.yaml</em></span><br>
+        <span class="tabspace"><em>kubectl get po kubia-manual -o yaml</em></span><br>
+        <span class="tabspace"><em>kubectl get po kubia-manual -o json</em></span><br>
+        <span class="tabspace"><em>kubectl get pods</em></span><br>
+        <span class="tabspace"><em>docker logs container_id</em></span><br>
+        <span class="tabspace">Forwarding a local network port to a port in the pod : <em>kubectl port-forward kubia-manual 8888:8080</em></span><br>
+        <span class="tabspace"><em></em></span><br>
+      </p>
+
+      <p>Organizing pods with labels <br>
+      <span class="tabspace">To operate on every pod belonging to a certain group with a single action</span><br>
+      <span class="tabspace">Kubernetes feature for organizing not only pods, but all other Kubernetes resources.</span><br>
+      <span class="tabspace">A label is an arbitrary key-value pair you attach to a resource, which is then utilized when selecting resources using <em>label selectors</em></span><br>
+      <span class="tabspace">A resource can have more than one label, as long as the keys of those labels are unique within that resource. </span><br>
+      
+    </p>
+    </div>
+
+
+
+
+  </body>
+</html>

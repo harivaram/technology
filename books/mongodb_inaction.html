@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>MongoDB In Action</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>MongoDB In Action</h1>
+
+    <h2>Content:</h3>
+    <ol>
+        <h3>I. Getting Started</h3>
+        <li><a href="#chapter1">A database for the modern web</a></li>
+        <li><a href="#chapter2">MongoDB though Javascript shell</a></li>
+
+    </ol>
+
+    <div id="chapter1">
+        <h3>Chapter 1: A database for the modern web</h3>
+        <p>MongoDB is an open source document-based database management system.</p>
+        <p>Designed for the data and scalability requirements of modern internet applications.</p>
+        <p>MongoDB features dynamic queries and secondary indexes; fast atomic updates and complex aggregations</p>
+        <p>Support replication with automatic failover and sharding for scaling horizantally</p>
+    </div>
+
+    <div id="chapter2">
+        <h3>Chapter 2: MongoDB though Javascript shell</h3>
+        <p>Instead of employing a standardized query language such as SQL, you interact with the server using the JavaScript programming language and a simple API.</p>    
+        <p>MongoDB’s JavaScript shell makes it easy to play with data and get a tangible sense for documents, collections, and the database’s particular query language</p>   
+        <p>Start Mongodb : <span id="command"><code>./mongod</code></span></p>
+        <p>Start Mongo shell : <span id="command"><code>./mongo</code></span></p>
+        <p>List all databases : <span id="command"><code>./show dbs</code></span></p>
+        <p>Create/Use DB : <span id="command"><code>./use db_name</code></span></p>
+        <p>Databases and collections are created only when documents are first inserted. This behavior is consistent with MongoDB’s dynamic approach to data</p>
+
+        <p>Insert and queries: <br>
+            <span class="command"><code>> use tutorial</code></span> <br>
+            <span class="command"><code>> db.users.insert({username: "smith"})</code></span><br>
+            <span class="command"><code>> db.users.find()</code></span> <br>
+            <span class="command"><code>> db.users.save({username: "jones"})</code></span> <br>
+            <span class="command"><code>> db.users.count()</code></span> <br>
+            <span class="command"><code>> b.users.find()</code></span> <br>
+            <span class="command"><code>> db.users.find({username: "jones"})</code></span> <br>
+        </p>   
+
+        <p>Updating Documents: <br>
+            <span class="command"><code>> db.users.update({username: "smith"}, {$set: {country: "Canada"}})</code></span> <br>
+            <span class="command"><code>> db.users.update({username: "smith"}, {$unset: {country: 1}})</code></span> <br>
+            <span class="command"><code>> db.users.update( {username: "smith"},
+                { $set: {favorites:
+                {
+                cities: ["Chicago", "Cheyenne"],
+                movies: ["Casablanca", "The Sting"]
+                }
+                }
+                })</code></span> <br>
+            <span class="command"><code>> db.users.update( {username: "jones"},
+                    {"$set": {favorites:
+                    {
+                    movies: ["Casablanca", "Rocky"]
+                    }
+                    }
+                    })</code></span> <br>
+            <span class="command"><code>> db.users.find({"favorites.movies": "Casablanca"}) </code></span> <br>
+            <span class="command"><code>> db.users.update( {"favorites.movies": "Casablanca"},
+                    {$addToSet: {"favorites.movies": "The Maltese Falcon"} },
+                    false,
+                    true )</code></span> <br>
+        </p>
+        
+        <p>Deleting Data: <br>
+            <span class="command"><code>> db.foo.remove()</code></span> <br>
+            <span class="command"><code>> db.users.remove({"favorites.cities": "Cheyenne"})</code></span> <br>
+            <span class="command"><code>> db.users.drop()</code></span> <br>
+            
+        </p>
+
+        <p>Creating Large Collection: <br>
+            <span class="command"><code>> for(i=0; i<200000; i++) {
+                db.numbers.save({num: i});
+                }</code></span> <br>
+            <span class="command"><code>> db.numbers.find()</code></span> <br>
+            <span class="command"><code>> it</code></span> <br>
+            <span class="command"><code>> db.numbers.find({num: 500})</code></span> <br>
+            <span class="command"><code>> db.numbers.find( {num: {"$gt": 199995 }} )</code></span> <br>
+            <span class="command"><code> db.numbers.find( {num: {"$gt": 20, "$lt": 25 }} )</code></span> <br>
+        </p>
+
+
+        <p>Indexing and explain(): <br>
+            EXPLAIN describes query paths and allows developers to diagnose slow operations by determining which indexes a query has used <br>
+            <span class="command"><code>> db.numbers.find( {num: {"$gt": 199995 }} ).explain() </code></span> <br>
+            <span class="command"><code>> db.numbers.ensureIndex({num: 1}) </code></span> <br>
+            <span class="command"><code>> db.numbers.getIndexes() </code></span> <br>
+            <span class="command"><code>> show dbs </code></span> <br>
+        </p>
+        <p>Getting database information: <br>
+            <span class="command"><code>> show dbs </code></span> <br>
+            <span class="command"><code>> show collections</code></span> <br>
+            <span class="command"><code>> b.numbers.stats()</code></span> <br>
+            <span class="command"><code>> </code></span> <br>
+            <span class="command"><code>> </code></span> <br>
+    </div>
+
+    <div id="chapter3">
+        <h3>Chapter 3: Writing programs using MongoDB</h3>
+        <p>The Java driver also forms the basis for the drivers powering JVM languages like Scala, Clojure, and JRuby <br>
+        <p> 
+            <strong>Sample Program:</strong> <br>
+            <code> <pre>
+          import com.mongodb.Mongo; 
+          import com.mongodb.DB; 
+          import com.mongodb.DBCollection;
+          import com.mongodb.BasicDBObject;
+          import com.mongodb.DBObject;
+          import com.mongodb.DBCursor;
+          import com.mongodb.WriteConcern;
+          import java.util.Date;
+          public class Sample {
+            public static void main(String[] args) {
+                Mongo conn;
+            
+                try {
+                    conn = new Mongo("localhost", 27017);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            
+                WriteConcern w = new WriteConcern( 1, 2000 );
+                conn.setWriteConcern( w );
+            
+                DB db = conn.getDB( "crawler" );
+                DBCollection coll = db.getCollection( "sites" );
+            
+                DBObject doc = new BasicDBObject();
+                String[] tags = { "database", "open-source" };
+                doc.put("url", "org.mongodb");
+                doc.put("tags", tags);
+            
+                DBObject attrs = new BasicDBObject();
+                attrs.put( "lastAccess", new Date() );
+                attrs.put( "pingtime", 20 );
+    
+                doc.put( "attrs", attrs );
+    
+                coll.insert(doc);
+    
+                System.out.println( "Initial document:n" );
+                System.out.println( doc.toString() );
+            
+                System.out.println( "Updating pingtime...n" );
+                coll.update( new BasicDBObject( "_id", doc.get("_id") ),
+                new BasicDBObject( "$set", new BasicDBObject( "pingtime", 30 ) ) );
+            
+                DBCursor cursor = coll.find();
+                System.out.println( "After updaten" );
+                System.out.println( cursor.next().toString() );
+                System.out.println( "Number of site documents: " + coll.count() );
+                System.out.println( "Removing documents...n" );
+                coll.remove( new BasicDBObject() );
+            }
+        }
+                </pre>
+            </code>
+
+        </p>
+        
+
+    </div>
+       
+
+
+
+</body>
+</html>

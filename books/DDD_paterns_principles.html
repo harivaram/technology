@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Patterns, Principles, and Practices of Domain-Driven Design</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script type="text/javascript">
+    //  function toggleColourMode(){
+        console.log(document.getElementsByTagName("body").style);
+      //}
+    </script>
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>Patterns, Principles, and Practices of Domain-Driven Design</h1>
+
+    <div class="">
+
+      <ol>
+        <h3>Part I: The Priciples and Practices of Domain Driven Design</h3>
+        <li><a href="#chapter1">What is Domain Driven Design</a></li>
+        <li><a href="#chapter2">Distilling the Problem Domain</a></li>
+        <li><a href="#chapter3">Focusing on the Core Domain</a></li>
+        <li><a href="#chapter4">Model-Driven Design</a></li>
+        <li><a href="#chapter5">Domain model implementation pattern</a></li>
+        <li><a href="#chapter6">Maintaining the Integrity of Domain Model with Bounded Contexts</a></li>
+        <li><a href="#chapter7">Context Mapping</a></li>
+        <li><a href="#chapter8">Application Architecture</a></li>
+        <li><a href="#chapter9">Common Problems for Teams Starting Out with Domain-Driven Design</a></li>
+        <li><a href="#chapter10">Common Problems for Teams Starting Out with Domain-Driven Design</a></li>
+        <h3>Part II: Strategic patterns: Communicating between bounded contexts</h3>
+        <li><a href="#chapter11">Introduction to Bounded Context Integration</a></li>
+        <li><a href="#chapter12">Integrating via Messaging</a></li>
+        <li><a href="#chapter13">Integrating via HTTP with RPC and REST</a></li>
+        <h3>Part III: Tactical Patterns: Creating Effective Domain Models</h3>
+        <li><a href="#chapter14">Introducing the Domain modelling building blocks</a></li>
+        <li><a href="#chapter15">Value Objects</a></li>
+        <li><a href="#chapter16">Entities</a></li>
+        <li><a href="#chapter17">Domain Services</a></li>
+        <li><a href="#chapter18">Domain Events</a></li>
+        <li><a href="#chapter19">Aggregates</a></li>
+        <li><a href="#chapter20">Factories</a></li>
+        <li><a href="#chapter21">Repositories</a></li>
+        <li><a href="#chapter22">Even sourcing </a></li>
+        <h3>Part 1V: Design Patterns for Effective Applications</h3>
+        <li><a href="#chapter23">Architecting Application User interfaces</a></li>
+        <li><a href="#chapter24">CQRS: An architecture of a bounded context</a></li>
+        <li><a href="#chapter25">Commands: Application service patterns for processing business use cases</a></li>
+        <li><a href="#chapter26">Queries: Domain Reporting</a></li>
+      </ol>
+
+    </div>
+
+
+
+    <div id="chapter1">
+      <h1 id="part1">Part I : The Priciples and Practices of Domain Driven Design</h1>
+      <h2 class="heading">1. What is Domain Driven Design</h2>
+      <h3>Silent Points:</h3>
+      <p>Domain-Driven Design (DDD) is a development philosophy that is designed to manage the creation and maintenance of software written for complex problem domains.</p>
+      <p>DDD is a collection of patterns, principles, and practices, which can be applied to software design to manage complexity.</p>
+      <p>DDD has two types of patterns. Strategic patterns shape the solution, while tactical patterns are used to implement a rich domain model. Strategic patterns can be useful for any application but tactical patterns are only useful if your model is sufficiently rich in domain logic.</p>
+      <p>Distillation of large problem domains into subdomains can reveal the core domain – The area of most value. Not all parts of a system will be well designed; teams must invest more time in the core subdomain(s) of a product.</p>
+      <p>An abstract model is created for each subdomain to manage domain problems.</p>
+      <p>A ubiquitous language is used to bind the analysis model to the code model in order for the development team and domain experts to collaborate on the design of a model. Learning and creating a language to communicate about the problem domain is the process of DDD. Code is the artefact.</p>
+      <p>In order to retain the integrity of a model, it is defined within a bounded context. The model is isolated from infrastructure concerns of the application to separate technical complexities from the business complexities.</p>
+      <p>Where there is ambiguity in terminology for a model or multiple teams at work the model can be split and defined in smaller bounded contexts.</p>
+      <p>DDD does not dictate any specific architectural style for development, it only ensures that the model is kept isolated from technical complexities so that it can focus on domain logic concerns.</p>
+      <p>DDD values a focus on the core domain, collaboration, and exploration with domain experts, experimentation to produce a more useful model, and an understanding of various contexts in play in a complex problem domain.</p>
+      <p>DDD is not a patterns language, it is a collaboration philosophy focused on delivery, with communication playing a central role.</p>
+      <p>DDD is a language- and domain-centric approach to software development.</p>
+    </div>
+
+
+    <div id="chapter2">
+      <h2 class="heading">2. Distilling the Problem Domain</h2>
+      <h3>Silent Points:</h3>
+      <p>Knowledge crunching is the art of processing domain information to identify the relevant pieces that can be used to build a useful model.</p>
+      <p>Knowledge is obtained by developers collaborating with domain experts. Collaboration helps to fill any knowledge gaps and fosters a shared understanding.</p>
+      <p>A shared understanding is enabled though a shared language known as the ubiquitous language (UL).</p>
+      <p>Knowledge crunching is an ongoing process; collaboration and engagement with the business should not be constrained to the start of a project. Deep insights and breakthroughs only happen after living with the problem through many development iterations.</p>
+      <p>Knowledge is gained around whiteboards, water coolers, brainstorming, and prototyping in a collaborative manner, with all members of the team at any time of the project.</p>
+      <p>Domain experts are the subject matter experts of the organization. They are anyone who can offer insight into the problem domain (users, product owners, business analysts, other technical teams).</p>
+      <p>Your stakeholders will give you the requirements of your application but they may not be best placed to answer detailed questions of the domain. Utilize domain experts when modelling core or complex areas of the problem domain.</p>
+      <p>Engage with your domain experts on the most important part of a system. Don’t simply read out a list of requirements and ask them to comment on each item.</p>
+      <p>Plan to change your model; don’t get too attached as a breakthrough in knowledge crunching may render it obsolete.</p>
+      <p>When working with domain experts focus on the most important parts of the problem domain; put most effort into the areas that will make the application a success.</p>
+      <p>Drive knowledge crunching around the most important use cases of the system. Ask the domain expert to walk through concrete scenarios of the system use cases to help fill knowledge gaps.</p>
+      <p>Ask powerful questions and learn the intent of the business. Don’t simply implement a set of requirements but actively engage with the business; work with them, not for them.</p>
+      <p>Visualize your learning with the sketches and event storming techniques. Visualize a problem domain can increase collaboration with the business experts and make knowledge-crunching session fun.</p>
+      <p>Use BDD to focus on the behaviour of the application and focus domains experts and stakeholders around concreate scenarios. BDD is a great catalyst for conversation with the domain experts and stakeholders. It has a template language to capture behaviour in a standard and actionable way.</p>
+      <p>Experiment in code to prove the usefulness of the model and to give feedback on the compromises that a model needs to make for technical reasons.</p>
+      <p>Look at existing processes and models in the industry to avoid typing to reinvent the wheel and to speed up the gaining of the domain knowledge.</p>
+      <p>Find out what you don’t know, identify the team’s knowledge gaps early then activate deliberate discovery. Eliminate unknowns and increase domain knowledge early.</p>
+      <p>Leverage Eric Evan’s Model Exploration Whirlpool when you need guidance on how to explore models. The activities in the whirlpool are particularly helpful when you are having communication breakdowns, overly complex designs, or when the team is entering an area of the problem domain of which they don’t have much knowledge.</p>
+    </div>
+
+  <div id="chapter3">
+      <h2 class="heading">3. Focusing on the Core Domain</h2>
+      <h3>Silent Points:</h3>
+      <p>Distillation is used to break down a large problem domain to discover the core, supporting and generic domains.</p>
+      <p>Distillation helps reduce complexity within a problem space.</p>
+      <p>Focus and effort should be invested on the core domain. Use your best developers here.</p>
+      <p>The core domain is the reason you are writing the software.</p>
+      <p>Consider outsourcing, buying in, or putting juniors on the supporting and generic domains.</p>
+      <p>A domain vision statement reveals a shared understanding of what is core to the success of a product. Use domain experts, project initiation documents, and business strategy presentations to help inform the domain vision statement.</p>
+      <p>Plan to change the model within the core domain as you learn more about problem. Don’t get too attached to a solution – your core domain may change over time.</p>
+      <p>Not all of a system will be well designed. Focus effort on the core domain. For legacy BBoM systems define an anti-corruption boundary to avoid new code becoming tangled within mess of old.</p>
+  </div>
+
+  <div id="chapter4">
+      <h2 class="heading">4. Model-Driven Design</h2>
+      <h3>Silent Points:</h3>
+      <p>The domain is the reality of the problem. The domain model is a set of abstractions based on a projection of the domain designed to handle specific business use cases.</p>
+      <p>A model is represented as an analysis model and code model. They are one and the same.</p>
+      <p>A domain model exists as an analysis model and a code model. A Model-Driven Design binds the analysis model and code model through the use of the shared language.</p>
+      <p>An analysis model is only useful if it says in synergy with the code model.</p>
+      <p>If you are shaping the analysis or code models, you have to be hands-on and contribute to code. There is a place for architects, but they must be coders as well.</p>
+      <p>Code is the primary form of expression of the model and needs to be bound using the ubiquitous language.</p>
+      <p>The process of developing a UL is the most important of Domain-Driven Design (DDD) because it enables communication and learning.</p>
+      <p>Domain jargon must be explicitly defined to ensure accuracy in meaning because the terminology used in communication is baked into the code implementation.</p>
+      <p>Implicit ideas in the domain that the team needs to understand are name explicit and given names that form the shared ubiquitous language.</p>
+      <p>Domains are full of specialist terms and language that describe complex concepts in a clean concise manner.</p>
+      <p>Feature stories and scenarios can help you understand the behaviour of a system, but a domain expert will help build a model that can support the specified behaviour.</p>
+      <p>The ubiquitous language should be used in tests, namespaces, class names and methods.</p>
+      <p>It’s important to care about the conversation; a ubiquitous language is about collaboration and not the development team just adopting the language of the business.</p>
+      <p>Use domain scenarios to prove the usefulness of the model and to validate the team’s understanding of the domain.</p>
+      <p>Only apply Model-Driven Design and create a UL for a core domain that will make a difference. Don’t apply these practices to the entire application.</p>
+  </div>
+
+  <div id="chapter5">
+      <h2 class="heading">5. Domain model implementation pattern</h2>
+      <h3>Silent Points:</h3>
+      <p>The domain layer contains the model of the domain and is isolated from infrastructure and presentation concerns.</p>
+      <p>The domain model can be implemented with multiple domain logic patterns.</p>
+      <p>There may be more than one model at play on a large project and therefore more than a good fit for DDD.</p>
+      <p>The domain model pattern is a good fit for a complex problem domain. Concepts in the domain are encapsulated as objects containing both data and behaviour.</p>
+      <p>The transaction script pattern organizes all domain logic to fulfil a business transaction or use case in a procedural module.</p>
+      <p>The table module pattern represents your data model in object form. The Table module is useful for data-driven models that closely reflect the underlying data schema.</p>
+      <p>The active record pattern is like the table module pattern in that it is data-driven but it represents rows in the tables a opposed to the tables themselves. It’s a good fit for low complexity logic but high CRUD-based models.</p>
+      <p>An anemic model is similar to the domain model pattern; however, the model is devoid of any behaviour. It is purely a model of the state of an object all behaviour resides in service classes that modify.</p>
+      <p>Functional programming is an equally valid approach to building domain models.</p>
+      <p>When using functional programming, behaviours can be grouped in to aggregates ( that represent domain concepts) and applied to pure, immutable data structures (that also represent domain concepts).</p>
+  </div>
+
+  <div id="chapter6">
+      <h2 class="heading">6. Maintaining the Integrity of Domain Model with Bounded Contexts</h2>
+      <h3>Silent Points:</h3>
+      <p>Trying to use a single model for a complex problem domain will often cause code to result in a Big Ball of Mud.</p>
+      <p>A monolithic model increases collaboration overhead amongst teams and reduce their efficiency at delivering business value.</p>
+      <p>For each model at paly within an application, you must explicitly define its context and communicate it to other teams.</p>
+      <p>A bounded context is a linguistic boundary. It isolates models to remove ambiguity within UL.</p>
+      <p>A bounded context protects the integrity of the domain model.</p>
+      <p>Identifying and creating bounded contexts is one of the most important aspects of Domain-Driven Design.</p>
+      <p>There are no rules for defining the boundaries of a model and therefore bounded contexts. Instead you should base bounded contexts around linguistic boundaries, team organization subdomains and physical deployments.</p>
+      <p>Subdomains are used in the problem space to partition the problem domain. Bounded contexts are used to define the applicability of a model in the solution space.</p>
+      <p>A single team should own a bounded context.</p>
+      <p>Architectural patterns apply at the bounded context level, not at the application level. If you don’t have complex logic in a bounded context, use a simple create, read, update, and delete (CRUD) architecture</p>
+      <p>Speak a ubiquitous language within an explicitly bounded context.</p>
+      <p>A bounded context should be autonomous – owning the entire code stack from presentation through domain logic and onto the database and schema.</p>
+  </div>
+
+  <div id="chapter7">
+      <h2 class="heading">7. Context Mapping</h2>
+      <h3>Silent Points:</h3>
+      <p>A context map reflects the way things are right now. It provides a holistic view of the technical integration methods and relationships between bounded contexts. Without them, models can be compromised, and bounded contexts can be quickly change the balls of mud as integration blurs the line of a of model’s applicability.</p>
+      <p>An anticorruption layer provides isolation for a model when interfacing with another context. The layer ensures integrity is not compromised by providing translation from one context to another.</p>
+      <p>Integration using the shared kernel pattern is for contexts that have an overlap and shared a common model.</p>
+      <p>Integration via an open host service exposes and external API instead of requiring clients to transform from one model to another. Typically, this creates a published language for clients to work with.</p>
+      <p>Relationships between bounded contexts can be understood in terms of being upstream or downstream of one another. Upstream context have influence over downstream contexts.</p>
+      <p>Collaboration between two teams not working to a common goal or not on the same project is known as a customer-supplier relationship. Downstream customers can collaborate with their upstream suppliers to integrate contexts.</p>
+      <p>The conformist pattern describes the relationship between an upstream and downstream whether the upstream team will not collaborate with the downstream team. This is often the case when the upstream team is a third-party.</p>
+      <p>The partnership relationship pattern describes two teams that have a common goal and a usually on the same project but working on two different contexts.</p>
+      <p>Separate ways should be followed if bounded contexts are too costly to integrate and other nontechnical method can be found.</p>
+  </div>
+
+  <div id="chapter8">
+      <h2 class="heading">8. Application Architecture</h2>
+      <h3>Silent Points:</h3>
+      <p>DDD does not require a specific architecture – only one that can separate the technical concerns from the business concerns.</p>
+      <p>Separate the concerns of your application, and isolate business complexity from technical complexity by layering your application.</p>
+      <p>Outer layers depend on inner layers. Inner layers expose interfaces that outer layers must adapt to and implement. This form of dependency inversion protects the integrity of the domain and application layer.</p>
+      <p>The domain layer is at the heart of your application. It is isolated from technical complexities by the application layer.</p>
+      <p>Application services are based around business use cases; they are the clients of the domain layer. They delegate to the domain layer to fulfill the use cases.</p>
+      <p>Application service should remain ignorant to the client that consume them. Clients should adapt to the API of the application, which enables the support of discrete clients.</p>
+      <p>The application service layer is the concrete implementation of the bounded context boundary.</p>
+  </div>
+      <div id="chapter9">
+      <h2 class="heading">9. Common Problems for Teams Starting Out with Domain-Driven Design</h2>
+      <h3>Silent Points:</h3>
+      <p>The tactical patterns of DDD can guide you toward creating an effective domain model; however, this area of DDD is evolving, and the implementation details have been overemphasized. The pattern may have value, but this is not where the value of DDD lies.</p>
+      <p>DDD is far more than coding. Collaboration with domain experts to knowledge crunch and have a shared understanding of the problem domain expressed in a ubiquitous language are the pillars of DDD.</p>
+      <p>Context is everything; context and isolation retain the integrity of your code. It reduces cognitive load and makes a model specific.</p>
+      <p>You need a smart dedicated team willing to learn about the domain.</p>
+      <p>You need access to a domain expert. Teams can’t reveal deeper insights without them.</p>
+      <p>Use CRUD for bounded contexts with low complexity. You are not a bad programmer if you don’t have a domain model.</p>
+      <p>Bounded context and the ubiquitous language are the foundation of DDD.</p>
+      <p>DDD is about the process of learning, refining, experimenting and exploring the quest to discover a useful model in collaboration.</p>
+  </div>
+
+  <div id="chapter10">
+      <h2 class="heading">10. Common Problems for Teams Starting Out with Domain-Driven Design</h2>
+      <h3>Silent Points:</h3>
+      <p>Don’t sell DDD as a silver bullet. Focus on the alignment with the business and learning more about the domain you are building software for.</p>
+      <p>Apply the principles of DD only when they are needed. Don’t use them as a tool for all problems.</p>
+      <p>Decompose the problem space and focus on the core domain. All interesting conversations will happen here. This is where you apply the principles of DDD to maximize value and where you should apply the most effort.</p>
+      <p>Before modelling a solution, capture the reality of the landscape, and understand other models and contexts in play. Who owns these? What relationships do you have with them? What and how is data exchanged?</p>
+      <p>Build a model to satisfy the feature scenarios. Start with the most risky or complex. Utilize your domain expert’s time here, and don’t bother him with simple data management.</p>
+      <p>If you are working in legacy environment, ensure that you protect yourself from external code, don’t trust anyone, and enforce your borders. Carve out an area to add new functionality. Don’t try to clean up everything.</p>
+      <p>Constantly integrate, refine, and challenge your model. Don’t stop at your first good idea. Explore and experiment and validate good ideas by trying new models and solutions. Have at least three useful models.</p>
+      <p>Don’t assume anything, keep things simple, delay large design decisions, and wait for complexity or new behaviours to challenge your solution. Then refactor toward strategic patterns when you need to.</p>
+      <p>Modelling is team activity, and one that should happen whenever the team is stuck, encounters an area it is unsure of, or needs clarification. It should not be confined to a predefined step in a project time line.</p>
+      <p>The model and the language evolve together. A model that cannot be communicated and talked about with ease will have limited usefulness and will be hard to evolve.</p>
+  </div>
+
+
+<h1 id="part2">Part II: Strategic patterns: Communicating between bounded contexts</h1>
+  <div id="chapter11">
+    <h2 class="heading">11. Introduction to Bounded Context Integration</h2>
+    <h3>Silent Points:</h3>
+    <p>These days, the majority of applications you are likely to build are distributed systems because large web traffic arises from everyone having access to the internet and from many devices.</p>
+    <p>Applying DD to distributed systems still provides lots of benefits, but there are new challenges when integrating bounded contexts.</p>
+    <p>Some of the challenges are technical, such as scalability and reliability, whereas others are social, such as integrating teams and developing at high velocity.</p>
+    <p>A number of techniques exist for building distributed systems that trade off simplicity, maintainability, and scalability. Database integration, for instance, can be quick to setup but isn’t recommended for use in high-scalability environments.</p>
+    <p>RPC and messaging are the most common forms of distributed systems integration and the ones you are most likely to use. They are significantly different in nature, so it’s essential you understand what benefits and complications they will add to your system.</p>
+    <p>You can use the loosely coupled, business-oriented philosophy of SOA to help design your bounded context integration strategy by thinking of bounded context as SOA services.</p>
+    <p>Combining SOA and reactive programming provides the platform to align your infrastructure with business priorities, deal with scalability and reliability challenges, and organize your teams by aligning them with bounded contexts to reduce communication overhead.</p>
+  </div>
+
+  <div id="chapter12">
+    <h2 class="heading">12. Integrating via Messaging</h2>
+    <h3>Silent Points:</h3>
+    <p>Messaging systems are used to build scalable, fault-tolerant systems based on reactive principles and loose coupling.</p>
+    <p>When combining Domain-Driven Design (DDD) with messaging systems, use domain events as messages in the system to make domain concepts explicit in the code.</p>
+    <p>Containers diagrams can give you early feedback about the design of your messaging system.</p>
+    <p>Component diagrams can be used to model the flow of messages using the ubiquitous language (UL)</p>
+    <p>Commands are messages that specify something should happen; they are handled in one place.</p>
+    <p>Events are used to specify something has happened; events can be handled by multiple subscribers.</p>
+    <p>A message bus is a distributed component that has an agent running inside each application that needs to send or receive messages.</p>
+    <p>A messaging gateway is a technical pattern used to hide the complexity of an external system and add reliability.</p>
+    <p>Messaging system often synergize with the local data storage principle for scalability and fault tolerance. But that gives rise to eventual consistency.</p>
+    <p>Eventual consistency is often a necessity for efficient scalability.</p>
+    <p>Rolling forward into new states is common pattern for dealing with eventual consistency that can lead to openings for new business-rule opportunities.</p>
+    <p>UI composition of APIs exposed by components is the recommended practice for presenting information on a web application.</p>
+    <p>Backward-compatible messaging versioning is a key pattern for ensuring the teams do not slow each other down when message formats need to change.</p>
+    <p>•	You can use messaging bridges to connect disparate messaging technologies, but it’s not always the simplest or most robust solution; HTTP-based alternatives like REST may be a better approach.</p>
+  </div>
+
+  <div id="chapter13">
+    <h2 class="heading">13. Integrating via HTTP with RPC and REST</h2>
+    <h3>Silent Points:</h3>
+    <p>Http’s popularity makes it a serious candidate for integrating bounded contexts.</p>
+    <p>Among its many benefits, HTTP leaves you completely free of any technology couplings, allowing you to mix and match technologies are you prefer.</p>
+    <p>Using HTTP means you may be able to use the same set of APIs internally and externally.</p>
+    <p>You can use HTTP in a number of ways; you can it for RPC or even-driven REST.</p>
+    <p>RPC can be a good choice for simple solution, whereas event-driven REST can lead to better fault tolerance and scalability.</p>
+    <p>With RPC over HTTP, you can use feature-rich but verbose SOAP or lightweight XML or JSON.</p>
+    <p>REST is fundamentally about resources, hypermedia, and statelessness based on how the web works.</p>
+    <p>REST takes full advantage of HTTP’s conventions and capabilities.</p>
+    <p>Domain events can be used as messages in event-driven REST system.</p>
+    <p>Asynchronous polling of Atom feeds that contain lists of events provides the basis for event driven REST application.</p>
+    <p>You can still use SOA’s principles with REST to build loosely coupled systems and loosely coupled teams.</p>
+    <p>HTTP requests and responses are the contract between bounded contexts. Try to avoid breaking changes, and aim for backward compatibility to avoid disrupting other teams.</p>
+    <p>Whichever form of HTTP you use, take every sensible opportunity to make domain concepts explicit.</p>
+  </div>
+
+
+  <h1 id="part3">Part III: Tactical Patterns: Creating Effective Domain Models</h1>
+  <div id="chapter14">
+    <h2 class="heading">14. Introducing the Domain modelling building blocks</h2>
+    <h3>Silent Points:</h3>
+    <p>The tactical patterns of DDD are Evan’s building blocks based on Martin Fowler’s patterns for use when creating an Object-Oriented Domain model.</p>
+    <p>The building blocks are guides to creating effective domain models, but they are only guides. The way you implement domain models can vary greatly, so don’t get too hung up on the building blocks patterns.</p>
+    <p>Entities <br>
+      <span class="tabspace">Are defined by their identity.</span> <br>
+      <span class="tabspace">Identity remains constant throughout its lifetime.</span> <br>
+      <span class="tabspace">Are responsible for equality checks.</span>
+    </p>
+    <p>Value Objects <br>
+      <span class="tabspace">Describe the properties and characteristics within the problem domain.</span> <br>
+      <span class="tabspace">Have no identity.</span> <br>
+      <span class="tabspace">Are immutable, meaning that they cannot be changed. Instead properties modelled as value objects must be replaced.</span>
+    </p>
+    <p>Domain Services<br>
+      <span class="tabspace">Contain domain logic that can’t naturally be placed in any entity or value object, whereas application services orchestrate the execution of domain logic but don’t actually implement it.</span> <br>
+      <span class="tabspace">Have no internal state, so you can call it repeatedly with the same input and it always gives the same output.</span>
+    </p>
+    <p>Modules<br>
+      <span class="tabspace">Are used to decompose, organize, and increase the readability of the domain model.</span> <br>
+      <span class="tabspace">Namespaces, and implementation of modules, can be applied to reduce coupling and increase cohesion within the domain model.</span> <br>
+      <span class="tabspace">Enable readers to quickly understand the design of a model.</span> <br>
+      <span class="tabspace">Help to define clear boundaries between domain objects.</span> <br>
+      <span class="tabspace">Encapsulate concepts that can be understood independently of each other. They operate on a higher level of abstraction that aggregates and entities.</span>
+    </p>
+
+    <p>Aggregates<br>
+      <span class="tabspace">Decompose large object graphs into small clusters of domain objects to reduce complexity of the technical implementation of the domain model.</span> <br>
+      <span class="tabspace">Represent domain concepts, not just generic collections of domain objects.</span> <br>
+      <span class="tabspace">Are based around domain invariants.</span> <br>
+      <span class="tabspace">Are a consistency boundary to ensure the domain model is kept in a reliable state.</span> <br>
+      <span class="tabspace">Ensure transactional concurrency boundaries are set at the right level of granularity to ensure a usable application by avoiding blocking at the database level.</span>
+    </p>
+
+    <p>Factories<br>
+      <span class="tabspace">Separate use from construction.</span> <br>
+      <span class="tabspace">Encapsulate complex entity and value object construction.</span> <br>
+    </p>
+
+    <p>Repositories<br>
+      <span class="tabspace">Expose the interface of an in-memory collection of aggregate roots.</span> <br>
+      <span class="tabspace">Should not be used for reporting.</span> <br>
+      <span class="tabspace">Provide the retrieval and persistence needs of aggregate roots.</span> <br>
+      <span class="tabspace">Decouple the domain layer from database strategies and infrastructure code.</span> <br>
+    </p>
+
+    <p>Domain Events<br>
+      <span class="tabspace">Are significant occurrences in the real-world problem domain that business users care about; they are part of the ubiquitous language (UL)</span> <br>
+      <span class="tabspace">Are an emerging design pattern that makes domain events more explicit in code.</span> <br>
+      <span class="tabspace">Are akin to publish-subscribe, where events are raised and event handlers handle them.</span> <br>
+    </p>
+
+    <p>Event Sourcing<br>
+      <span class="tabspace">Replace traditional snapshot-only storage with a full history of events that produce the current state.</span> <br>
+      <span class="tabspace">Allows powerful querying capabilities that revolve around time, known as temporal queries. </span> <br>
+    </p>
+  </div>
+
+  <div id="chapter15">
+    <h2 class="heading">15. Value Objects</h2>
+    <h3>Silent Points:</h3>
+    <p>Value objects are DDD modelling constructs that represents descriptive quantities like magnitudes and measurements.</p>
+    <p>Due to having no identity, you do not have to lumber value objects with the complexities associated with entities.</p>
+    <p>You are encouraged to wrap primitive types with integers and strings so that domain concepts are articulated well in the code.</p>
+    <p>Examples of value object include Money, Currency, Name, Height, and Colour. However, it’s important to remember that value objects in one domain might be entities in another and vice versa.</p>
+    <p>Value objects are immutable; their values cannot change.</p>
+    <p>Value objects are cohesive; they can wrap multiple attributes to fully encapsulate a single concept.</p>
+    <p>Value objects can be combined to create new values without altering the original.</p>
+    <p>Value objects are self-validating; they should never be in an invalid state.</p>
+    <p>A number of modelling patterns exist for working with value objects, but you can also create your own.</p>
+    <p>You can persist the value of value objects directly in a deformalized form. This is the most common and easiest case to implement with document-oriented databases and is still a popular approach with SQL.</p>
+    <p>You can also persist value objects as their own documents or tables. This is still a common option for SQL databases, but it’s often an optimization when applied to document databases.</p>
+  </div>
+
+  <div id="chapter16">
+    <h2 class="heading">16. Entities</h2>
+    <h3>Silent Points:</h3>
+    <p>Entities are domain concepts that have a unique identity in the problem domain.</p>
+    <p>Having a life cycle is also a distinguishing characteristic of entity.</p>
+    <p>Value Objects are the inverse of entities; they have no identity, and their equality is based on representing the same value.</p>
+    <p>Entities and value objects are context dependent; an entity in one domain might be a value object in another.</p>
+    <p>Choosing an entity’s ID is a fundamental implementation concern.</p>
+    <p>Natural keys from the problem domain, application generated, and datastore generated are all techniques for creating entity IDs.</p>
+    <p>Entities should always be valid for given context.</p>
+    <p>Invariants are fundamental truths about an entity, so they should always be enforced.</p>
+    <p>An entity’s behaviour is dictated by the needs of the application being built. It is not about modelling every behaviour in the real world.</p>
+    <p>Be careful of modelling physical concepts are single entities. The typical Customer entity can often be logically split across multiple bounded contexts in to numerous entities.</p>
+    <p>Be wary of using the state pattern for modelling entity life cycles; often it can be a messy way to hide domain concepts.</p>
+    <p>Consider patterns like the memento pattern what allow you to maintain behaviour-rich domain models without exposing the structure of your entities.</p>
+  </div>
+
+  <div id="chapter17">
+    <h2 class="heading">17. Domain Services</h2>
+    <h3>Silent Points:</h3>
+    <p>Sometimes behaviour does not belong to an entity or value object yet is still an important domain concept; this is hinting at the need for domain services.</p>
+    <p>Domain services represent domain concepts; they are part of UL.</p>
+    <p>Domain services are often used to orchestrate entities and value objects as part of stateless operations.</p>
+    <p>Too many domain services can lead to an anemic domain model that does not align well with the problem domain.</p>
+    <p>Too few domain services can lead to logic being incorrectly located on entities or value objects. This causes distinct concepts to be mixed up, which reduces clarity.</p>
+    <p>Domain services are also used as contracts, where the interface lives in the domain model, but the implementation does not.</p>
+    <p>When an entity depends on a domain service, a variety of options can be used, including dependency injection, double dispatch, and domain events.</p>
+  </div>
+
+  <div id="chapter18">
+    <h2 class="heading">18. Domain Events</h2>
+    <h3>Silent Points:</h3>
+    <p>Domain events are significant occurrences in the real-world problem domain; they are part of the ubiquitous language (UL).</p>
+    <p>Domain events is also a design patterns that makes domain events more explicit in code.</p>
+    <p>Domain events is akin a publish-subscribe, where events are raised and event handlers handle them.</p>
+    <p>Unlike messaging between bounded contexts, domain events are applied inside a single domain model and are usually synchronous.</p>
+    <p>Using domain events can make is easier to transition certain operations or use cases in to asynchronous processes.</p>
+    <p>Event handlers can be classes or anonymous callbacks/lambdas.</p>
+    <p>Some handlers live in the domain, and some live in the service layer.</p>
+    <p>Handlers in the domain carry out domain logic.</p>
+    <p>Handlers in the service layer normally take some of the responsibilities otherwise handled by application services.</p>
+    <p>There are multiple versions of the domain events pattern.</p>
+    <p>One approach is to use native language constructs, like C#’s event keyword.</p>
+    <p>C# events have a tight coupling between publishers and subscribers. For looser coupling you can use an in-memory bus, such as NServiceBus.</p>
+    <p>An in-memory bus causes immediate execution of events and their side effects. If this is undesirable, you can store events and dispatch them later with dispatcher.</p>
+    <p>Another version relies on a static DomainEvents class, which is similar to an in-memory message bus but much more compact.</p>
+    <p>Using domain events does not mean you have to use event sourcing, although a lot of developers find the combination highly effective.</p>
+    <p>Ultimately, the pattern is about trade-offs – an extra layer of indirection that distributes code across more files but has fully encapsulated domain model that accentuates real-world domain events.</p>
+  </div>
+
+  <div id="chapter19">
+    <h2 class="heading">19. Aggregates</h2>
+    <h3>Silent Points:</h3>
+    <p>Reduce bidirectional relationship in the domain to communicate more about relationships between domain objects, decrease the implementation complexity, and show traversal direction bias, which helps with where to place domain logic.</p>
+    <p>Qualify associations by adding constraints to reduce technical complexity.</p>
+    <p>Only add object references when you need to traverse an association to fufill an invariant; otherwise, simply a reference via an identifier.</p>
+    <p>Include associations that support domain invariants; don’t simply model real life or replicate the data model in code.</p>
+    <p>Aggregates decompose large object graphs into small clusters of domain objects to reduce complexity or the technical implementation of the domain model.</p>
+    <p>Aggregates represent domain concepts, not just generic collections of domain objects.</p>
+    <p>Align aggregate boundaries with domain invariants to help enforce them.</p>
+    <p>Aggregates are a consistency boundary to ensure the domain model is kept in a reliable state.</p>
+    <p>Aggregates ensure transactional boundaries are set at the right level of granularity to ensure a usable application by avoiding blocking the database level.</p>
+    <p>Aim for smaller aggregates to reduce transactional locking and reduce consistency complexities. </p>
+    <p>An aggregate root is an entity of the aggregate that is chosen as the gateway into the aggregate. The aggregate root ensures the aggregate is always consistent and invariants are enforced.</p>
+    <p>An aggregate root has global identity; the domain objects within the aggregate only have identity within the context of aggregate root.</p>
+    <p>Domain objects outside the aggregate can only hold a reference to the aggregate root.</p>
+    <p>When an aggregate is deleted all the domain objects within it must be removed as well.</p>
+    <p>No domain object outside the boundary of the aggregate can hold a reference to internal objects.</p>
+    <p>An aggregate root can return copies or references of internal domain objects for use in domain operations, but any changes to these objects must be via the aggregate root.</p>
+    <p>Aggregates, not individual domain objects, are persisted and hydrated from database via the repository.</p>
+    <p>An aggregate’s internal domain objects can hold references to other aggregate roots.</p>
+    <p>Transactions should, ideally, not cross aggregate boundaries.</p>
+    <p>There can be inconsistencies between aggregates; use domain events to update aggregates in a separate transaction.</p>
+  </div>
+
+  <div id="chapter20">
+    <h2 class="heading">20. Factories</h2>
+    <h3>Silent Points:</h3>
+    <p>A factory separates use from construction in the domain.</p>
+    <p>Knowledge of creating a complex domain object can be hidden from client code and domain objects by employing a factory class.</p>
+    <p>A factory can be used to create the appropriate instance of a domain object based on the needs of the caller.</p>
+    <p>Factory methods can encapsulate the internal state of an aggregate.</p>
+    <p>When you have multiple constructers for different purposes use a factory object to increase the expressiveness of the code.</p>
+  </div>
+
+  <div id="chapter21">
+    <h2 class="heading">21. Repositories</h2>
+    <h3>Silent Points:</h3>
+    <p>The repository mediates between the domain model and the data model; it maps the domain model to a persistence store.</p>
+    <p>The repository pattern is a procedural boundary, keeping the domain model free from infrastructural concerns.</p>
+    <p>The repository is a contract, not a data access layer. It explicitly states what operations are available for each aggregate – that is, which you can modify and which you can remove.</p>
+    <p>The repository is for transactional behaviour, not for ad hoc reporting. Using explicit query names provides more information.</p>
+    <p>A repository hides the mechanisms for querying the data model and supports the Tell, Don’t Ask principle.</p>
+    <p>An ORM framework is not a repository. The repository is an architectural pattern, whereas an ORM is a means to represent the data model as an object model. A repository can use an ORM to assist in mediating between domain model and the data model.</p>
+    <p>Your persistence framework affects the way your domain model is constructed. Be pragmatic, and don’t fight your framework in the quest for needless purity.</p>
+    <p>The repository is best used for bounded context with a rich domain model. For simpler bounded context without complex business logic, use the persistence framework directly.</p>
+    <p>When managing transactions, use a unit of work. The unit of work tracks which objects have been removed, added, or updated. The repository is responsible for the actual persistence, performed within a transaction coordinated by the unit of work.</p>
+    <p>A repository should be scoped to updating a single aggregate; it should not control a transaction. This should be the responsibility of a unit of work.</p>
+  </div>
+
+  <div id="chapter22">
+    <h2 class="heading">22. Even sourcing </h2>
+    <h3>Silent Points:</h3>
+    <p>Event sourcing replaces traditional snapshot-only storage with full history of events that produce the current state.</p>
+    <p>You can rewind the state to any previous point in history with event sourcing.</p>
+    <p>Storing history allows powerful querying capabilities that revolve around time – temporal queries.</p>
+    <p>Temporal queries can be game-changing business capability, allowing greater analytical insights.</p>
+    <p>Domain model need to contain event-oriented aggregates when using event sourcing.</p>
+    <p>Event-sourced aggregates allow for the declarative expression of business rules and looser coupling to the persistence technology.</p>
+    <p>You can implement an event store using existing storage option like document databases and SQL servers.</p>
+    <p>Event store is purpose-built event store that natively supports the concept of streams and provides advanced functionality, like projections.</p>
+    <p>CQRS and event sourcing are a synergistic combination that uses projections to create view caches.</p>
+    <p>Event sourcing can often be a lot of effort without a worthwhile return on investment, so don’t use it without careful consideration.</p>
+  </div>
+
+  <h1>Part 1V: Design Patterns for Effective Applications</h2>
+  <div id="chapter23">
+    <h2>23. Architecting Application User interfaces</h2>
+    <h3>Silent Points:</h3>
+    <p>The arrangements of the back-end bounded contexts can heavily influence the user interface and vice versa.</p>
+    <p>Deciding which team owns a UI can significantly affect the team dynamics and engineering solutions.</p>
+    <p>Pulling data from the multiple bounded contexts can occur on the client as JavaScript or on the server with your preferred technology.</p>
+    <p>Client-side composition can reduce the complexity and coupling of an additional server component.</p>
+    <p>Server-side aggregation and orchestration remove the reliance on JavaScript and the performance constraints </p>
+    <p>UIs can be composed of HTML, or they can pull in data from each bounded context as JSON or XML.</p>
+    <p>Composition with HTML gives more control to each bounded context but distributes presentational concerns.</p>
+    <p>Aggregation of data isolates presentation concerns to a single web application but remove ownership of presentation concerns form each bounded context.</p>
+  </div>
+  <div id="chapter24">
+    <h2>24. CQRS: An architecture of a bounded context</h2>
+    <h3>Silent Points:</h3>
+    <p>CQRS is not an architectural pattern to apply to all bounded contexts of a system.</p>
+    <p>Use CQRS if a domain model cannot meet the needs of complex presentation and domain logic without compromise. Split the model into two specific models: one for the read context and one for the write context.</p>
+    <p>By using segregation, you can shape aggregates on the write side of behaviour and design them around invariants and not for reporting needs.</p>
+    <p>View models tailored to reporting needs on the read side can bypass the domain model and pull data directly from the database, which can be turned for better performance.</p>
+    <p>CQRS is a simple pattern. It’s a simple case of applying the Single Responsibility Principle at the model level, creating two models instead of one.</p>
+    <p>CQRS is often incorrectly thought of as the application of messaging, eventual consistency, domain events, and event sourcing. Although all the above can enhance a system and be useful in specific contexts, they are by no means essential to apply the CQRS pattern.</p>
+    <p>CQRS can enable you to scale if you have a high number of reads by allowing you to introduce eventual consistency through separating the read side data model from the write side data model.</p>
+    <p>If you are designing a system for a highly collaborative domain with many writes to the same set of aggregates, you can introduce asynchronous request processing on the write side of the segregation.</p>
+    <p>There are trade-offs with scaling and introducing eventual consistency to either the write or the read models. This trade-off must be understood and accepted by the business, and it must be considered in terms of the user experience.</p>
+    <p>CQRS enables your system to have limitless scalability on both the read and the write side.</p>
+  </div>
+
+  <div id="chapter25">
+    <h2>25. Commands: Application service patterns for processing business use cases</h2>
+    <h3>Silent Points:</h3>
+    <p>Application services and a service layer allow you to isolate technical concerns from domain logic.</p>
+    <p>Technical concerns include transaction, database connections, and e-mails.</p>
+    <p>Application services are responsible for coordinating with the domain to carry out full business use cases.</p>
+    <p>When communicating with the domain, application services should invoke expressive high level APIs on domain objects.</p>
+    <p>An important responsibility of application services is to protect domain structure by presenting higher layers and external components with more stable interfaces to couple themselves to.</p>
+    <p>You can use design patterns like the command processor pattern and asynchronous patterns in the service layer.</p>
+    <p>Testing application services in an opportunity to express high-level behaviors or full business use cases, in the ubiquitous language, while covering a high percentage of the implementation.</p>
+  </div>
+
+  <div id="chapter26">
+    <h2>26. Queries: Domain Reporting</h2>
+    <h3>Silent Points:</h3>
+    <p>Reports can be created using a variety of tools and technologies that avoid domain coupling.</p>
+    <p>Some reports operate on data within a bounded context, but some may need to query data from multiple bounded contexts.</p>
+    <p>Mapping from domain objects onto view models is often the quickest approach, but it provides little control over low-level data access.</p>
+    <p>Design patterns like the mediator pattern can be used to build reports or to juggle trade-offs such as coupling.</p>
+    <p>It’s okay to go directly to the datastore if you need queries to be inefficient, but duplication of concepts and violation of DRY is concern to be mindful of.</p>
+    <p>Querying the main database and querying denormalized view caches are two direct data access approaches.</p>
+    <p>Denormalized view caches move all the hard work in to denormalization process in return for simpler queries.</p>
+    <p>Using projections of event streams also trade off background processing in favour of simpler reads.</p>
+    <p>You can query data from multiple bounded contexts by using UI composition in some cases and separate reporting context in another.</p>
+  </div>
+</html>

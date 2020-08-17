@@ -1,6 +1,6 @@
 body{
-  background-color: black;
-  color: grey;
+  /* background-color: black;
+  color: grey; */
   padding: 0px;
 }
 
@@ -16,6 +16,10 @@ h3{
 ul{
   list-style-type: none;
   padding-left: 20px;
+}
+
+ol{
+  padding-left: 55px;
 }
 
 li{
@@ -42,6 +46,10 @@ p{
   margin-left: 40px;
 }
 
+.tabspace2{
+  margin-left: 80px;
+}
+
 .btn_back{
   position: absolute;
   left:20px;
@@ -62,4 +70,13 @@ p{
 
 .heading{
   text-align:center;
+}
+
+.command{
+  padding-left: 50px;
+}
+
+.dotlist{
+  list-style-type: disc;
+  padding-left: 40px;
 }
