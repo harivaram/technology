@@ -89,5 +89,44 @@
       <p>Amazon Glacier valuts can be locked for compliance purposes.</p>
 
     </div>
+
+    <div id="chapter3">
+      <h3>3. Amazon Elastic Compute Cloud (Amazon EC2) and Amazon Elastic Block Store (Amazon EBS)</h3>
+      <p>Compute is the amount of computational power required to fullfill your workload. Amazon EC2 is the primary service to provide compute to customers.</p>
+      <p>The instance type defines the virtual hardware supporting the instance. Available instance types vary in vCPUs, memory, storage, and network performance to address nearly any workload.</p>
+      <p>An AMI defines the initial software state of the instance, both OS and applications. There are four sources of emphasis <br>
+        AWS published generic OSs <br>
+        Partner published AMIs in the AWS market place with software packages preinstalled. <br>
+        Custom generated AMIs from existing Amazon EC2 instances, and uploaded AMIs from vitual servers. <br>
+      </p>
+      <p>Instances can be addressed by public DNS name, public IP address, or elastic IP address. <br>
+        To access a newly launched Linux instance, use private half of the key pair to contact to the instance via SSH. <br>
+        To access a newly created Windows instance, use private half of the key pair to decrypt the randomly initialized local admistrator password <br>
+      </p>
+      <p>Network traffic in and out of an instance can be controlled by virtual firewall called security group.
+        A secuirty group allows rules that block traffic based on direction, port, protocol, and source/destination address.
+      </p>
+      <p>Bootstrapping allows you to run a script to initialize your instance with OS configurations and applications. This feature allows instance to configure themselves upon launch. <br>
+        Once an instance is launched, you can change your instance type or, of Amazon VPC instances, the security group with which it is associated. <br>
+      </p>
+
+      <p>The three pricing options for instances are On-Demand, Reserved Instance, and Spot. <br>
+        On-Demand has highest  per hour cost, requiring no up-front commitment and giving you complete control over the lifetime of the instance. <br>
+        Reserved Instances require a commitment and provided a reduced overall cost over the lifetime of the reservation. <br>
+        Spot instances are idle compute capacity that AWS makes available based on bid prices from customers. <br>
+        The savings on per hour cost can be significant, but instances can be shutdown when bid price exceeds customer's current bid.
+      </p>
+
+      <p>Instance stores are block storage included with hourly cost of the instance. The amount and type of storage available varies with the instance type. <br>
+        Instance store terminate when the associated instance is stopped, so they should only be used for temporary data or in architectures providing redundancy such as Hadoop's HDFS.
+      </p>
+      <p>
+        Amazon EBS provides durable block storage in several types. <br>
+        Magnetic has low cost per gigabyte and delivers modest performance. <br>
+        General purpose SSD is cost-effective storage that can be provided up to 10,000 IOPS. <br>
+        Provisioned IOPS SSD has the highest cost per gigabyte and is well suited for I/O-intensive workloads sensitive to storage performace. <br>
+        Snapshots are incremental backups of Amazon EBS volumes store in Amazon S3. Amazon EBS volumes can be encrypted. 
+      </p>
+    </div>
   </body>
 </html>
