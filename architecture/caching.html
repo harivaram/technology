@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Application Performance</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>Caching</h1>
+
+    <div class="">
+
+    </div>
+      <h2>Caching Topologies:</h2>
+        <ul>
+          <li>Single in-memory cache</li>
+          <li>Distributed (Client/Server) cache</li>
+          <li>Replicated (in-process) cache</li>
+          <li>Near cache hibrid</li>
+        </ul>
+
+      <h3>Single in-memory (IMDG/IMDB) cache</h3>
+        <p>IMDG - In Memory Data Grid , IMDB - In memory Database</p>
+        <p>Products : Apache Ignite, Couchbase, EHCache,NCache, Hazlecast, Memcache, Redis, Pivotal GemFire, Oracle coherance</p>
+
+
+      <h3>Distributed (Client/Server) cache</h3>
+        <p>Cache will be located in an external server/service, All the components/services will have access the cache using a client library using  propreatory protocal</p>
+        <p>Products : Apache Ignite, Couchbase, EHCache,NCache, Hazlecast, Memcache, Redis, Pivotal GemFire, Oracle coherance</p>
+
+      <h3>Replicated (in-process) cache</h3>
+      <p>The data is maitened in the in-memory cache in each instance, but the data is replicated/duplicated across all the instances in the group (using a client library) </p>
+      <p>Replicating the data is different than mirroring.</p>
+      <p>Products : Apache Ignite, Hazlecast, Pivotal GemFire, Oracle coherance</p>
+
+      <h3>Near cache hibrid</h3>
+      <p>This cache is to solve the problems of both in-memory (memory consumption) and distributed cache (latency) </p>
+      <p>The cache will be maintain in a distributed server but each instance will maintain a smaller version (most frequently used MFU) of the cache in the memory.</p>
+      <p>Products : Apache Ignite, Hazlecast, Pivotal GemFire, Oracle coherance</p>
+
+
+      <h3>Choosing the right caching topology:</h3>
+      <p>For microservices the right toplogies are Distributed or Replicated</p>
+      <p>Comparision:</p>
+      <table style="padding-left: 40px">
+        <thead>
+          <th></th><th>Replicated Cache</th><th>distributed cache</th>
+        </thead>
+        <tbody>
+          <tr><td>optimization</td><td>performance</td><td>consistency</td></tr>
+          <tr><td>cache size</td><td>small (less than 100 MG)</td><td>large</td></tr>
+          <tr><td>type of data</td><td>relatively static</td><td>transactional</td></tr>
+          <tr><td>update frequency</td><td>relatively low</td><td>high update rate</td></tr>
+          <tr><td>fault tolerant</td><td>high</td><td>low</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+ </<body>
+</html>

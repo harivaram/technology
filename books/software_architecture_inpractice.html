@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Software Architecture in Practice</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>Software Architecture in Practice</h1>
+
+    <h2>Content:</h3>
+    <ol>
+        <h3>I. Introduction</h3>
+        <li><a href="#chapter1">What is Software Architecture</a></li>
+        <li><a href="#chapter2">Why is Software Arhitecture is important?</a></li>
+        <li><a href="#chapter3">The Many Contexts of Software Architecture</a></li>
+
+        <h3>II. Quality Attributes</h3>
+        <li><a href="#chapter4">Understanding Quality Attributes</a></li>
+        <li><a href="#chapter5">Availability</a></li>
+        <li><a href="#chapter6">Interoperability</a></li>
+        <li><a href="#chapter7">Modifiability</a></li>
+        <li><a href="#chapter8">Performance</a></li>
+        <li><a href="#chapter9">Security</a></li>
+        <li><a href="#chapter10">Testability</a></li>
+        <li><a href="#chapter11">Usability</a></li>
+        <li><a href="#chapter12">Other Quality Attributes</a></li>
+        <li><a href="#chapter13">Architectural Tactics and Patterns</a></li>
+        <li><a href="#chapter14">Quality Attribute Modelling and Analysis</a></li>
+
+        <h3>III. Architecture in the Life Cycle</h3>
+        <li><a href="#chapter15">Architecture in Agile Projects</a></li>
+        <li><a href="#chapter16">Architecture Requirements</a></li>
+        <li><a href="#chapter17">Designing an Architecture</a></li>
+        <li><a href="#chapter18">Documenting Software Architecture</a></li>
+        <li><a href="#chapter19">Architecture, Implementation and Testing</a></li>
+        <li><a href="#chapter20">Architecture Reconstruction and Conformance</a></li>
+        <li><a href="#chapter21">Architecture Evaluation</a></li>
+        <li><a href="#chapter22">Management and Governance</a></li>
+
+        <h3>IV. Architecture And Business</h3>
+        <li><a href="#chapter23">Economic Analysis of Architecture</a></li>
+        <li><a href="#chapter24">Architecture Competence</a></li>
+        <li><a href="#chapter25">Architecture and Software Product Lines</a></li>
+
+        <h3>V. The Brave New World</h3>
+        <li><a href="#chapter26">Architecture in the Cloud</a></li>
+        <li><a href="#chapter27">Architecture for the edge</a></li>
+        <li><a href="#chapter28">Epilogue</a></li>
+    </ol>
+
+    <h1>I. Introduction</h1>
+    <div id="chapter1">
+        <h2>Chapter 1: What is Software Architecture</h2>
+        <p><em>Good judgement is usually the result of experience. And experience is frequently the result of bad judgement. But to learn from the experience of others requires those who have the experience to share the knowledge with those who follow -- Barry LePatner</em></p>
+        <p>Software systems are constructed to satisfy organizations busienss goals. The Architect is a bridge betweeen those (often abstract) business goals and the final (concrete) resluting system.</p>
+        <p>The topic of the book are : the design, analysis, documentation, and implementation of architecture.</p>
+        <p>The software architecture of a system is the set of structures needed to reason about the system, which complise software elements, relations, among them and properties of both.</p>
+        <h4>What is Software Architecture Is and What it Isn't:</h4>
+        <div class="subsection">
+        <h4>Architecture is a Set of Structures:</h4>
+        <p>A structure is simply a set of elements held together by a relation. Software systems are composed of many structures, and no single structure holds claim to being <em>the architecture.</em></p>
+        <p>There are 3 categories of Architectural structures. <br>
+            <span class="tabspace">1. Module : embodies decisions as to how the system is to be structured as a set of code or data units that have to be constructed or procured.</span> <br>
+            <span class="tabspace">2. Component-and-connector (Dynamic) : embodies decisions as to how the system is to be structured as a set of elements that have runtime behavior (components) and interactions (connectors). </span> <br>
+            <span class="tabspace">3. Allocation : embodies decisons as to how the system will relate to nonsoftware in its environment (networks, development teams etc.,)</span> <br>
+        </p>
+        <p>A structure is architectural if it supports reasoning about the sytem and the system's properties.</p>
+        </div>
+
+        <div class="subsection">
+        <h4>Architecture is an Abstraction:</h4>
+        <p>Because architecute consists of structure and structures consists of elements and relations, it follows that an architecture comprises software elements and how the elements relate to each other. This means that architecture specifically omits certain information about elements that is not useful for reasoning about the system. </p>
+        <p>An architectue is foremost an abstraction of a system that selects certain details and supresses others.</p>
+        </div>
+
+        <div class="subsection">
+        <h4>Architecture includes behavior:</h4>
+        <p>This behavior embodies how elements interact with each other, which is clearly part of our definition of architecture.</p>
+        <p>To the extent that an element's behavior influences another element or influences the acceptability of the system as a whole, this behavior must be considered, and should be documented, as part of the software architecture.</p>
+        </div>
+
+        <p>Two disciplines related to software architecture are system architecture and enterprise architecture</p>
+        <h4>System Architecture</h4>
+        <p>A system's architecture is representation of a system in which there is a mapping of functionality onto hardware and software components, a mapping of the software architecture onto that hardware, and a concern for the human interaction with these components.</p>
+        <p>System architeture is conerned with a total system, including hardware, software, and humans.</p>
+
+        <h4>Enterprise Architecture</h4>
+        <p>Enterprise architeture is a description the structure and behavior of an organization's processes, information flow, personnel, and organizational subunits, aligned with the organization's core goals and strategic direction.</p>
+        <p>A modern enterprise architecture is concerned with how an enterprise's software systems support the business processes and goals of the enterprise.</p>
+        <p>Software is only one concern of enterprise arhitecture. Two other common concerns addressed by enterprise architecture are how the software is used by human to perform business proecsses, and the standards that determine the computational environment.</p>
+
+        <h4>Software Architecture</h4>
+        <p>The System and Enterprise provide environment for, and constraints on, the software architecture.</p>
+        <p>The software architecture must live within the system and enterprise.</p>
+        <p></p>
+        <p>All the three forms of architeture share important commonalities: They are concerned with major elements taken as abstraction, the relationships among the elements, and how the elements together meet the behavior and quality goals of the thing being built.</p>
+
+        <h4>Architectural Structures and Views</h4>
+        <p>To communicate meaningfully about an architecture, we must make clear which structure or structures we are discussing at the moment - which view we are taking of the architecture.</p>
+        <p>View : is a representation of a coherent set of architectural elements, as written by and read by system stakeholders. It consists of a representation of a set of elements and the relations among them.</p>
+        <p>Structure : is a set of elements itself, as they exists in software or hardware.</p>
+        <p>Structure provide insists. Each structure provides the architect with a different insight into the design (that is, each structure can be analyzed for its ability to deliver a quality attribute)</p>
+
+        <!-- <h4>Some Useful Module Structure</h4>
+        <p>Decomposistion structure: : the units are modules, it determines, to a large degree, the ssytem's modifiability, by assuring that likely changes are localized.</p>
+        <p>Uses structure : the units are modules, The units are related by the uses relation, a specialized form of dependency.</p>
+        <p>Layered structure : the units are modules, A layer is an abstract "virtual machine" that provides a cohesive set of services through a managed interface.</p>
+        <p>Class (or generalization) structure : Units are classes, the relation is inherits from or is an instance of.</p>
+        <p>Data model : describes the static information structure in terms of data entities  and their relationships.</p> -->
+
+
+        <table>
+          <thead>
+            <th></th><th>Software Structure</th><th>Element Types</th><th>Releations</th><th>Userful For</th><th>Quality Attributes effected</th>
+          </thead>
+          <tbody>
+            <tr><td rowspan="5">Module Structures</td><td>Decomposistion</td><td>Modules</td><td>Is a submodule of</td><td>Resource allocation and project structure and planning; infomration hiding, encapsulation; configuration control</td><td>Modifiability</td></tr>
+            <tr><td>Uses</td><td>Module</td><td>Uses (i.e requires the correct presence of)</td><td>Engineering subsets, engineering extensions</td><td>Subsetablitity, Extensibility</td></tr>
+            <tr><td>Layers</td><td>Layers</td><td>Requires the correct presence of, uses the service of provides abstraction to</td><td>Incremental developement, implementing systems on top of "virtual machines"</td><td>Portablitiy</td></tr>
+            <tr><td>Classes</td><td>Class, Object</td><td>Is an instance of, shares access methods of</td><td>In object-oriented design systems, factoring out commonolities; planning extensions of functionality</td><td>Modifiability, Extensibility</td></tr>
+            <tr><td>Data Model</td><td>Obhect Entity</td><td>{one, many}-to-{one, many} generalizes, specializes</td><td>Engineering global data structures for consistency and performance</td><td>Modifiability, Performance</td></tr>
+
+            <tr><td rowspan="2">C & C Structure</td><td>Service</td><td>Service, ESB, registry, others</td><td>Runs concurrenlty with, may run concurrenlty with, excludes, precedes. etc</td><td>Scheduling analysis, performance analysis</td><td>Interoperablity, Modifiability</td></tr>
+            <tr><td>Concurrency</td><td>Processes, threads</td><td>Can run in parallel</td><td>Identifying locations where resource contention exists, or where theads many fork, join, be created, or be killed</td><td>Performance, Avaliability</td></tr>
+
+            <tr><td rowspan="3">Allocation Structures</td><td>Deployment</td><td>Components, hardware, elements</td><td>Allocated to, migrates to</td><td>Performance, Availability, Security analysis</td><td>Performance, Availability, Security</td></tr>
+            <tr><td>Implementation</td><td>Modules, file structure</td><td>Stored In</td><td>Configuration control, integration, test activites</td><td>Development efficiency</td></tr>
+            <tr><td>Work assignment</td><td>Modules, Organizational units</td><td>Assigned to</td><td>Project management, best use of expertise and available resouces, management of commonolity</td><td>Development efficiency</td></tr>
+          </tbody>
+        </table>
+
+        <p>If the architecture has not been documented, we will not proceed with the evaluation. The reason for this precondition was simple: we could not evaluate the architecture by reading the code.</p>
+        <p>An Architecute that is not documented, and not communicated, may still be a good architecture, but the risks surrounding it are enourmous.</p>
+
+
+        <h4>Architectural Patterns</h4>
+        <p>To do: add the content to specific architectre html</p>
+        <p>The composition of architectual elements, called architectural patterns, provide packaged strategies for solving some of the problems facing a system. Example patterns <br>
+          <span class="tabspace">Layered pattern</span> <br>
+          <span class="tabspace">Shared-data (or repository) pattern</span> <br>
+          <span class="tabspace">Client-Server pattern</span> <br>
+          <span class="tabspace">Multi-tier pattern</span> <br>
+          <span class="tabspace">Competence center and platform</span> <br>
+        </p>
+
+        <p>One of the message of this book is that architectures can in fact be evaluated - one of the great benefits of paying attention to them -- but only in the context of specific stated goals.</p>
+
+        <p>Process recomendations:</p>
+        <ol>
+          <li>The architecture should be the product of a single architect or a small group of architects with an identified tehnial leader. </li>
+          <li>The architect (or architecture team) should, on an ongoing basis, base the architecture on a prioritized list of well-specified quality attibute requirements.</li>
+          <li>The architecture should be documented using views. The views should address the conecrns of the most important stakeholders in support of the project timelines.</li>
+          <li>The architecture should be evaluated for its ability to deliver the system's important quality attributes.</li>
+          <li>The architecture should lend itself to incremental implementation to avoid having to integrate everything at once as well as to discover problems early.</li>
+        </ol>
+
+        <p>Structural recomendations:</p>
+        <ol>
+          <li>The architecture should feature well-defined modules whose functional responsibilites are assigned on the principles of information hiding and seperation of concerns.</li>
+          <li>Unless your requirements are unprecedented, your quality attibutes should be achieved using well-known architectural parterns an tactics specific to each attribute.</li>
+          <li>The architecture should never depend on a particular versionof commertial product or tool. If it must, it should be structured so that changing to a different version is straightforward and inexpensive.</li>
+          <li>Modues that produce data should be seperate from modules that consume data.</li>
+          <li>Don't expect one-to-one correspondence between modules and components.</li>
+          <li>Every process should be written so that its assignmentto a specific processor can be easily changed, perhaps even at runtime.</li>
+          <li>The architecute should feature a small number of ways for components to interact.</li>
+          <li>The architecture should contain specific (and small) set of  resource contention areas, the resolution of which is clearly specified and maintained.</li>
+        </ol>
+
+    </div>
+
+    <div id="chapter2">
+        <h2>Chapter 2: Why Is Software Architecture Important</h2>
+        <p><em> Software architecture is the set of design decisions which, if made incorrectly, may cause your project to be cancelled. ___Eoin Woods</em></p>
+        <p>Software architectue is important for a wide variety of technical and nontechnical reasons.</p>
+        <ol>
+          <li>An architecture will inhibit or enable a system's driving quality attributes.</li>
+          <li>The decisions made in an architecture allow you to reason about and manage change as the system evlovles.</li>
+          <li>The analysis of an architecture enables early prediction of a system's qualities.</li>
+          <li>A documented architecture enhances communication among stakeholders.</li>
+          <li>The architecture is a carrier of the earliest and hence most fundamental, hardest-to-change design decision.</li>
+          <li>An architecture defines a set of constraints on subsequent implementation.</li>
+          <li>The architecture dectates the structure of an organization, or vice versa</li>
+          <li>An architecture can provide the basis for evelutionary prototyping.</li>
+          <li>An architecture is the key artifact that allows the architect and project manager to reason about cost and schedule.</li>
+          <li>An architecture can be created as a transferable, reusable model that forms the heart of a product line.</li>
+          <li>Architecture-based development focuses attention on the asembly of components, rather than simply on their creation.</li>
+          <li>An architecture channels the creativity of developers, reducing design and system complexity.</li>
+          <li>An architecture can be the foundation for training of a new team member.</li>
+        </ol>
+    </div>
+
+    <div id="chapter3">
+        <h2>Chapter 3: The Many Contexts of Software Architecture</h2>
+        <p><em>People in London think of London as the centre of the world, whereas New Yorkers think the world ends three miles outside of Manhattan. __Toby Young</em></p>
+        <p>Architecture exists in four different contexts.</p>
+        <ol>
+          <li><em>Technical:</em> The techincal context includes the achievement of quality attribute requirements. Also includes the current technology.</li>
+          <li><em>Project life cycle:</em> Regardless of teh software developement methodology you use, you must make a business case for the system, understand the architecturally significant requirements, create or select the architecture, document and communicate the architecture, analyze or evaluate the architecture, implement and test the system based on the architecture, and ensure that the implementation conforms to the architecture.</li>
+          <li><em>Business:</em>The system created from the architecture must satisfy the business goals of a wide variety of stakeholders, each of whom has different expectations for the system. The architecture is also influenced by and influences the structure of the developement organization.</li>
+          <li><em>Professional:</em> You must have certain skills and knowledge to be an architect, and there are certain duties that you must perform as an architect. These are influenced not only by coursework and reading but also by your experiences.</li>
+        </ol>
+        <p>An architecture has some influences that lead to its creation, and its existence has impact on the architect, the organizaton, and potentially the industry. We call this cyle the Architecture Influence Cycle.</p>
+      </div>
+
+    <h1>II. Quality Attributes</h1>
+    <div id="chapter4">
+      <h2>Chapter 4: Understanding Quality Attributes</h2>
+      <p><em>Between stimulus and respose, there is a space. In that space is our power to choose our reponse. In our reponse lies our growth and our freedom. __Viktor E.Frankl, Man's search for Meaning. </em></p>
+      <p>A quality attribute (QA) is a measurable or testable property of a system that is used to indicate how well the system satisfies the needs of its stakeholders.</p>
+
+      <p>Requirements for a system come in three categories:</p>
+      <ol>
+        <li><em>Functional Requrements:</em> These requirements state what the system must do, and how it must behave or react to runtime stimuli. <br>
+          These are satisfied by including an appropriate set of responsibilites within the design.</li>
+        <li><em>Quality attributes:</em> These requirements are qualifications of the functional requirements or of the overall product.
+          <br>These requirements are satisfied by the structures and behaviors of the architecture.</li>
+        <li><em>Constraints:</em> A constraint is a design that's already been made.</li>
+      </ol>
+
+
+      <p>Functionality is the ability of the system to do the work for which it was intended.</p>
+      <p>There are two categories of quality attribute on which we focus. The first is those that describe some property of the system at runtime, such as availability, peformance, or usability. The second is those that describe some property of the developement of the system, such as modifiability or testability.</p>
+      <p>A tactic is a design decision that influences the achievement of a quality attibute reponse.</p>
+
+      <p>To express a quality attribute requirement, we use a quality attribute scenario. The parts of the scenario are these:</p>
+      <ol>
+        <li>Source of Stimulus</li>
+        <li>Stimulus</li>
+        <li>Environment</li>
+        <li>Artifact</li>
+        <li>Response</li>
+        <li>Response measure</li>
+      </ol>
+
+      <p>An artchitectural tactic is a design decision that affects a quality attribute reponse. The focus of a tactic is on a single quality attribute reponse. Archiatectural patterns can be seen as "packages" of teactics.</p>
+      <ol>
+        <li>Allocation of responsibilites</li>
+        <li>Coordination model</li>
+        <li>Data model</li>
+        <li>Management of resources</li>
+        <li>Mapping among architectural elements</li>
+        <li>Binding time decisions</li>
+        <li>Choice of technology</li>
+      </ol>
+  </div>
+
+  <div id="chapter5">
+    <h2>Chapter 5: Availability</h2>
+    <p><em>Ninety percent of life is just showing up __Woody Allen</em></p>
+    <p>Availability refers to a property of software that it is there and ready to carry out its task when you need it to be. This is broad perspective and encompasses what is normally called reliability.</p>
+    <p>Availability is realted to security (DOS attack), peformace (excell load) and safety (damage)</p>
+    <p>Funamentally, availability is about minimizing service outage time by mitigating faults.</p>
+    <p>One of the most demanding tasks in building a high-availability, fault-tolerant system is to understand the nature of the failures that can arise during operation. Once those are understood, mitigation stratergies can be designed in the software.</p>
+    <p>A failure's cause is called a fault. Faults can be either internal or external to the system under consideration.</p>
+    <p>Intermediet states between the occurance of a fault and the occurance of a failure are called errors.</p>
+    <p>Faults can be prevented, tolerated, removed, or forcast to make the system resilient.</p>
+    <p>The distinction between faults and failures allows discussion of automatic repair stratergies.</p>
+    <p>Availability = BTBF / (MTBF + MTTR)  <br>
+      MTBF : Mean Time Between Failures <br>
+      MTTR : Mean Time To Recover
+    </p>
+    <p>Hazard analysis is a tehique that attempts to catalog the hazards that can occur during the operation of a system.</p>
+    <p>Hazard Categories:</p>
+    <ol>
+      <li><em>Catastropic</em></li>
+      <li><em>Hazardous</em></li>
+      <li><em>Major</em></li>
+      <li><em>Minor</em></li>
+      <li><em>No effect</em></li>
+    </ol>
+
+    <p><em>Fault Tree Analysis</em> is an analytical technique that specifies a state of the system that negatively impacts safety or reliability, and then analyze the system's context and operation to find all the ways that undesired state could occur.</p>
+
+    <h4>Availability Tactics:</h4>
+    <p><em>Detect Faults:</em> Ping/echo , Monitor,  Heartbeat, Timestamp, Sanity Checking, Condition Monitoring, Voting, Exeption Detection, Self-Test</p>
+    <p><em>Recovery from Faults:</em> <br>
+      <span class="tabspace"><em>Preperation and Repair:</em> Active Redundancy, Passive Redundancy, Spare, Exception Handling, Rollback, Software Upgrade, Retry, Ignore Faulty Behavior, Degradation, Reconfiguration.</span> <br>
+      <span class="tabspace"><em>Reintroduction:</em> Shadow, State Resynchronization, Escalating Restart, Non-stop Forwarding</span>
+    </p>
+    <p><em>Prevent Faults:</em> Removel from service, Transactions, Predictive Model, Exception Prevention, Increase Compentence Set</p>
+
+    <h4>A Design cehcklist for Availability</h4>
+    <ul>
+      <li>Allocation of Responsibilities</li>
+      <li>Coordination Model</li>
+      <li>Data Model</li>
+      <li>Mapping among Architectural Elements</li>
+      <li>Resource Management</li>
+      <li>Binding Time</li>
+      <li>Choice of Technology</li>
+    </ul>
+  </div>
+
+  <div id="chapter6">
+    <h2>Chapter 6:Interoperablity</h2>
+    <p><em><a href="https://www.rubegoldberg.com/artwork/simple-alarm-clock/">Instrcution for "a simple alarm clock"</a></em>___ Rube Goldberg</p>
+    <p>Interoperability is about the degree to which two or more systems can usefully exchange meaningful information ia interfaces in a particular context.</p>
+    <p>The definition includes not only having the ability to exchange data (syntatic interoperablity), but also having ability to correctly interpret the data being exchanged (semantic interoperablity).</p>
+    <p>Reasons for the system to interoperate: <br>
+      <span class="tabspace">Your system provides a service to be used by a collection of unknown systems.</span> <br>
+      <span class="tabspace">You are constructing capabilities from existing systems.</span>
+    </p>
+
+
+    <p>Two important aspects of interoperability: <br>
+      <span class="tabspace">1. <em>Discovery</em>: The consumer of a service must discover the location, indentity, and the interface of the service.</span> <br>
+      <span class="tabspace">2. <em>Handling of the response</em>: There are three distinct possibilities: </span><br>
+        <span class="tabspace2">The service reports back to the requester with the reponse.</span> <br>
+        <span class="tabspace2">The service sends its reponse on to another system.</span> <br>
+        <span class="tabspace2">The service broadcasts its reponse to any interested parties.</span> <br>
+      </p>
+
+    <p><em>Systems of System</em>: A group of systems that are interoperating to achieve a joint purpose.</p>
+
+    <h4>SOAP vs. REST</h4>
+    <p>SOAP is a protocol specification for XML-based information that distributed applications can use to exchange information and hence interoperate.</p>
+    <p>SOAP standards: <br>
+      <span class="tabspace">An instrastrucure for service composition</span> <br>
+      <span class="tabspace">Transactions</span> <br>
+      <span class="tabspace">Service Discovery</span> <br>
+      <span class="tabspace">Reliability</span>
+    </p>
+    <p>SOAP relies on HTTP and RPC for message transmission, but it could, in theory, be implemented on top of any communication protocol.</p>
+    <p>SOAP doesn't mandate a sevice's method names, addressing model, or procedural conventions. It is  just an information exachange standard.</p>
+    <p>The interacting applications need to agree on how to interpret the payload, which is where you get scemantic interoperability.</p>
+
+    <p>REST is a client-server-based architectural style that is structured around a small set of CRUD operations and a single addressing scheme.</p>
+    <p>REST is about state and state transfer and views the web (asn services that services-oriented systems can string toghether) as huge network of information that is accessible by single URI-based addressing scheme.</p>
+    <p>There is no notion of type and hence no type cheking in REST. It is up to the applications to get the semantics of interaction right.</p>
+    <p>REST, on top of HTTP, is meant to be self-descriptive and in the best case is a stateless protocol.</p>
+    <p>An aspect of the choice between SOAP and REST is whether you want to accept the complexity and restrictions of SOAP+WSDL to get more standardized interoperablity or if you wnat to avoid the overhead by using REST, but perhaps benefit from less standardiztion.</p>
+    <p>One of the tradeoffs in the choice between REST and SOAP the size of the individual messages. For performance favor REST and for structure of message, faovor SOAP</p>
+    <p>SOAP is for the quality of service (QoS), which has greater support for security, availability and so on -- and the type of functionality.</p>
+    <p>REST is for simplicity and more appropriate for read-only functionality, typical of mashups, where there are minimal QoS requirements and concerns.</p>
+    <p>Interoperablity tactics: <br>
+      <span class="tabspace">Locate : Discover Service</span> <br>
+      <span class="tabspace">Manage Interfaces : Orchestrate, Tailor Interfaces</span>
+    </p>
+    <p>I once heard someone in a keynote address say that "The nice thing about standards is that there are so many to choose from."</p>
+  </div>
+
+
+  <div id="chapter7">
+    <h2>Chapter 7:Modifiability</h2>
+    <p><em>Adapt or perish, now as ever, is nature's inexorable imperative</em>___H.G. Wells </p>
+
+    <h3>Summary:</h3>
+    <p>Modifiability deals with change and the cost in time or money of making a change, including the extent to which this modification effects other functions or quality attributes.</p>
+    <p>Changes can be made by developer, installers, or end users, and these changes need to be prepared for. There is a cost of preparing for change as well as a cost of making a change.</p>
+    <p>The modifiability tactics are designed to prepare for subsequent changes. </p>
+    <p>Tactics to reduce the cost of making a change include making modules smaller, increaasing cohesion, and reducing coupling. Deferring binding will also reduce the cost of making a change.</p>
+    <p>Reducing coupling is a standard category of tactics that includes encapsulating, using an intermediary, restricting dependencies, co-locating related responsibilities, refactoring, and abstracting common services.</p>
+    <p>Increasing cohesion is another standard tactic that involves seperating responsibilities that do not serve the same purpose.</p>
+    <p>Defer binding is a category of tactics that affect build time, load time, initialization time, or runtime.</p>
+
+    <h3>Details:</h3>
+
+    <p>Most of the cost of the typical software system occurs after it has been initially released.</p>
+    <p>Modifiability is about change, and our interest in it centers on the cost and risk of making changes.</p>
+    <p>To plan for modifiability, an architect has to consider four questions: <br>
+      <span class="tabspace">What can change?</span> <br>
+      <span class="tabspace">What is the likelihood of the change?</span> <br>
+      <span class="tabspace">Whe is the change made and who makes it?</span> <br>
+      <span class="tabspace">What is the cost of the change?</span> <br>
+    </p>
+
+    <h4>Modifiability Tactics</h4>
+    <p>Reduce of Size of a module : Split Module</p>
+    <p>Increase Cohesion : Increase Semantic Coherence</p>
+    <p>Reduce Coupling : Encapsulate, Use an Intermediary, Restrict Dependencies, Refactore, Abstract Common Services</p>
+    <p>Defer Binding</p>
+
+    <p><strong>Tactics to bind values at compile time or build time:</strong> <br>
+    <span class="tabspace">Component relacement</span> <br>
+    <span class="tabspace">Compile-time parameterization</span> <br>
+    <span class="tabspace">Aspects</span> <br>
+    </p>
+
+    <p><strong>Tactics to bind values at deployment time:</strong> <br>
+    <span class="tabspace">Configuration time binding</span> <br>
+    </p>
+
+    <p><strong>Tactics to bind values at startup or initialization time:</strong> <br>
+    <span class="tabspace">Resource files</span>
+    </p>
+
+    <p><strong>Tactics to bind values at runtime:</strong> <br>
+    <span class="tabspace">Runtime registration</span><br>
+    <span class="tabspace">Dynamic lookup</span><br>
+    <span class="tabspace">Interpret parameters</span><br>
+    <span class="tabspace">Startup time binding</span><br>
+    <span class="tabspace">Name Server</span><br>
+    <span class="tabspace">Plugins</span><br>
+    <span class="tabspace">Publish-subscriber</span><br>
+    <span class="tabspace">Shared repositories</span><br>
+    <span class="tabspace">Polymorphism</span><br>
+    </p>
+
+  </div>
+  <div class="line"></div>
+
+<!-- ---------------------------------------------------------------chapter 8 ---------------------------------------------------------------------------------------------- -->
+
+    <div id="chapter8">
+      <h2>Chapter 8:Performance</h2>
+      <p><em>An ounce of performance is worth pounds of promises.</em>___Mae West</p>
+
+      <h3>Summary:</h3>
+      <p>Performance is about the management of system resources in the face of particular type of demand to achieve acceptable timing behavior.</p>
+      <p>Performance can be measured in terms of throughput and latency for both interactive and embedded real-time systems, although throughput is usually more important in interactive systems, latency is more impportant in embedded system.</p>
+      <p>Performance can be improved by reducing demand or by managing resourecs more appropriately.</p>
+      <p>Reducing demand will have the side effect of reducing fidelity or refusing to service some requests.</p>
+      <p>Manaing resources more appropriately can be done through scheduling, replication, or just increasing the resources available.</p>
+
+      <h2>Details:</h2>
+      <p>Performance is often linked to scalability, i.e increasing you system capacity for work, while still performing well.</p>
+      <p>Event arriaval Patterns <br>
+        <span class="tabspace">Periodic : (ex: every 10 secs)</span><br>
+        <span class="tabspace">Stochatic : probabilistic distribution</span><br>
+        <span class="tabspace">Sporadic : a quanity of events expected by with no mention of time, when it arrives</span><br>
+      </p>
+      <p>Response of the system to a stimulus: <br>
+        <span class="tabspace">Latency : The time between the arrival of the stimulus and the system's response to it.</span><br>
+        <span class="tabspace">Deadlines in processing : completion of the task on arrival of the stimulus (no reponse)</span><br>
+        <span class="tabspace">Throughput : The number of transactions the system can process in a unit of time.</span><br>
+        <span class="tabspace">Jitter of reponse : allowable variation in latency.</span><br>
+        <span class="tabspace">Number of events not processed</span><br>
+      </p>
+
+      <p>Two basic contributors to the reponse time: <br>
+        <span class="tabspace">Processing time</span><br>
+        <span class="tabspace">Blocked time</span><br>
+          <span class="tabspace2">Contention of resources</span><br>
+          <span class="tabspace2">Availability of resources</span><br>
+          <span class="tabspace2">Dependency on other computation</span><br>
+      </p>
+
+      <h4>Perormance Tactics</h4>
+      <p>Control Reesouce Demand<br>
+        <span class="tabspace">Manage Sampling Rate</span><br>
+        <span class="tabspace">Limit Event Response</span><br>
+        <span class="tabspace">Prioritize Events</span><br>
+        <span class="tabspace">Reduce overhead</span><br>
+        <span class="tabspace">Bound Execution Times</span><br>
+        <span class="tabspace">Increase Resource Efficiency</span><br>
+
+     Manage Resources <br>
+       <span class="tabspace">Increase Resources</span><br>
+       <span class="tabspace">Introduce Concurrency</span><br>
+       <span class="tabspace">Maintain Multiple Copies of Computations</span><br>
+       <span class="tabspace">Maintain Multiple Copies of Data</span><br>
+       <span class="tabspace">Bound Queues Sizes</span><br>
+       <span class="tabspace">Schedule Resource</span><br>
+     </p>
+
+     <h4>Scheduling Policies</h4>
+     <p>
+       First-in/fist-out <br>
+       Fixed-priority shceduling <br>
+       <span class="tabspace">Semantic importance</span><br>
+       <span class="tabspace">Deadline monotonic</span><br>
+       <span class="tabspace">Rate monotonic</span><br>
+       Dynamic priority scheduling <br>
+       <span class="tabspace">Round-robin</span><br>
+       <span class="tabspace">Earliest-deadline-first</span><br>
+       <span class="tabspace">Least-slack-first</span><br>
+       Static scheduling
+     </p>
+    </div>
+
+    <div class="line"></div>
+
+  <!-- ---------------------------------------------------------------chapter 8 ---------------------------------------------------------------------------------------------- -->
+
+  <div id="chapter9">
+    <h2>Chapter 9: Security</h2>
+      <p><em>Your personal identity isn't worth quite as much as it used to be -- at least to thieves willing to swipe it. Accoring to experts who monitor such markets, the value of stolen creadit card datamay range from $3 to as little as 40 cents. That's down tenfold from a decade ago -- even though the cost to an individual whohas a credit card stolen can soar into the hundreds of dollars.</em>___ <a href="https://www.forbes.com/2008/10/25/credit-card-theft-tech-security-cz_tb1024theft.html#47d6f10b506f">Forbes.com</a></p>
+
+      <p>Security is a measure of the system's ability to protect data and information from unauthorized access while still providing access  to people and system that are authorized.</p>
+      <p>An action taken against a computer aystem with the intention of doing harm is called an attack and can take a number of forms. It may be an unauthorized attempt to access data or services or to modify data, or it may be intended to deny services to legitimate users.</p>
+      <p>The simplest approach to characteriing security has three characteristics: ie. CIA</p>
+      <p><em>Confidentiality</em> is the property that data or serices are protected from unauthorized access.</p>
+      <p><em>Integrity</em> is the property that data or services are not subject to unauthorized manipulation.</p>
+      <p><em>Availability</em> is the property that system will be available for legitimate use.</p>
+      <p>Other characteristics that are used to support CIA:</p>
+      <p><em>Authentication</em> verifies that identities of the parties to a transaction and checks if they are truly wo they claim to be.</p>
+      <p><em>Nonrepudiation</em> gaurantees that the sender of a message cannot later deny having sent the message, and that the recipient cannot deny having received the message.</p>
+      <p><em>Authorization</em> grants a user the privileges to perform a task.</p>
+      <p>Approaches to achieving security can be characterized as those that detect attack, those that resist attacks, those that react to attack, and those that recover from successful attacks.</p>
+      <p>The objects that are being protected from attacks are data at rest, data in transit, and computational processes.</p>
+      <p>One technique that is used in the security domain is <em>Threat modeling (Attack tree)</em> used to by secuirty engineers to determine possible threats.</p>
+      <p>An attack is an attempt to break CIA, and the leaves of attack tree would be the stimulus in the scenario. The response to the attack is to preserve CIA or deter attackers through monitoing of their activities.</p>
+
+      <h3>Security Tactics:</h3>
+      <p><strong>Detect Attacks : </strong> Detect Intrustion, Detect Service Denial, Verify Message Integrity, Detect Message Delay</p>
+      <p><strong>Resist Attacks : </strong> Identify Actors, Authenticate Actors, Authorize Actors, Limit Access, Limit Exposure, Encrypt Data, Separate Entities , Change Default Setting </p>
+      <p><strong>React to Attacks :</strong> Revoke Access, Lock Computer, Inform Actors</p>
+      <p><strong>Recover from Attack :</strong> <br>
+        <span class="tabspace">Maintain Audit Trail</span> <br>
+        <span class="tabspace">Restore : See Availability</span>
+      </p>
+
+      <p>The emphasis of distringuishing various classes of actors in the characterization leads to many of the tactics used to achieve security.</p>
+      <p>Identifying, authenticating, and authorizing actors are tactics intended to determine which users or systems are entitiled to what kind of access to a system.</p>
+      <p>An assumption is made that no security tactic is foolproof and that systems will be compromised. Hence, tactics exist to detect and attack, limit the spread of any attack, and to react and recover from an attack.</p>
+      <p>Recovering from an attack involves many of the same tactics as availability and, in general, involves returning the system to a consistent state prior to any attack.</p>
+
+ </div>
+  <div class="line"></div>
+  <!-- ---------------------------------------------------------------chapter 10 ---------------------------------------------------------------------------------------------- -->
+
+  <div id="chapter10">
+    <h2>Chapter 10: Testability</h2>
+    <p><em>Testing leads to failure, and failure leads to understanding </em>__Burt Rutan</p>
+    <p>Ensuring that system is easily testable has payoffs both in terms of the cost of testing and the reliability of the system.</p>
+    <p>Software testability refers to the ease with which software can be made to demonstrate its faults through (typically execution-based) testing.</p>
+    <p>For a system to be properly testable, it must be possible to control each component's inputs (and possibly manipulate its internal state) and then to observe its outputs (and possibly its internal state, either after or on the way to computing the outputs).</p>
+    <p>A vehicle often used to execute the tests is the test harness. Test harnesses are software systems that encapsulate test resources such as test cases and test infrastructure so that it is easy to reapply tests across iterations and it is easy to apply the test infrastructure to new increments of the system.</p>
+    <p>Another vehicle is the creation of test cases prior to the development of a component, so that developers know which tests their component must pass. </p>
+    <p>Controlling and observing the system state is a major class of testability tactics.</p>
+    <p>Providing the ability to do fault injection, to record system state at key portions of the system, to isolate the system from its environment, and to abstract various resources are all different tactics to support the cotrol and observation of a system and its components.</p>
+    <p>Compex systems are difficult to test because of the large state space in which their computations take place, and because of the large number of interconnections among the elements of the system.</p>
+    <p>Keeping the system simple is another class of tactics that supports testability.</p>
+    <p>
+      <strong>Netfix's simian Army</strong> <br>
+      <span> <em>Chaos Monkey </em></span> <br>
+      <span><em>The Latency Monkey</em></span><br>
+      <span><em>The Confirmity Monkey</em></span><br>
+      <span><em>The Doctor Monkey</em></span><br>
+      <span><em>The Janitor Monkey</em></span><br>
+      <span><em>The Secuirty Monkey</em></span><br>
+      <span><em>10-18 Money (localization-internationalization)</em></span><br>
+    </p>
+
+    <p>Testing of code is a special case of validation, which is making sure that an engineered artifact meets the needs of its stakeholders or is suitable for use.</p>
+    <p>The goal of tactics for testability is to allow for easier testing when an increment of software development is completed.</p>
+
+    <h3>Tactics of Testability</h3>
+    <p><strong>Control and Observe System State :</strong> Specialized Interfaces, Record/Playback, Localize State Storage, Abstract Data Sources, Sandbox, Executable Assertions.</p>
+    <p><strong>Limit Complexity :</strong> Limit Structural Complexity, Limit Nondeterminism</p>
+
+  </div>
+  <div class="line"></div>
+  <!-- ---------------------------------------------------------------chapter 11 ---------------------------------------------------------------------------------------------- -->
+  <div id="chapter11">
+    <h2>Chapter 11: Usability</h2>
+    <p><em>Any darn fool can make something complex; it takes a genius to make something simple.</em>__ Albert Einstein</p>
+    <p>Usability is concerned with how easy it is for the user to accomplish a desired task and the kind of user support the system provides.</p>
+    <p>Usability is one of the cheapest and easiest ways to improve a system's quality (or more precisely, the user's perception of quality)</p>
+    <p>Usablity comprises of following areas: <br>
+      <span class="tabspace">Learning system features</span><br>
+      <span class="tabspace">Using a system efficiently</span><br>
+      <span class="tabspace">Minimizing the impact of errors</span><br>
+      <span class="tabspace">Adapting the system to user needs</span><br>
+      <span class="tabspace">Increasing confidence and satisfaction</span><br>
+    </p>
+    <p>Researchers in humun-computer interaction have used the term user intiative, system initiative, and mixed initiative to describe which of the humun-computer pair takes the intiative in performing certain actions and how the interaction proceeds.</p>
+    <p>One of the most helpful things an architect can do to make a system usable is to facilitate experimentation with the user interface via the construction of rapid prototypes.</p>
+    <p>Once a system is executing, usability is enhanced by giving the user feedback as to what the system is doing and by allowing the user to make appropriate responses.</p>
+    <h3>Usability Tactics</h3>
+    <p>
+      <strong>Supprt User initiative:</strong> Cancel, Undo, Pause/Reuse, Aggregate <br>
+      <strong>Support System Initiatives:</strong> Maintain Task Model, Maintain User Model, Maintain System Model
+    </p>
+  </div>
+  <div class="line"></div>
+  <!-- ---------------------------------------------------------------chapter 12 ---------------------------------------------------------------------------------------------- -->
+  <div id="chapter12">
+    <h2>Chapter 12: Other Quality Attributes</h2>
+    <p><em>Quality is not an act, it is a habit</em>__Aristotle </p>
+</body>
+</html>

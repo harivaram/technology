@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>AWS Certified Architect - Associate</h1>
+
+    <div class="">
+      <h3>Chapters:</h3>
+      <ol>
+        <li><a href="#chapter1">Introduction</a></li>
+        <li><a href="#chapter2">Amazon Simple Storage Service (Amazon S3) and Amazon Glacier Storage</a></li>
+        <li><a href="#chapter3">Amazon Elastic Compute Cloud (Amazon EC2) and Amazon Elastic Block Store (Amazon EBS)</a></li>
+        <li><a href="#chapter4">Amazon Virtual Private Cloud (Amazon VPC)</a></li>
+        <li><a href="#chapter5">Elastic Load Balancing, Amazon CloudWatch, and Auto Scaling</a></li>
+        <li><a href="#chapter6">AWS Identiy Access Management (IAM)</a></li>
+        <li><a href="#chapter7">Databases and AWS</a></li>
+        <li><a href="#chapter8">SQS, SWF, and SNS</a></li>
+        <li><a href="#chapter9">Domain Name System (DNS) and Amazon Route 53</a></li>
+        <li><a href="#chapter10">Amazon Elastic Cache</a></li>
+        <li><a href="#chapter11">Additional Key Services</a></li>
+        <li><a href="#chapter12">Security on AWS</a></li>
+        <li><a href="#chapter13">AWS Risk and Compliance</a></li>
+        <li><a href="#chapter14">Architecture Best Practices</a></li>
+      </ol>
+    </div>
+
+    <div id="chapter1">
+      <h3>1. Introduction</h3>
+        <p>The term "cloud computing" refers to the on-demand delivery of IT resources via Internet with pay-as-you-go pricing. <br>
+          Instead of buying, owning, and maintaining data centers and servers, organizations can acquire technology such as compute power, storage, databases, and other services on an as-needed basis.
+          <br>With Cloud computing, AWS manages and maintains the technology infrastructure in a secure envronment and business access these resouces via the Internet to develop and run their applications.
+          Capatciy can grow or shrink instantly and business pay only for what they use.
+        </p>
+
+        <p>Cloud computing introduces revolutionary shift in how technology is obtained, used, and managed, and how the organizations budget and pay for the technology services. <br>
+          While each organization experiences a unique journey to the cloud with numerous benefits, six advantages become aparant time and time again. Understanding these advantages allows architects to shape solutions that delivers contineous benefits to the organizations.
+        </p>
+        <p>
+          AWS provides a highly available technology infrastructure platform with mulitiple locations worldwide. These locations are composed of regions and Availability Zones. <br>
+          This enables organizations to place resources and data in multiple locations around the globe.
+          Helping to protect the confidenciality, Integrity, and availability of systems and data of the utmost importance to AWS, as is maintaining the trust and confidence of the organizations around the world. <br>
+        </p>
+
+        <p>
+          AWS offers a broad set of global compute, storage, database, analytics, application, and deployment services that help organizations move faster, lower IT cost, and scale applications. <br>
+          Having a broad understanding of these services allows solution architects to design effective distributed applications and systems on AWS platforms.
+        </p>
+    </div>
+
+    <div id="chapter2">
+      <h3>2. Amazon Simple Storage Service (Amazon S3) and Amazon Glacier Storage</h3>
+      <p>Amazon S3 is core object storage service on AWS, allowing you to store an unlimitted amount of data with very high durability.</p>
+      <p>Common Amazon S3 use cases include backup and archive, web content, big data analytics, static website hosting, mobile and cloud native application hosting and disaster recovery.</p>
+      <p>Amazon S3 integrated with many other AWS cloud services, including AWS IAM, AWS KMS, Amazon EC2, Amazon EBS, Amazon EMR, Amazon DynamoDB, Amazon Redshift, Amazon SQS, Amazon Lambda, and Amazon Cloud Front.</p>
+      <p>Object storage differs from traditional block and file storage. Block storage manages data at a device level addressible blocks, while file storage manages data at the operating system level files and folders. <br>
+        Object storage manages data as objects that contain both data and metadata, manupulated by an API.
+      </p>
+      <p>Amazon S3 buckets are containers for objects stored in Amazon S3, Bucket names must be globally unique. Each bucket is created in a specific region, and data doen't leave the region unless explicitly copied by the user.</p>
+      <p>Amazon S3 objects are files stored in buckets. Objects can be up to 5TB and can contain any kind of data. Objects contain both data and metadata and are identified by keys. Each amazon S3 bucket is can be addressed by unique URL formed by the webservices endpoint, the bucket name, and object key.</p>
+      <p>Amazon S3 has minimalistic API - create/delete a bucket, read/write/delete objects, list keys in bucket - and uses a REST interface based on standard HTTP verbs - GET,PUT,POST and DELETE. <br>
+        You can also use SDK wrapper libraries, the AWS CLI, and the AWS Management Console to work with Amazon S3.
+      </p>
+      <p>Amazon S3 is highly durable and highly available, designed for 11 nines of durability of objects in a given year and four nines of availability.</p>
+      <p>Amazon S3 is eventually consistent, but offers read-after-write for new object PUTs. </p>
+      <p>Amazon S3 objects are private by default, accessible only to the owners. Objects can be marked public readable to make them accessible on the web. Controlled access may be provided to others using ACLs and AWS IAM and Amazon S3 bucket policies. </p>
+      <p>Static websites can be hosted in an Amazon S3 bucket.</p>
+      <p>Prefixes and delimiters may be used in key names to organize and navigate data hierachically much like a traditional file system.</p>
+      <p>Amazon S3 offers serveral storage classes suited for different usecases.<br>
+         Standard is desinged for general purpose and needing high performance and low latency <br>
+         Standard IA  is for less frequently accessed data. <br>
+         RRS offfers lower redundancy at lower cost for easily reproduced data <br>
+         Amazon Glacier offers low-cost durable storage for archive and long-term backups that can are rearly accessed and can accept a three to five hour retrieval time.
+      </p>
+      <p>Object life cycle management policies can be used to automatically move data between storage classes based on time.</p>
+      <p>Amazon S3 data can be encrypted using server-side or client-side encryption, and encryption keys can be managed with Amazon KMS.</p>
+      <p>Versioning and MFA delete can be used to protect against accidental deletion.</p>
+      <p>Cross-region replication can be used to automatically copy new objects from a source bucket in one region to target bucket in another region.</p>
+      <p>Pre-signed URLs grant time-limited permission to download objects and can be used to protect media and other webcontent from unauthorized "web scraping".</p>
+      <p>Multipart upload can be used to upload large objects, and Range GET can be used to download options of an amazon S3 object or Amazon Glacier archive.</p>
+      <p>Server access logs can be enabled on a bucket to track requestor, object, action, and response.</p>
+      <p>Amazon S3 event notifications can be used to send an Amazon SQS or Amazon SNS message or to trigger an AWS Lambda function where an object is created or deleted.</p>
+      <p>Amazon Glacier can be used as a standalone serivce or as a storage class in Amazon S3.</p>
+      <p>Amazon Glacier stores data in achives, which are contained in vaults. You can have up to 1,000 vaults, and each vault can store an unlimted number of archives.</p>
+      <p>Amazon Glacier valuts can be locked for compliance purposes.</p>
+
+    </div>
+  </body>
+</html>
