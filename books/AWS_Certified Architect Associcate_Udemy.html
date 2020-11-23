@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate_ Udemy</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style media="screen">
+
+      h3,h4{
+        padding-left: 10px;
+      }
+      h4{
+        padding-left: 20px;
+      }
+
+      ul{
+        list-style-type: disc;
+        padding-left: 80px;
+      }
+
+      li{
+        padding-top: 10px;
+      }
+  </style>
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>AWS Certified Architect - Associate  (Udemy)</h1>
+
+    <div class="">
+      <h3>Chapters:</h3>
+      <ol>
+        <li><a href="#section1">Introduction</a></li>
+        <li><a href="#section2">Identity Access Management & S3</a></li>
+      </ol>
+    </div>
+
+    <div id="section1">
+      <h3>1. Introduction</h3>
+      <ul>
+        <li>
+          Invention requires two things <br>
+          1. The ability to try alot of experiments, and  <br>
+          2. not having to live with the collateral damage of failed experiments. <br>
+          -- Andy Jassy (CEO Amazon Webservices)
+        </li>
+        <li>Think of Availability Zone as a Data Center. A Data Centre is just a building filled with Servers. An Availability be several data centres but because they are closer together, they are counted as one Availability Zone.</li>
+        <li>A Region is a geographical area. Each Region consists of 2 (or more) Availability Zones. </li>
+        <li>Edge locations are endpoints for AWS which are used for caching content. Typically this consists of CloudFront, Amazon's Content Delivery Network (CDN), There are many more edge locations than Regions.</li>
+      </ul>
+    </div>
+
+    <div id="section2">
+      <h3>2. Identity Access Management & S3</h3>
+      <h4>Identy Access Management</h4>
+      <ul>
+        <li>IAM allows you to manage user and their level of access to the AWS Console.</li>
+        <li>It is important to understand IAM for adminstrating a company's AWS account in real life.</li>
+        <li>
+          IAM offers following features: <br>
+          - Centralised control of your AWS account <br>
+          - Shared access to your AWS account <br>
+          - Granular permissions  <br>
+          - Identity Federation (including Active Directory, Facebook, Linkedin etc) <br>
+          - Multifactor Authentication <br>
+          - Provide temporary access to users/devices and services where necessary <br>
+          - Allows you to set up your own password rotation policy. <br>
+          - Integrates with many different AWS services <br>
+          - Supports PCI DSS compliance.
+        </li>
+        <li>
+          Key terminology for IAM <br>
+          - Users : End User such as people, employees of organization etc. <br>
+          - Groups : A collection of users. Each user in the group will inherit the permission of the group. <br>
+          - Policies : Policies are made up of documents, called Policy documents. These docuemnts are in a format called JSON and they give permissions as to what a User/Group/Role is able to do. <br>
+          - Roles : You create roles and assign them to AWS Resources.
+        </li>
+        <li>IAM is universal. It does not apply to regions at this time.</li>
+        <li>The "root account" is simply the account created when first setup your AWS account. It has complete admin access.</li>
+        <li>New users have No permissions when first created.</li>
+        <li>New users are assigned Accesss Key ID & Secret Access Keys when first created.</li>
+        <li>These are not the same as a password. You can not use Accesss Key ID & Secret Access Key to Login in to the console. You can use this to access AWS via APIs and Command Line, However</li>
+        <li>You only get to view these once. if you lose them, you have to regenerate them. So, save them in a secured location.</li>
+        <li>Always setup Multifactor Authentication on your root account. </li>
+        <li>You can create and customize your own password rotation policies.</li>
+      </ul>
+
+      <h4>S3</h4>
+      <ul>
+        <li>Remember that S3 is Object-based: i.e allows you to upload files.</li>
+        <li>Files can be from 0 bytes to 5 TB.</li>
+        <li>There is unlimited storage.</li>
+        <li>Files are stored in Buckets.</li>
+        <li>S3 is a universal namespace. That is names must be unique globally.</li>
+        <li>URL looks like https://s3-eu-west-1.amazonaws.com/rkbucket</li>
+        <li>Not suitable to install an operating system on.</li>
+        <li>Successful uploads generate a HTTP 200 status code.</li>
+        <li>
+          By default, all newly created buckets are PRIVATE. You can setup access contol to your buckets Using <br>
+          - Bucket policies <br>
+          - Access Control Lists
+        </li>
+        <li>S3 buckets can be configured to create access logs which logs all requests made to the S3 bucket. This can be sent to another bucket and even another bucket in another account.</li>
+        <li>
+          The Key fundamentals of S3 are: <br>
+          - Key (This is simply the name of the object) <br>
+          - Value (This is simply the data and is made up of sequence of bytes). <br>
+          - Version ID (Important for versioning). <br>
+          - Metadata (Data about data you are storing) <br>
+          - Subresources: Access Control Lists , Torenet
+        </li>
+        <li>Read after Write consistency for PUTs of new Objects</li>
+        <li>Eventual Consistency for overwrite PUTs and DELETEs (can take some time to propagate)</li>
+        <li>
+          S3 Classes of Storage: <br>
+          1. S3 Standard : 99.99% availability. 99.999999999% durablility, stored redundantly across multiple devices in multiple facilities and is designed to sustain the loss of 2 facilities concurrelty. <br>
+          2. S3 - IA (Infrequently Accessed): For data that is accessed less frequently, but requires rapid access when needed. Lower fee than S3, but you are charged a retrieval fee. <br>
+          3. S3 One Zone - IA : For where you want a lower-cost option for Infrequently accessed data, but do not require the multiple Availbility Zone and data resilience. <br>
+          4. S3 - Intelligent Tiering : Designed to optimize costs by automatically moving data to the most cost-efffective access tier, without performance impact or operational overhead. <br>
+          5. S3 Glacier : is a secure, durable, and low cost storage class for data archiving. Retrieval times configurable from minutes to hours. <br>
+          6. S3 Glacier Deep Archive : is Amazon S3's low cost storage class where a retrieval time of 12 hours is acceptable.
+        </li>
+        <li>Encyption in Transit is achieved by : SSL/TLS</li>
+        <li>
+          Encryption At Rest (Server Side) is achieved by  <br>
+          - S3 Managed Keys - SSE-S3 <br>
+          - AWS Key Managements Service / Managed Keys - SSE-KMS <br>
+          - Service Side Encryption With Customer Provided Keys - SSE-C
+        </li>
+        <li>Client Side Encryptoin</li>
+        <li>Use S3 Object Locks to store objects using a write once, read many (WORM) model.</li>
+        <li>Object locks can be on individual objects or applied across the bucket as a whole.</li>
+        <li>
+          Object locks come in two modes : governance mode and compliance mode. <br>
+          - With governance mode, users can't overwrite or delete an object version or alter its lock settings unless they have special permissions. <br>
+          - With compliance mode, a protected object version can't be overwriten or deleted by any user, including the root user in your AWS account.
+        </li>
+        <li>
+          S3 Glacier Vault Lock allows you to easily deploy and enforce compliance controls for individual S3 Glacier vaults with Vault Lock policy.  <br>
+          You can specify controls such as WORM in Vault Lock policy and lock the policy from future edits. Once locked, the policy can no longer be changed.
+        </li>
+        <li><i>mybucketname/folder1/subfolder1/myfile.jpg</i>, in this folder1/subfolder1 is called as prefix</li>
+        <li>You can also achieve a high number of requests : 3,500 PUT/COPY/POST/DELETE and 5,500 GET/HEAD </li>
+        <li>
+          If you are using SSE-KMS to encrypt your objects in S3, you must keep in mind the KMS limits.
+          - Uploading/downloading will count toward the KMS quota. <br>
+          - Region-specific, however, it's either 5,500 or 10,000 or 30,000 requests per second. <br>
+          - Currently, you cannot request quota increase for KMS.
+        </li>
+        <li>Use multipart uploads to increase performance when uploading files to S3. Should be used for any files over 100 MB and must be used for any file over 5 GB.</li>
+        <li>Use S3 byte-range fetches to increase performance when downloading to S3.</li>
+        <li>Remember that S3 select used to retrieve only a subset of data from an object by using simple SQL expression.</li>
+        <li>Get data by rows or colums using simple SQL expressions.</li>
+        <li>Save money on data transfer and increase speed.</li>
+        <li>
+          Some Best practices with AWS Organization: <br>
+          - Always enable multi-factor authentication on root account. <br>
+          - Always use a strong and complex password on root account <br>
+          - Paying account should be used for billing purposes only. Do not deploy resources in the paying account. <br>
+          - Enable/Disable AWS services using Service Control Policies (SCP) either on Organizational Units (OU) or on individual accounts.
+        </li>
+        <li>
+          3 different ways to share S3 bucket across accounts. <br>
+          - Using Bucket Policies & IAM (applies across the entire bucket) Programmatic Access Only.
+          - Using Bucket ACLs & IAM (individual objects). Programmatic Access Only.
+          - Cross-account IAM Roles. Programmatic and Console access.
+        </li>
+        <li>
+          Cross Region Replication <br>
+          - Versioning must be enabled on both source and destination buckets. <br>
+          - Files in an existing bucket are not replicated automatically. <br>
+          - All subsequent updated files will be replicated automatically. <br>
+          - Delete markers are not replicated. <br>
+          - Deleting individual vesions and delete markers will not be replicated. <br>
+        </li>
+
+        <li>
+          Lifecycle Policies <br>
+          - Automates moving your objects between the different storage tiers. <br>
+          - Can be used in conjunction with versioning. <br>
+          - Can be applied to current versions and previous versions
+        </li>
+        <li>S3 Transfer Acceleratation helps to improve speed of file tranfers from edge locations to S3 bucket, which improves the performace of file upload.</li>
+
+      </ul>
+    </div>
+
+    <h4>Cloud Front</h4>
+    <ul>
+      <li>Edge Location : This is the locaiton where content will be cached. This is seperate to AWS Region/AZ.</li>
+      <li>Origin : This is origin of all the files that the CDN will distribute. This can be either S3 Bucket, an EC2 Instance, an Elasitc Load Balancer, or Route53. </li>
+      <li>Distribution: This is the name given the CDN which consists of a collection of Edge Locations.</li>
+      <li>
+        Two types of distributions <br>
+        1. Web Distribution - Typically used for websites. <br>
+        2. RTMP - Used for media streaming
+      </li>
+      <li>Edge locations are not just READ only -- you can write them too. (i.e put an object on to them)</li>
+      <li>Objects are cached for the life of the TTL (Time To Live) </li>
+      <li>You can clear cached objects, but you will be charged.</li>
+      <li>
+        Signed URL <br>
+        - Use signed URLs/coockies when you wnat to secure Content so that only the people you authorize are able to access it. <br>
+        - A signed URL is for individual files. 1 file = 1 URL. <br>
+        - A signed cookie is for multiple files. 1 cookie = multiple files. <br>
+        - If your  is EC2, then use CloudFront <br>
+      </li>
+      <li>
+        AWS DataSync <br>
+        - Used to move large amounts of data from on-promise to AWS. <br>
+        - Used with NFS and SMB compatible file systems. <br>
+        - Replication can be done hourly, daily or weekly. <br>
+        - Install DataSync agent to start the replication. <br>
+        - Can be used to replicate EFS to EFS.
+      </li>
+      <li>AWS Snowball is used to import data to S3 or export data from S3</li>
+
+      <li>
+        Storage Gateway <br>
+        - File Gateway : For flat files, stored directly on S3. <br>
+        - Volume Gatewys : <br>
+         1)Stored Volumes - Entire Dataset is stored on site and is asynchronously backed up to S3. <br>
+         2) Cached Volumes - Entire Dataset is stored on S3 and the most frequently accessed data is cached on site. <br>
+        - Gateway Virtual Tap Library : Used for backup and uses popular backup applications like NetBackup, Backup Exec, Veeam etc.
+      </li>
+
+      <li>
+        Athena <br>
+        - Athena is an interactive query service. <br>
+        - It allows you to query data located in S3 using standard SQL. <br>
+        - Serverless <br>
+        - Commonly used to analyze log data stored in S3.
+      </li>
+
+      <li>
+        Macie <br>
+        - Uses AI to analyze data in S3 and helps to indentify PII. <br>
+        - Can also be used to analyse Cloud Trail logs for suspecious API activity. <br>
+        - Includes Datashboards, Reports and Alerting. <br>
+        - Greate for PCI-DSS compliance and prevent ID theft.
+      </li>
+
+    </ul>
+
+
+  </body>
+</html>
