@@ -33,6 +33,10 @@
       <ol>
         <li><a href="#section1">Introduction</a></li>
         <li><a href="#section2">Identity Access Management & S3</a></li>
+        <li><a href="#section3">Elastic Cloud Compute</a></li>
+        <li><a href="#section4">Databases</a></li>
+        <li><a href="#section5">Advanced IAM</a></li>
+
       </ol>
     </div>
 
@@ -243,6 +247,410 @@
 
     </ul>
 
+    <div id="section3">
+      <h3>3. Elastic Cloud Compute</h3>
+      <ul>
+        <li>EC2 is a webservice that provides resizable compute capacity in cloud. <br>
+            It reduces the time required to obtain and book new server instances to minutes, allowing you to quickly scale capacity, both up and down, as your computing requirements change.
+        </li>
+        <li>
+          Pricing Models <br>
+          1. On Demand : Allows you to pay a fixed rate by the hour (or by the second) with no commitment. <br>
+          2. Reserved : Provides you with capacity reservation, and offer significant discount on the hourly change for an instance. Contract terms are 1 Year or 3 Year Terms. <br>
+          3. Spot : Enables you to bid whatever price you want for instance capacity, providing for even greater savings if your application have flexible start and end times. <br>
+          4. Dedicated Hosts : Physical EC2 server dedicated for your use. Dedicated hosts can help you reduce costs by allowing you to use your exisiting server-bound software licenses.
+        </li>
+        <li>If Spot instance is terminated by Amazon EC2, You will not be charged for the partial hour of usage. However, if you terminate the instance yourself, you will be charged for any hour in which instance ran.</li>
+        <li>
+          EC2 Instance Types <br>
+          F - For FPGA <br>
+          I - for IOPS <br>
+          G - Graphics <br>
+          H - High Disk Thoughhput <br>
+          T - Cheap general purpose (Think T2 micro) <br>
+          D - For Denisity <br>
+          R - for RAM <br>
+          M - Main choice for general purpose apps <br>
+          C - for Compute <br>
+          P - for Graphics (Think Pics) <br>
+          X - Extream Memory <br>
+          Z - Extream Memory and CPU <br>
+          A - Arm based workloads <br>
+          U - Bare Metal
+        </li>
+      </ul>
+
+      <h4>EBS</h4>
+      <ul>
+        <li>EBS is virtual hard disk drive in the cloud.</li>
+        <li>Temination protection is turned off by default, you must turn it on</li>
+        <li>On an EBS-backed instance, the default action is for the root EBS volume to be deleted when the instance is terminated.</li>
+        <li>EBS root volumes of your DEFAULT AMI's can be encrypted. You can also use a third party tool (such as bit locker etc) to encrypt the root volume, or this can be done when creating AMI's in the AWS console or using API.</li>
+        <li>Additional Volumes can be encrypted.</li>
+      </ul>
+
+      <h4>Security Groups</h4>
+      <ul>
+        <li>All inbound traffic is blocked by default.</li>
+        <li>All outbound traffic is allowed.</li>
+        <li>Changes to Security Groups take effect immedietly.</li>
+        <li>You can have any number of EC2 instances within a security group.</li>
+        <li>You can have multiple secuity groups attached to EC2 instances</li>
+        <li>Security groups are STATEFUL</li>
+        <li>If you create an inbound rule allowing traffic in, the traffic is automatically allowed back out again.</li>
+        <li>You can not block specific IP addresses using security groups, instead use Network Access Control Lists.</li>
+        <li>You can specify allow rules, but not deny rules.</li>
+      </ul>
+      <h4>EBS Types</h4>
+      <table>
+        <thead>
+          <th></th><th colspan="2">Solid State Drives (SSD)</th><th colspan="3">Hard Disk Drives (HDD)</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Volume Type</td>
+            <td>Generaral Purpose SSD</td>
+            <td>Provisioned IOPS SSD</td>
+            <td>Throughput Optimized HDD</td>
+            <td>Cold HDD</td>
+            <td>EBS Magnetic</td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>General purpose SSD volume that balances price and performance for a wide variety of transactional workloads.</td>
+            <td>Highest-performance SSD volumes designed for missing-critical applications.</td>
+            <td>Low cost HDD volume designed for frequently accessed, throughput-intensive workloads.</td>
+            <td>Lowest cost HDD volumes designed for less frequently accessed workloads.</td>
+            <td>Previous generation HDD</td>
+          </tr>
+          <tr>
+            <td>Use Cases</td>
+            <td>Most Work Loads</td>
+            <td>Databases</td>
+            <td>Big Data & Data Warehouses</td>
+            <td>File Servers</td>
+            <td>Workloads where data is infrequently accessed</td>
+          </tr>
+          <tr>
+            <td>API Name</td>
+            <td>gp2</td>
+            <td>io1</td>
+            <td>st1</td>
+            <td>sc1</td>
+            <td>Standard</td>
+          </tr>
+          <tr>
+            <td>Volume Size</td>
+            <td>1 Gib - 16 Tib</td>
+            <td>4 Gib - 16 Tib</td>
+            <td>500 Gib - 16 Tib</td>
+            <td>500 Gib - 16 Tib</td>
+            <td>1 Gib - 1 Tib</td>
+          </tr>
+          <tr>
+            <td>Max. IOPS/Volume</td>
+            <td>16,000</td>
+            <td>64,000</td>
+            <td>500</td>
+            <td>250</td>
+            <td>40-200</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>EBS Snapshots</h4>
+      <ul>
+        <li>Volumes exists on EBS. Think of EBS as a virtual hard disk.</li>
+        <li>Snapshots exists on S3. Think of snapshots as photograph of the disk.</li>
+        <li>Snapshots are point in time copies of Volumes</li>
+        <li>Snapshots are incremental - This means that only the bucket that have changed since your last snapshot are moved to S3.</li>
+        <li>If this is your first snapshot, it may take sometime to create.</li>
+        <li>To create snapshot for Amazon EBS volumes that serve as root devices, you should stop the instance before taking the snapshot.</li>
+        <li>However you can take a snapshot while the instance is running.</li>
+        <li>You can create AMI's from both Volumes and Snapshots.</li>
+        <li>You can change EBS Volume sizes on the fly, including changing the size and storage type.</li>
+        <li>Volumes will ALWAYS be in the same availability zone as the EC2 instance.</li>
+      </ul>
+
+      <h4>Migrating EBS</h4>
+      <ul>
+        <li>To move an EC2 volume from one AZ to another, take a snapshot of it, create an AMI from the snapshot and then use AMI to launch the EC2 instance in a new AZ.</li>
+        <li>To move an EC2 instance from on region to another, take a snapshot of it, create an AMI from snapshot and then copy the AMI from one region to another. Then use the copied AMI to launch the new EC2 instance in the new region.</li>
+      </ul>
+
+      <h4>EBS Encryption</h4>
+      <ul>
+        <li>Snapshots of encrypted volumes are encrypted automatically.</li>
+        <li>Volumes restored from encrypted snapshots are encrypted automatically.</li>
+        <li>You can share snapshots, but only if they are unencrypted.</li>
+        <li>These snapshots can be shared with other AWS account or made public.</li>
+        <li>
+          Root Device Volumes can Now be Encrypted. If you have unencrypted root device volume that needs to encrypted do the following <br>
+          - Create a snapshot of unencrypted root device volume. <br>
+          - Create a copy of the snapshot and select the encrypt option. <br>
+          - Create an AMI from the encrypted snapshot. <br>
+          - Use that AMI to launch new encrypted instances.
+        </li>
+      </ul>
+
+      <h4>EBS Vs Instance Store</h4>
+      <ul>
+        <li>Instance Store volumes are sometimes called Ephermal Storage.</li>
+        <li>Instance store volumes cannot be stopped. If the underlying host fails, you will lose your data.</li>
+        <li>EBS backed instances can be stopped. You will not lose your data on this instance, if it is stopped.</li>
+        <li>You can reboot both, you will not lose your data.</li>
+        <li>By default, both ROOT volumes will be deleted on termination. However, with EBS volumes, you can tell AWS to keep the root device volume.</li>
+      </ul>
+
+      <h4>Cloud Watch</h4>
+      <ul>
+        <li>CloudWatch is used for monitoring performance.</li>
+        <li>CloudWatch can monitor most of AWS as well as you application that run on AWS.</li>
+        <li>CloudWatch with EC2 will monitor events every 5 minutes by default.</li>
+        <li>You can have 1 minute intervals by turning on detailed monitoring.</li>
+        <li>You can create CloudWatch alarms which triggers notifications.</li>
+        <li>CloudWatch is all about performance and CloudTrail is all about auditing.</li>
+        <li>
+          What can I do with CloudWatch <br>
+          - Dashboards : Create awesome datashbords to see what is happening with you AWS environment. <br>
+          - Alarms : Allows you to set Alarms that notify you when particular thresholds are hit. <br>
+          - Events : CloudWatch events helps you to respond to state changes in your AWS resources. <br>
+          - Logs : CloudWatch logs helps you to aggregate, monitor, and store logs.
+        </li>
+      </ul>
+
+      <h4>Mislaneous Items</h4>
+      <ul>
+        <b>CLI:</b> <br>
+        - You can interact with AWS from anywhere in the world just by using the command line (CLI). <br>
+        - You will need to set up access in IAM.
+      </ul>
+
+      <ul>
+        <b>Roles</b> <br>
+        - Roles are more secure than storing your access keys and secret access keys on individual EC2 instances. <br>
+        - Roles are easier to manage. <br>
+        - Roles can be assigned to an EC2 instance after it is created using both the console & command line. <br>
+        - Roles are universal - you can use them in any region.
+      </ul>
+
+      <ul>
+        <b>Bootstrap scripts</b> <br>
+        - Bootstrp scripts run when an EC2 instance first boots. <br>
+        - Can be a powerful way of automating software installs and updates.
+      </ul>
+
+      <ul>
+        <b>Instance Meta Data & User Data</b><br>
+        - Used to get information about an instance (such as public ip) <br>
+        - curl http://169.254.169.254/latest/meta-data/ <br>
+        - curl http://169.254.169.254/latest/user-data/ <br>
+      </ul>
+
+      <h4>EFS</h4>
+      <ul>
+        <li>Supports the Network File System version 4 (NFSv4) protocol.</li>
+        <li>You only pay for the storage you use (no pre-provisioning required)</li>
+        <li>Can scale up to petabytes.</li>
+        <li>Can support thousands of concurrent NFS connections.</li>
+        <li>Data is stored across multiple AZ's within a region.</li>
+        <li>Read After Write Consistency.</li>
+      </ul>
+
+      <h4>EC2 Placement Groups</h4>
+      <ul>
+        Three types Placement Groups <br>
+        <li>
+          Clustered Placement Groups <br>
+          - Low Network latency / High Network throughput.
+        </li>
+        <li>
+          Spread Placement Groups <br>
+          - Individual Critical EC2 instances
+        </li>
+        <li>
+          Partitioned <br>
+          - Multiple EC2 instances HDFS, HBase, and Cassandra
+        </li>
+        <li>A clustered placement group can't span multiple Availbility Zones, where as Spread placement and Partitioned can.</li>
+        <li>The name you specify for placement group must be unique within AWS account.</li>
+        <li>Only certain types of instances can be launched in a placement group (Compute Optimized, GPU, Memory Optimized, Storage Optimized)</li>
+        <li>AWS recommended homogeneous instances within clusterd placement groups.</li>
+        <li>You can't merge placement groups.</li>
+        <li>You can't move an existing instance into a placement group. You can create an AMI from your existing instance, and then launch a new instance from the AMI into a placement group.</li>
+      </ul>
+    </div>
+
+    <div id="section4">
+      <h3>4. Databases</h3>
+
+      <ul>
+        <li>
+          RDS (OLTP): <br>
+          - SQL <br>
+          - MySQL <br>
+          - PostgreSQL <br>
+          - Oracle <br>
+          - Aurora <br>
+          - MariaDB
+        </li>
+        <li>DynamoDB (NoSQL)</li>
+        <li>Redshift (OLAP)</li>
+      </ul>
+
+      <h4>Elastic Cache</h4>
+      <ul>
+        <li>Memcached  : for simple</li>
+        <li>Redis : more advanced data types and for multiple AZs and backups</li>
+        <li>Use ElasticCache to increase database and web application performance.</li>
+        <li>Redis is Multi-AZ.</li>
+        <li>You can do backups and restore of Redis.</li>
+        <li>If you need to scale horizantally, use Memcached.</li>
+      </ul>
+
+      <ul>
+        <li>
+          Relational Databases:<br>
+          - RDS runs on virtual machines <br>
+          - You cannot log in to these operating systems howver. <br>
+          - Patching of the RDS Operating System and DB is Amazon's responsibility.  <br>
+          - RDS is not serverless <br>
+          - Aurora is serverless <br>
+        </li>
+        <li>
+          There are two different types of Backups for RDS: <br>
+          - Automated Backups <br>
+          - Database snapshots
+        </li>
+        <li>
+          Read Replicas: <br>
+          - Can be Multi-AZ. <br>
+          - Used to increase performace. <br>
+          - Must have backups turned on. <br>
+          - Can be in different regions. <br>
+          - Can be MySQL, PostgreSQL, MariaDB, Oracle, Aurora <br>
+          - Can be promoted to master, this will break the Read Replica
+        </li>
+        <li>
+          - Multi AZ is used for DR (Data Replication) <br>
+          - You can force a failover from on AZ to another by rebooting the RDS instance.
+        </li>
+        <li>
+          - Encryption at rest is supported for MySQL, Oracle, SQL Server, PostgreSQL, MariaDB & Aurora. <br>
+          - Encryption is done using the AWS Key Management Service (KMS) service. <br>
+          - Once you RDS instance is encrypted, the data stored at rest in the underlying storage is encrypted, as are its automated backups, read replicas, and snapshots.
+        </li>
+      </ul>
+
+      <h4>DynamoDB</h4>
+      <ul>
+        <li>Stored on SSD storage.</li>
+        <li>Spread across 3 geographically distinct data centres.</li>
+        <li>Eventual Consistent Reads (Default)</li>
+        <li>Strongly Consistent Reads</li>
+      </ul>
+
+      <h4>Redshift</h4>
+      <ul>
+        <li>Redshift is used for business intelligence.</li>
+        <li>Available in only 1 AZ.</li>
+        <li>Redshift backups enabled for 1 day retention period. Maximum retention period is 35 days.</li>
+        <li>Redshift always attempts to maintain at least three copies of your data (the original and replica on compute nodes and a backup in Amazon S3)</li>
+        <li>Redshift can also asynchronously replicate your snapshots to S3 in another region for disaster recovery.</li>
+      </ul>
+
+      <h4>Aurora</h4>
+      <ul>
+        <li>2 copies of your data are contained in each availability zone, with minimum of 3 availability zones, 6 copies of your data.</li>
+        <li>You can share Aurora Snapshots with other AWS accounts.</li>
+        <li>3 types of replicas available. Aurora replicas, MySQL replicas & PostgreSQL replicas.</li>
+        <li>Automated failover is only available with Aurora replicas.</li>
+        <li>Aurora has automated backups turned on by default. You can take snapshots with Aurora. You can share these snapshots with other AWS accounts.</li>
+        <li>Use Aurora Serverless, if you want simple, and cost effective option for infrequent, intermittent, or unpredictable workloads.</li>
+      </ul>
+    </div>
+
+    <div id="section5">
+      <ul>
+        <li>
+          Directory Service <br>
+          - Active Directory <br>
+          - Connect AWS resources with on-promises AD <br>
+          - SSO to any domain-joined EC2 instance <br>
+          - AWS Managed Microsoft AD <br>
+          - AD trust <br>
+          - AWS vs. customer responsibility
+        </li>
+        <li>
+          - Simple AD <br>
+          - Does not support trusts <br>
+          - AD connector <br>
+          - Cloud Directory <br>
+          - Cognito user pools <br>
+          - AD and non-AD compatible services
+        </li>
+        <li>
+          IAM Policies <br>
+          - ARN  <br>
+          - IAM policy structure <br>
+          - Effect/Action/Resource <br>
+          - Identity vs. Resource policies <br>
+          - Policy evaluation logic <br>
+          - AWS managed vs. customer managed <br>
+          - Permission boudaries <br>
+        </li>
+        <li>
+          Resource Access Manager (RAM) <br>
+          - Resource sharing between accounts <br>
+          - Individaul accounts and AWS organizations <br>
+          - Types of resources you can share
+        </li>
+        <li>
+          Single Sign-On (SSO) <br>
+          - Centrally managed access <br>
+          - Example: G suite, Office 365, Salesforce <br>
+          - Use existing identities. <br>
+          - Account level permissions <br>
+          - SAML
+        </li>
+      </ul>
+    </div>
+
+    <div id="section6">
+      <h2>Route 53</h2>
+      <ul>
+        <li>ELBs do not have pre-defined IPv4 addresses; you resolve them using a DNS name.</li>
+        <li>Understand difference between Alias Record and CNAME</li>
+        <li>Given the choice, always choose an Alias Record over CNAME</li>
+        <li>
+          Common DNS Types : <br>
+          - SOA Records <br>
+          - NS Records <br>
+          - A Records <br>
+          - CNAMES <br>
+          - MX Records <br>
+          - PTR Records
+        </li>
+        <li>
+          The following Routing Polices are avaibale with Route 53: <br>
+          - Simple Routing : - If you choose the simple routing policy you can only have one record with multiple IP addresses.
+          - if you specify multiple values in a record, Route53 returns all values to user in a random order. <br>
+          - Weighted Routing :  used to distribute the percentage of the traffic to the distinations.<br>
+          - Latency-based Routing : based on user's location and latency which gets the fast reponse <br>
+          - Failover Routing <br>
+          - Geolocation Routing <br>
+          - Geoproximity Routing (Traffic Flow Only) : routes traffic to your resources based on the geographic location of your users and your resources.
+          You can also optionally choose to route more traffic or less to a given resource by specifying a value, known as a bias. A bias expands or shrinks the size of the geographic region from which traffic is routed to a resource. To use Geoproximity routing, you must use Route53 traffic flow. <br>
+          - Multivalue Answer : Same as Simple based routing, except you get Health checks.
+        </li>
+        <li>
+          Health Checks: <br>
+          - You can set health checks on individual record sets. <br>
+          - If a record set fails a health check it will be removed from Route53 until it passes the health check. <br>
+          - You can set SNS notification to alert you if a health check is failed. <br>
+        </li>
+      </ul>
+    </div>
 
   </body>
 </html>
