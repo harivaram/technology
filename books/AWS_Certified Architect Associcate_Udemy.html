@@ -36,7 +36,11 @@
         <li><a href="#section3">Elastic Cloud Compute</a></li>
         <li><a href="#section4">Databases</a></li>
         <li><a href="#section5">Advanced IAM</a></li>
-
+        <li><a href="#section6">Route53</a></li>
+        <li><a href="#section7">Amazon VPC</a></li>
+        <li><a href="#section8">HA Architecture</a></li>
+        <li><a href="#section9">Applications</a></li>
+        <li><a href="#section10">Serverless</a></li>
       </ol>
     </div>
 
@@ -571,6 +575,7 @@
     </div>
 
     <div id="section5">
+      <h2>5. Advanced IAM</h2>
       <ul>
         <li>
           Directory Service <br>
@@ -617,7 +622,7 @@
     </div>
 
     <div id="section6">
-      <h2>Route 53</h2>
+      <h2>6. Route 53</h2>
       <ul>
         <li>ELBs do not have pre-defined IPv4 addresses; you resolve them using a DNS name.</li>
         <li>Understand difference between Alias Record and CNAME</li>
@@ -650,6 +655,292 @@
           - You can set SNS notification to alert you if a health check is failed. <br>
         </li>
       </ul>
+    </div>
+
+    <div id="section7">
+      <h2>7. VPCs</h2>
+      <ul>
+        <li>Think of VPC as a logical datacenter in AWS.</li>
+        <li>Consists of IGWs (Or Virtual Private Gateways), Route Tables, Network Access Control Lists, Subnets, and Security Groups</li>
+        <li>1 Subnet = 1 Availbility Zone</li>
+        <li>Security Groups are Stateful; Network Access Control Lists are Stateless.</li>
+        <li>NO TRANSITIVE PEERING</li>
+        <li>When you create a VPC a default Route Table, Network Access Control List (NACL) and default Security Group.</li>
+        <li>It won't create any subnets, not will it create a default internet gateway</li>
+        <li>US-East-1A in your AWS account can be a completely different availability zone to US-East-1A in another AWS account. The AZ's are randoized.</li>
+        <li>Amazon always reserts 5 IP addresses within your subnets.</li>
+        <li>You can only have 1 Internet Gateway per VPC.</li>
+        <li>Security Groups can't span VPCs.</li>
+        <li>
+          NAT Instances: <br>
+          - When creating NAT instance, Disable Source/Destination Check on the Instance. <br>
+          - NAT instances must be in public subnet. <br>
+          - There must be a route out of private subnet to the NAT instance, in order for this to work. <br>
+          - The amount of traffic that NAT instance can support depends on the instance size. If you are bottlenecking, increase the instance size. <br>
+          - You can create high availability using Autoscaling Groups, multiple subnets in different AZs and a script to automate failover. <br>
+          - NAT instances are alway behind Security Group.
+        </li>
+        <li>
+          NAT Gateway: <br>
+          - Redundant inside the Availability Zone. <br>
+          - Preferred by the enterprise. <br>
+          - Starts at 5Gbps and scale currently to 45Gbps. <br>
+          - No need to patch <br>
+          - Not associated with security Groups <br>
+          - Automatically assigned a public IP address <br>
+          - Remember to update your route tables. <br>
+          - No need to disable Source/Destination Checks <br>
+          - If you have resources in multiple AZs and they share one NAT gateway, in the event that the NAT gateway's AZ is down, resources in other AZs lose internet access. <br>
+          - To create an AZ independent architecture, create a NAT gateway in each AZ and configure your routing to ensure that resources use the NAT gateway in the same AZ.
+        </li>
+        <li>
+          Network ACLs <br>
+          - Your VPC automatically comes with a default network ACL, and by default it allows all inbound and outbound traffic <br>
+          - You can create custom network ACLs. By default, each custom network ACL denies all inbound and outboud traffic untill you add rules <br>
+          - Each subnet in your VPC must be associated with a network ACL. If you don't explicitly associate a subnet with a network ACL, the subnet is automatically associated with the default network ACL. <br>
+          - Block IP addresses using network ACLs not Security Groups. <br>
+          - You can associate a network ACL with multiple subnets; however, a subnet can be associated with one network ACL at a time. When you associate a network ACL with a subnet, the previous association is removed. <br>
+          - Network ACLs contain a number of rules that is evaluated in order starting with the lowest numbered rule. <br>
+          - Network ACLs have seperate inbound and outbound rules, and each rule can either allow or deny traffic. <br>
+          - Network ACLs are stateless; responses to allowed inbound traffic are subject to the rules for outbound traffic (and vice versa)
+        </li>
+        <li>
+          ELB's and VPC <br>
+          - You need a minimum of two public subnets to deploy an internet facing loadbalancer. <br>
+        </li>
+        <li>
+          VPC Flow Logs: <br>
+          - You cannot enable flow logs for VPCs that are peered with your VPC, unless the peered VPC is in your account. <br>
+          - You can tag VPC flow logs. <br>
+          - After you've created a flow log, you cannot change its configuration; for example, you can't associate a different IAM role with the flow log. <br>
+        </li>
+        <li>
+          Not all IP traffic is monitored:
+          - Traffic generated by instances when they contact the Amazon DNS server. If you use your own DNS server, then all traffic to that DNS server is logged. <br>
+          - Traffic generated by a Windows instance for Amazon Windows license activation. <br>
+          - Traffic to and from 169.254.169.254 for instance metadata. <br>
+          - DHCP traffic. <br>
+          - Traffic to reserved IP address for default VPC router. <br>
+        </li>
+        <li>Bastion : If we want to SSH or RDP to an instance in PRIVATE subnet, Bastion host is used </li>
+
+        <li>
+          Bastions Vs NAT Gateways/Instances : <br>
+          - A NAT Gateway or NAT instance is used to provide internet traffic to EC2 instances in a private subnet. <br>
+          - A Bastion is used to securely administer EC2 instances (Using SSH or RDP). Bastions are also called as Jump boxes. <br>
+          - You can not use a NAT Gateway as Bastion host.
+        </li>
+        <li>
+          Direct Connect: <br>
+          - Direct Connect directly connects your data center to AWS. <br>
+          - Useful for high throughput workloads (i.e lots of network traffic) <br>
+          - Or if you need stable and reliable secure connection. <br>
+        </li>
+        <li>
+          Steps to Creating a Direct Connect Connection <br>
+          - Create a virtual interface in the Direct Connect console. This is a PUBLIC virtual interface. <br>
+          - Go to VPC console and then to VPC connections. Create a Customer Gateway. <br>
+          - Create a Virtual Private Gateway. <br>
+          - Attach the Virtual Private Gateway to desired VPC. <br>
+          - Select VPN Connection and create new VPN Connection <br>
+          - Select the Virtual Private Gateway and the Customer Gateway <br>
+          - Once the VPN is available, setup the VPN on the customer gateway or firewall.
+        </li>
+        <li>
+          Global Accelarator : <br>
+          - AWS Global Accelarator is a service in which you create accelarators to improve availability and performance of your applications for local and global users. <br>
+          - You are assigned two static IP addresses (or alternatively you can bring your own) <br>
+          - You can control traffic using traffic dials. This is done with the endpoint group. <br>
+          - You can control weighted to individual end points using weights. <br>
+        </li>
+        <li>
+          A VPC Endpoint: <br>
+          - A VPC Endpoint enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct connection. <br>
+          - Instances in your VPC do not require public IP addresses to communicate with resources in the service.
+          - Traffic between your VPC and other services doesn't leave the Amazon Network.
+          - Endpoints are virtual devices. They are horizantally scaled, redundant, and hightly available VPC components that allow communication between instances in your VPC and services without imposing availability risks or bandwidth constraints on your network traffic.
+          - There are two types of VPC Endpoints. 1) Interface Endpoints 2) Gateway Endpoints <br>
+          - Currently Gateway endpoints supports : Amazon S3, DynamoDB
+        </li>
+        <li>
+          AWS Private Link <br>
+          - If you see a question asking about peering VPCs to ten, hundreds, or thousands of customer VPCs, think of AWS Private Link. <br>
+          - Doesn't require VPC peering; no route tables; NAT, IGWs, etc. <br>
+          - Requires a Network Load Balancer on the service VPC and an ENI on the customer VPC. <br>
+        </li>
+        <li>
+          Transit Gateway <br>
+          - Allows you to have transitive peering between thousands of VPCs and on-promises data centers. <br>
+          - Works on hub-and-spoke model. <br>
+          - Works on regional basis, but you can have it across multiple regions. <br>
+          - You can use it across multiple AWS accounts using RAM (Resource Access Manager). <br>
+          - You can use route tables to limit how VPCs talk to one another. <br>
+          - Works with Direct Connect as well as VPN connections. <br>
+          - Support IP multicast (not supported by any other AWS service)
+        </li>
+        <li>
+          AWS VPN CloudHub <br>
+          - If you have multiple sites, each with its own VNP connection, you can use AWS VPN CloudHub to connect those sites together. <br>
+          - Hub-and-spoke model. <br>
+          - Low cost; easy to manage. <br>
+          - It operates over the public internet, but all traffic between the customer gateway and the AWS VPN CloudHub is encrypted. <br>
+        </li>
+        <li>
+          AWS Network Costs: <br>
+          - Use private IP addresses or public IP address to save on costs. This is then utilizes the AWS backbone network. <br>
+          - If you want to cut all network costs, group your EC2 instances in the same Availability Zone and use private IP addresses. This will cost-free, but make sure to keep in mind single point of failure issues.
+        </li>
+      </ul>
+    </div>
+
+    <div id="section8">
+      <h2>8. HA Architecture</h2>
+      <ul>
+        <li>
+          3 Different type of Load Balancers <br>
+          - Application Load balancers
+          - Network Load balancers
+          - Classic Load balancers
+        </li>
+        <li>504 Error means the gateway has timedout. This means that the application is not responding within the idle timeout period.</li>
+        <li>troubleshoot the application. Is it the Web Server or Database Server?</li>
+        <li>If you need the IPv4 address of your end user, look for the X-FORWARD-FOR header</li>
+        <li>Instances monitored by ELB are reported as; InService, or OutofService</li>
+        <li>Health Checks check the instance health by talking to it.</li>
+        <li>Load Balancers have their own DNS name. You are never given an IP address.</li>
+        <li>Sticky sessions enable your users to stick to the same EC2 instance. Can be useful if you are storing information locally to that instance. </li>
+        <li>Cross Zone Load Balancing enables you to load balance across multiple availability zones.</li>
+        <li>Path patterns allow you to direct traffic to different EC2 instances based on the URL contained in the request.</li>
+        <li>
+          Cloud Formatioon : <br>
+          - Is a way of completely  scripting your cloud environment. <br>
+          - Quick Start is a bunch of Cloud Fromation templates already buit by AWS Solution Architects allowing you to create complex environments very quickly. <br>
+        </li>
+        <li>
+          Elastic Beanstalk: <br>
+          - You can quickly deploy and manage applications in the AWS Cloud without worrying about the infrastructure that runs those applictions. <br>
+          - You simply upload your application, and Elastic Beanstalk automatically handles the details of capacity provisioning, load balancing, scalling, and applicaiton health monitoring.
+        </li>
+        <li>
+          High Availbility with Bastion hosts <br>
+          - Two hosts in two seperate Availbility Zones. Use a Network Load Balancer with static IP addresses and health checks to fail over from one host to other. <br>
+          - Can't use application load balancer, as it is layer 7 and you need to use layer 4.
+          - One host in one AZ behind an Auto Scaling group with health checks and fixed EIP. if the host fails, the health check will fail and the Auto Scaling group will provision a new EC2 instance in a seperate Availability Zone. You can use a user data script to provision the same EIP to the new host. This is cheapest option, but it is not 100% tolerant. <br>
+        </li>
+        <li>
+          AWS services on-promise <br>
+          - Database Migration Service (DMS) <br>
+          - Server Migration Service (SMS) <br>
+          - AWS Applicaiton Discovery Service <br>
+          - VM Import/Export <br>
+          - Download Amazon Linux 2 and an ISO <br>
+
+        </li>
+      </ul>
+    </div>
+
+    <div id="section9">
+      <h2>9. Applications</h2>
+      <h4>SQS</h4>
+      <ul>
+        <li>SQS is a way to de-couple your infrastructure.</li>
+        <li>SQS is pull based, not push based.</li>
+        <li>Messages are 256 KB in size.</li>
+        <li>Messages can be kept in queue from 1 minute to 14 days; the default retention period is 4 days.</li>
+        <li>Standard SQS and FIFO SQS</li>
+        <li>Standard order is not guarateed and messages can be delivered more than once.</li>
+        <li>FIFO order is stricly maintained and messages are delivered only once.</li>
+        <li>Visiblity Time Out is the amount of time that message is invisible in the SQS queue after a reader picks up that message. <br>
+          Provided the job is processed before the visibility timeout expires, the message will then be deleted from the queue. <br>
+          If the job is not processed within the time, the message will become visible again and another reader will process it. This could result in the same message being delivered twice. <br>
+          Visiblity timeout is maximum 12 hours
+        </li>
+        <li>SQS guarantees that your messages will be processed atleast once.</li>
+        <li>Amazon SQS long polling is a way to retrieve messages from Amazon SQS queues. <br>
+          While the regular short polling returns immedietly (even if the message queue being pulled is empty), long polling doesn't return a reponse untill a message arrives in the message queue, or the long polling times out.
+        </li>
+        <li>
+          SWF vs SQS <br>
+          - SQS has a retention period of up to 14 days; with SWF, workflow executions can last up to 1 year. <br>
+          - Amazon SWF presents a task-oriented API, whereas Amazon SQS offeres message-oriented API.<br>
+          - Amazon SWF ensures that task is assigned only once and is never duplicated. With Amazon SQS, you need to handle duplicated messages and may also need to ensure that a message is processed only once. <br>
+          - Amazon SWF keep track of all the tasks and events in an application. With Amazon SQS, you need to implement you own application-level tracking, especially if your application uses multiple queues.
+        </li>
+      </ul>
+
+      <h4>SWF Actors</h4>
+      <ul>
+        <li>Workflow Starters : An application that can initiate (start) a workflow. Could you your e-commerce website following the placement of an order, or a mobile app searching for bus times.</li>
+        <li>Deciders : Control the flow of activity tasks in a workflow execution. If something as finished (or failed) in a workflow, a Decider decides what to do next.</li>
+        <li>Activity Workers : Carry out the activity tasks.</li>
+      </ul>
+
+      <h4>SNS</h4>
+      <ul>
+        <li>Instantaneous, push-based delivery (no polling).</li>
+        <li>Simple APIs and easy integration with applications.</li>
+        <li>Flexible message delivery over multiple transport protocols.</li>
+        <li>Inexpensive, pay-as-you-go model with no up-front costs.</li>
+        <li>Web-based AWS Management console offeres the simplicity of a point-and-click interface</li>
+      </ul>
+
+      <h4>Elastic Transcoder</h4>
+      <ul>
+        <li>Elastic Transcoder is a media transcoder in the cloud. It converts media files from the original source format in to different format that will play on smart phones, tables, PCs, etc  </li>
+      </ul>
+
+      <h4>API Gateways</h4>
+      <ul>
+        <li>API Gateway has caching capability to increase performance.</li>
+        <li>low cost and scales automatically</li>
+        <li>You can throttle API Gateways to prevent attacks</li>
+        <li>You can log results to CloudWatch</li>
+        <li>If you are using Javascript/AJAX that uses multiple domains with API Gateway, ensure that you have enabled CORS on API Gateway.</li>
+        <li>CORS is enforced by the client's browser</li>
+      </ul>
+
+      <h4>Kenisis</h4>
+      <ul>
+        <li>Kenisis streams has data persistence, but Kenisis Firehouse is for realtime data processing with out persistence.</li>
+      </ul>
+
+      <h4>Cognito</h4>
+      <ul>
+        <li>Federation allows users to authenticate with a Web Identity Provider (Google, Facebook, Amazon)</li>
+        <li>The user authenticates first with the Web ID Provider and receives an authentication token, which is exchanged from temporary AWS credentials allowing them to assume an IAM role.</li>
+        <li>Cognito is an Identity Broker which handles interaction between your applications and the Web ID provider (You don't need to write your own code to do this)</li>
+        <li>User pools is user based. It handles things like user registration, authentication, and account recovery.</li>
+        <li>Identity pools authorise account to your AWS resources.</li>
+      </ul>
+    </div>
+
+    <div id="section10">
+      <h2>10. Serveress</h2>
+      <ul>
+        <li>
+          Traditional Architecture: <br>
+          - Typically contains Load balancers, EC2 instances, RDS.
+          - can be scallable if architected corretly, but has a limit.
+        </li>
+        <li>
+          Serverless Architecture: <br>
+          - Typically contains API Gateway, Lambdas, DynamoDB.
+          - Scalable without limits.
+          - High availability and low cost option.
+        </li>
+        <li>
+          Lambda <br>
+          - Lambda scales out (not up) automatically. <br>
+          - Lambda functions are independent, 1 event = 1 function <br>
+          - Lambda is serverless <br>
+          - Know what services are serverless <br>
+          - Lambda functions can trigger other Lambda functions, 1 event can = x functions if functions trigger other functions <br>
+          - Architecture can get extreamly complicated, AWS X-ray allows you to debug what is happening. <br>
+          - Lambda can do things globally, you can use it to back up S3 buckets to other S3 buckets etc. <br>
+          - know your triggers
+        </li>
+      </ul>
+
     </div>
 
   </body>
