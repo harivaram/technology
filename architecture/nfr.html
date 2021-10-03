@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Non Functional Requirements</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>Non Functional Requirements</h1>
+
+    <div class="">
+
+    </div>
+      <h3>Why should we care about NRFs</h3>
+        <ul>
+          <li>Identify constraints</li>
+          <li>Identify Benchmarks</li>
+          <li>Identify unknown unknown</li>
+          <li>Common Vocabulary</li>
+          <li>Forsee Future</li>
+        </ul>
+
+      <h3>What is NFR?</h3>
+      <p>NFR is a requirement that specifies criteria that can be used to judge the operation of a system, rather than specific behavior.</p>
+      <p>Functional requirements define what a system is supposed to do and non-functionl requirements define how a system is supposed to be.</p>
+
+
+      <h3>7 important NFRs</h3>
+      <ul>
+        <li>Scalability</li>
+        <li>Performance</li>
+        <li>Testability</li>
+        <li>Security</li>
+        <li>Extensibility</li>
+        <li>Observability</li>
+        <li>Maintainability</li>
+      </ul>
+
+      <h3>Why 7 NRFs</h3>
+      <ul>
+        <li>Too important to ignore.</li>
+        <li>Easily overseen.</li>
+        <li>Too costly to oversee.</li>
+        <li>Help to build our credibility.</li>
+        <li>Ignoring may create a blackspot in our career.</li>
+      </ul>
+
+      <h3>Scalability</h3>
+      <p><b>Scalability Problems:</b> <br>
+        If considered too early u end up YAGNI, too late wast money in resources. <br>
+        MVP suddenly blows up into real project.
+      </p>
+      <p><b>What is Scalability:</b> <br>
+        Scalability means the capacity to be changed in size or scale. <br>
+        Scalability is the most important NFR, which definitely needs an architect to be present in the project. <br>
+      </p>
+      <p>
+        <b>Scalability Tips</b><br>
+        Automation is the key, Human intervention kills scalability. <br>
+        Use Content Delivery Network / Load Balancer / Traffic Manager / Geo Replication <br>
+        Enable Auto scaling. <br>
+        Think about messaging patterns. <br>
+        Choose proper DB based on requriements and storage type. NoSQL Vs SQL Options. <br>
+        Enable cache and use them extensively. Browser cache / Client-side Cache / Server-side Cache / Data-base cache. <br>
+      </p>
+
+      <h3>Performance</h3>
+      <p>
+        <b>Performance Problems</b> <br>
+        If your application is not perfromant you are out of business. <br>
+        People nowadays wants everything now. They don't want to wait.
+      </p>
+      <p>
+        <b>What is Performance?</b> <br>
+        Performance is an indication of the responsiveness of a system to execute any action within a given time interval.
+      </p>
+      <p>
+        <b>Performance Tips</b><br>
+        Define a metric for during the intial phases of your design and get it signed from the stakeholders. <br>
+        Measure KPI's <br>
+        &nbsp; &nbsp; Average Response Time <br>
+        &nbsp; &nbsp; Error Rate <br>
+        &nbsp; &nbsp; Request Rate <br>
+        &nbsp; &nbsp; Application Availability <br>
+        &nbsp; &nbsp; Mean time between failres <br>
+        &nbsp; &nbsp; Mean time to recover/ repair <br>
+
+        Always choose push communcation instead of pull communcation. <br>
+        Choose Horizantal scaling as much as possible. <br>
+        Realizing speed is relative, a good progress bar will make your app like a quick one.
+      </p>
+
+      <h3>Testability</h3>
+      <p>
+        <b>Testability Problems:</b><br>
+        Turn around time for bug fix or adding feature is more. <br>
+        Fear of regression issues. <br>
+        Too much resources and time spent in testing. <br>
+        Velocity is low. <br>
+        Maitenance is costly <br>
+      </p>
+      <p>
+        <b>What is Testability?</b> <br>
+        Software testability is the degree to which a software artifact supports testing in a given test context. <br>
+        If the testability of the software artifact is high, then finding faults in the system by means of testing is easier. <br>
+      </p>
+
+      <p>
+        <b>Testability Tipes</b> <br>
+        Use a Dependency Injection framework <br>
+        Learn at least one in-memory database for integration testing. <br>
+        Make it a habit to test your code changes only through unit testing. <br>
+        Automate your tests and make sure your developer cannot check in the code even if one of your tests fails. <br>
+        Don't try for 100% coverage, aim for covering important functionality. <br>
+        When you fix a bug, add a unit test first and then fix the bug. <br>
+        Implement Semantic Monitoring. <br>
+        Keep your E2E as minimal as possible as simple. <br>
+        Use browser stack, sause lab or any third party online services for device testing. <br>
+      </p>
+
+      <h3>Security</h3>
+      <p>
+        <b>Security problems:</b>
+        Always a challenge. <br>
+        Can make our life as nightmare. <br>
+        Can make our application go down. <br>
+        Tough to keep up with the all negative forces. <br>
+        Your system can be attached at anytime by anyone, by means, intentionally or unintentionally. <br>
+      </p>
+
+      <p>
+        <b>What is Security</b> <br>
+        Security is an ongoing process involving people and practices, and ensures application confidentiality, integrity, and availability. <br>
+      </p>
+      <p>
+        <b>Security Principles</b> <br>
+        Don't trust people, any hardware or software. <br>
+        Audit all users and usage <br>
+        Implement security in every layer of software from physical and application layer. <br>
+        Always follow a lease privilige approach. Do not provide even one extra previlege. <br>
+        Set a time limit for every previlege provided. <br>
+      </p>
+      <p>
+        <b>Security Principles</b><br>
+        Always sanitize input to avoid SQL injection, Cross site scripting and remote file inclusion attacks. <br>
+        Always use HTTPS and enable SSL certification. <br>
+        Use encryption wherever applicable. <br>
+        Always use request limiting, to prevent DDOS attack. <br>
+        Use the Encryption at REST for available services. <br>
+        Make sure you keep the connection string in vaults that can only be accessible by your service <br>
+        Don't try to build a login system, use an already built-in system such as OAuth, AD B2C etc. <br>
+        Choose managed services rather than unmanaged services provided by the cloud vendor. <br>
+        Never share production configuraiton to anyone, it should be only in the application settings or in vault <br>
+      </p>
+
+      <h3>Extensibility</h3>
+      <p>
+        <b>Extensibility Problems</b><br>
+        Time for market is low <br>
+        Defines overall success of the project <br>
+        Compitition is high, faster to market has become default necessity. <br>
+        Can make your application unstable. <br>
+      </p>
+
+      <p>
+        <b>What is Extensibility</b> <br>
+        Extensibility is a measure of the ability to extend a system and the level of effort required to implement the extention. <br>
+        Extensions can be through the addition of new functionality or through modification of existing functionality. <br>
+        The principle provides for enhanecments, without impairing existing system functions.
+      </p>
+
+      <p>
+         <b>Extensibility Tips:</b> <br>
+         Beware of the antipattern Vendor lock-in. <br>
+         Start thinking your system in smaller services or microservices. Understand the domain driven design and even driven design. <br>
+         Automate every manual work that hinders the release process. <br>
+         Setup Automated rollback mechanism. <br>
+         Choose buy strategy, when you are presented with buy vs build choice. <br>
+         Always validate your assumptions, your way of thinking may be the problem that is not allowing the system to extend and scale. <br>
+         Beware of your knowledge which may stop Extensibility <br>
+      </p>
+
+      <h3>Observability</h3>
+      <p>
+        <b>Observability Problems</b> <br>
+        Spend countless time to understand the problem. <br>
+        Waste lots of time in reproducing the problem. <br>
+        Need to access the production resource to find the problem. <br>
+      </p>
+      <p>
+        <b>What is the Observability</b>
+        Observability is a measure of how well internal states of a system can be inferred from knowledge of its external outputs. <br>
+        Another name is Monitoring.
+      </p>
+      <p>
+        <b>Observability Components</b> <br>
+        Data Collection <br>
+        Data Storage <br>
+        Visualization <br>
+        Analytics and Reporting
+      </p>
+      <p>
+        <b>Observability Tips</b> <br>
+        Select the right tools, don't select any monitoring tools because amazon or google uses it. <br>
+        Monitoring is not a Job, so you cannot have manual person sitting and watching the dashboard. <br>
+        Alert only when humun intervention is needed, remember all ignored alerts in your projects. <br>
+        Continuous improvement is the key in monitoring systems. <br>
+        Write logs as much as possible.<br>
+        Use correlation id in your logs, for time interval.
+        Always set up availability test for all your applications including web App, web API, messaging service etc. <br>
+      </p>
+
+      <h3>Maintainability</h3>
+      <p>
+        <b>What is Maintainability</b><br>
+        Maintainability is the ease with which a product can be maintained in order to correct defects or their cause, prevent unexpected working conditions, make future maintenance easier, or cope with changed environment. <br>
+      </p>
+      <p>
+        <b>Maintainability Principles</b><br>
+        Broken window theory states that visible signs of disorder and misbehavior in an environment encourages further disorder and misbehavior, leading to serious crimes. <br>
+        Same applies to code base, if you accept one hacky code, your applicaiton become a spaghetti repo.
+      </p>
+      <p>
+        <b>Maintainability Tips:</b> <br>
+        Write code for humans. <br>
+        Choose always a simple way to implement the feature and avoid complexity. Avoid accidental complexity by all means. <br>
+        Code by thinking first and not by typing. <br>
+        Try to refactor the code as many times as possible, use the Boy Scout Rule for coding. Leave your code better than you found it. <br>
+        Have a well defined CI/CD pipelines, so the release to stage is not dependent on any person.<br>
+        Make sure you have enabled static code analysers such as foxcop, JTest, linter etc. <br>
+        Never voilate Single Responsibility Principle <br>
+        Code review can make your code maintainable, just the thought of someone reviewing our code makes us better developer. <br>
+        Final tip, is the "Sharpen the saw" principle, make it a habit for yourself and also for other developers to learn a new way of coding. <br>
+      </p>
+
+      <h3>Reference:</h3>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=MyHSFqWDA8I">7 Non-Functional Requirements(NFR) every Architect should know</a></li>
+        <li><a href="https://enfocussolutions.com/wp-content/uploads/2014/12/nonfunctional_question_bank.pdf">NFRs Question bank</a></li>
+      </ul>
+
+
+ </<body>
+</html>

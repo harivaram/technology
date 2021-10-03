@@ -570,5 +570,158 @@
   <div id="chapter12">
     <h2>Chapter 12: Other Quality Attributes</h2>
     <p><em>Quality is not an act, it is a habit</em>__Aristotle </p>
+
+    <h3>Other important Quality Attributes</h3>
+    <h4>Variability:</h4>
+    <p>Variability is a special form of modifiability. It refers to the ability of a system and its supporting artifacts such as requirements, test plans, and configuration specifications to suppport the production of a set of variants that differ from each other in a preplanned fashion.</p>
+    <p>The goal of veriability in a software product line is  to make it easy to build and maintain products in the product line over a period of time.</p>
+    <p>Scenarios for variability will deal with the binding time of the variation and the people time to achieve it.</p>
+
+    <h4>Portablitiy:</h4>
+    <p>Portablitiy is also a special form of modifiability. Portablitiy refers to the ease with which software that was built to run on one platform can be changed to run on a different platform.</p>
+    <p>Portablitiy is achieved by minimizing platform dependencies in the software, isolating dependencies to well-identified locations, and writing the sotware to run on a "virtual machine" that encapsulate all the platform dependencies within. </p>
+
+    <h4>Development Distributability</h4>
+    <p>It is the quality of designing the software to support distributed software development.</p>
+    <p>The system should be desinged so that coodination among teams is minimized. This minimal coordination needs to be achieved both for the code and for the data model.</p>
+
+
+    <h4>Scalability:</h4>
+    <p>Horizanal Scalability and Vertical Scalability.</p>
+    <p>The problem aiseswith either type of scaling is how to effectively utilize the additional resources.</p>
+    <p>Being <em>effective</em> means that the additional resources result in a measurable improvement of some system quality, did not require undue effort to add, and did not distrupt operations.</p>
+
+    <h4>Deployability</h4>
+    <p>Deployability is concerned with how an executable arrives at a host platform and bow it is subsequently invoked.</p>
+    <p>How does it arrive at its host (push, where updates are sent to users inbidden, or pull, where users must explicitly request updates)? How is it integrated in to an existing system? Can this be done while the existing system is executing?</p>
+    <p>Deployment scenarios will deal with the type of update (push or pull), the form of the update (medium, such as DVD or Internet download, and packaging such as executable, app, or plug-in), the resulting integration into an existing system, the efficiency of executing the process,and the associated risk.</p>
+
+    <h4>Mobility</h4>
+    <p>Mobility deals with the problemsof movement and affordability of a platform (e.g., size, type of display, type of input devices, availability, and volume of bandwidth, and batter life)</p>
+    <p>Scenarios will deal with specifying the desired effect of mobility or the various affordances.</p>
+
+    <h4>Monitorability</h4>
+    <p>Monitorability deals with ability of the operations staff to monitor the system whileit is executing.</p>
+    <p>Items such as queue lengths, average transaction processing time and the health of various componenets should be visible to the operations staff.</p>
+
+    <h4>Safety</h4>
+    <p>Safety is not purely a software concern, but a concern for any system that can affect its environment.</p>
+    <p>Software saftey is about the software's ability to avoid entering states that cause or lead to damage, injury, or loss of life to actors in the software's environment, and to recover and limit the damage when it does enter in to bad states.</p>
+    <p>It is concerned with the prevention of and recovery from hazardous failures.</p>
+    <p>Safety is not the same as reliability. A system can be reliable but still unsafe.</p>
+    <p>Safety is frequently engineered by performing failure mode and effects analysis, and fault tree analysis.</p>
+
+    <h3>Other Categories of Quality Attributes</h3>
+    <p>There are other types of quality attributes that measure "goodness" of something other than the final product.</p>
+
+    <h4>Conceptual Integrity of the Architecture</h4>
+    <p>Conceptual integrity refers to consistency in the design of the architecture, and it contributes to the understandability of the architecture and leads to fewer errors of confusion.</p>
+    <p>Conceptual integrity demands that the same thing is done in the same way through the architecture.</p>
+
+    <h4>Quality in Use</h4>
+    <p><em>Effectiveness:</em> This refers to the distinction between building the system correctly (the system performs according to its requirement) and building the correct system (the system performs in the manner the user wishes). Effectiveness is a measure of whether the system is correct.</p>
+    <p><em>Efficiency:</em> The effort and time required to develop a system. Put another way,
+      <br> what is the architecture's impact on the project's corst and schedule?
+      <br> Would a different set of architectual choices have resulted in a system that would be faster or cheaper to bring to fruition?
+      <br> Efficiency can include training time for developer; an architecture that uses technology unfamiliar to the staff on hand is less buildable.
+      <br> Is the architecture appropriate for the organization in terms of its experience and its available supporting infrastrucre (such as test facilities or dev environemt)?
+    </p>
+    <p><em>Freedom from risk:</em> The degree to which a product or system effects economic status, humun life, health, or the environment.</p>
+
+    <h4>Marketability</h4>
+    <p>Some systems are well known by their architectures, and these architectures sometimes carry a meaning all their own, independent of what other quality attributes they bring to the system.</p>
+    <p>The current craze in building cloud-based systems has taught us that the perception of an architecture can be more important than the qualities the architecture brings.</p>
+
+    <h3>Software Quality Attributes and System Quality Attributes</h3>
+    <p>Physical systems, such as aircraft or automobiles or kitchen appliances, that rely on software embedded within are designed to meet a whole other litany of quality attributes: weight, size, electricity consumption, power of output, pollution output, weather resistance, battery life. and on and on. For many of these safety tops the list.</p>
+
+    <h3>Using Standard List of Quality Attributes - or Not</h3>
+    <h4>The ISO/IEC FCD 25010 product quality standard</h4>
+    <table border="1px">
+      <tr>
+        <th>Functional Stability</th>
+        <td>Functional completeness <br>
+            Functional correctness <br>
+            Functional appropriateness</td>
+      </tr>
+      <tr>
+        <th>Performance efficiency</th>
+        <td>Time behavior <br>
+            Resource Utilization <br>
+            Capacity</td>
+      </tr>
+      <tr>
+        <th>Compatibility</th>
+        <td>Coexistance <br>
+          Interoperability</td>
+      </tr>
+      <tr>
+        <th>Usability</th>
+        <td>
+          Appropriateness recognizability <br>
+          Learnability <br>
+          Operability <br>
+          User error prediction <br>
+          User interface aesthetics <br>
+          Accessibility
+        </td>
+      </tr>
+      <tr>
+        <th>Reliability</th>
+        <td>
+          Maturity <br>
+          Availability <br>
+          Fault tolerance <br>
+          Recoverability
+        </td>
+      </tr>
+      <tr>
+        <th>Security</th>
+        <td>
+          Confidentiality <br>
+          Integrity <br>
+          Nonrepudiation <br>
+          Accountability <br>
+          Authenticity
+        </td>
+      </tr>
+      <tr>
+        <th>Maintainability</th>
+        <td>
+          Modularity <br>
+          Reusability <br>
+          Analyzability <br>
+          Modifiability <br>
+          Testability <br>
+        </td>
+      </tr>
+      <tr>
+        <th>Portability</th>
+        <td>
+          Adaptability <br>
+          Installability <br>
+          Replaceability
+        </td>
+      </tr>
+    </table>
+
+    <h4>Advantages of the Quality Attributes list</h4>
+    <p>The Quality Attribute list, can be helpful checklists to assist requirements gatherers in making sure that no important needs were overlooked.</p>
+    <p>They can serve as the basis for creating your own checklist that contains the quality attributes of concern in your domain, your industry, your organization,  and your products</p>
+    <p>Quality attribute list can also serve as the basis for establishing measures.</p>
+
+    <h4>Drawbacks of the Quality Attributes list</h4>
+    <p>Firstly, no list will ever be complete. As an architect, you will be called upon to design a system meet a stakeholder concern not foreseen by any list-maker.</p>
+    <p>Second, list often generate more controversy than understanding.</p>
+    <p>Third, These lists often purport to be <em>taxonomies</em></p>
+    <p>Finally, These lists force architects to pay attention to every quality attribute on the list, even if only to finally decide that the particular quality attribute is irrelevant to their system.</p>
+
+    <h3>Dealing with "X-ability": Bringing a New Quality Attribute in to the Fold</h3>
+    <p>Suppose, as an architect, you must deal with a quality attribute for which there is no compact body of knowledge, or no "portfolio", Suppose you find yourself having to deal with a qulity attribute like "green computing" or "manageability" or even "Ilwability"? What you do?</p>
+    <h4>Capture scenarios for the New Quality Attribute</h4>
+    <h4>Assemble design approaches for new Quality Attribute</h4>
+    <h4>Model the New Quality Attribute</h4>
+    <h4>Assemble a Set of Tactics for the New Quality Attribute</h4>
+    <h4>Construct Design Checklists for New Quality Attribute</h4>
 </body>
 </html>
