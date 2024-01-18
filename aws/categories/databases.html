@@ -1,0 +1,575 @@
+<html lang="en" dir="ltr">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../styles.css">
+    </style>
+  </head>
+  <body>
+    <h1>Databases</h1>
+    <h5>Questions to choose right Database based on your architecture:</h5>
+    <ul>
+      <li>Read-heavy, write-heavy, or balanced workloads? Throughput needs? Will it change, does it needs to scale or fluctuate during the day?</li>
+      <li>How much data is stored and for how long? Will it grow? Average object size? How are they accessed?</li>
+      <li>Data durability? Source of truth for the data?</li>
+      <li>Latency requirements? Concurrent users?</li>
+      <li>Data model? How will you query the data? Joins? Structured? Semi-Structured?</li>
+      <li>Strong schema? More flexibility? Reporting? Search? RDBMS? NoSQL?</li>
+      <li>Licence costs? Switch to Cloud Native DB such as Aurora?</li>
+    </ul>
+
+    <h5>Database Types:</h5>
+    <ul>
+      <li>RDBMS (=SQL/OLTP): RDS, Aurora - great for joins.</li>
+      <li>NoSQL Database - no joins, no SQL: DynamoDB (~JSON), ElastiCache (Key/value pairs), Neptune (graphs), DocumentDB (for MongoDB), Keyspaces (for Apache Cassandra) </li>
+      <li>Object Store: S3 (for big objects) / Glacier (for backups/archives)</li>
+      <li>Data Warehouse (SQL Analytics / BI): Redshift (OLAP), Athena, EMR </li>
+      <li>Search: OpenSearch (JSON) - free text, unstructured searches.</li>
+      <li>Graphs: AmazonNeptune - dispaly relations between data.</li>
+      <li>Ledger: Amazon Quantum Ledger Dtabase</li>
+      <li>Time serires: Amazon Timestream.</li>
+    </ul>
+    <h2 id="rds">Amazon RDS</h2>
+    <div id="rdsdetails">
+      <ul>
+        <li>AWS Managed Relational Database Service that uses SQL as Query Language.</li>
+        <li>Supports Postgres, MySQL, MariaDB, Oracle, Microsoft SQL Server, Aurora (AWS Propriatory Database)</li>
+        <li>Advantages of using RDS over deploying DB on EC2:
+            <ul>
+                <li>Automatic Provisioning, OS patching.</li>
+                <li>Contineous backups and restore to specific timestamp (Point in Time Restore)</li>
+                <li>Monitoring dashboards</li>
+                <li>Read replicas for improved performance.</li>
+                <li>Multi AZ setup for DR (Disaster Recovdery)</li>
+                <li>Maintenance window for upgrades.</li>
+                <li>Scalling capability. (Vertical and horizantal)</li>
+                <li>Storage backed by EBS (gp2 or io1)</li>
+            </ul>
+        </li>
+        <li>Can't SSH in to the RDS instances.</li>
+        <li>Automatic scalling capability. (have to set Maximum Storage Threshold)</li>
+        <li>Automatically modify storage if  <br>
+            - Free storage is less than 10% of allocated storage. <br>
+            - Low storage lasts at least 5 minutes. <br>
+            - 6 hours have passed since last modification.
+        </li>
+        <li>Useful for applications with unpredictable workloads.</li>
+      </ul>
+     
+      <h5>RDS Read Replicas for read scalability</h5>
+      <ul>
+        <li>Up to 15 Read Replicas.</li>
+        <li>Within AZ, Cross AZ or Cross Region.</li>
+        <li>Replication is Async, so reads are eventually consistent.</li>
+        <li>Replicas can be promoted to their own DB.</li>
+        <li>Applications must update the connection string to leverage read replicas.</li>
+        <li>Used for read only operations like Reporting.</li>
+        <li>Read replicas with in region is free (incuding between AZs), If the Read replica is in another region network cost is charged.</li>
+      </ul>
+
+     <h5>RDS Multi AZ (Disaster Recovery)</h5>
+     <ul>
+        <li>SYNC replication.</li>
+        <li>One DNS name - automatic app failover to standby.</li>
+        <li>Increase availability.</li>
+        <li>Failover in case of loss of AZ, loss of network, instance or storage failures.</li>
+        <li>No manual intervention in apps.</li>
+        <li>Not used for scalling.</li>
+        <li>The Read Replicas be setup as Multi AZ for Disaster Recovery (DR).</li>
+     </ul>
+
+     <h5>RDS - From Single-AZ to Multi-AZ</h5>
+     <ul>
+        <li>Zero downtime operation. Just click on "Modify" for the database.</li>
+        <li>It takes the snapshot of the DB in present AZ and a new DB is restored with the snapshot in another AZ and establishes Synchonization.</li>
+     </ul>
+     <h5>RDS- Custom</h5>
+     <ul>
+      <li>Managed Oracle, Microsoft SQL Server Databases with OS and Database customizations.</li>
+      <li>Provide full Admin access to the underlying OS and the database.</li>
+     </ul>
+     <h5>RDS Backup</h5>
+     <ul>
+      <li>Automated Backup 
+        <ul>
+          <li>Daily full backup of the database (during the backup window)</li>
+          <li>Transaction logs are backed-up by RDS every 5 minutes.</li>
+          <li>Ability to restore to any point in time (from oldest backup to 5 minutes ago)</li>
+          <li>1 to 35 days of retention set 0 to disable automated backups.</li>
+        </ul>
+      </li>
+      <li>Manual DB Snapshots
+        <ul>
+          <li>Manulaly triggered by the user</li>
+          <li>Retention of backup for as long as you want.</li>
+        </ul>
+      </li>
+      <li>Note: In a stopped RDS database, you will still pay for storage. If you plan on stopping it for a long time, you should snapshot & restore instead.</li>
+     </ul>
+
+     <h5>Summary:</h5>
+     <ul>
+      <li>Managed PostgreSQL / MySQL / Oracle / SQL Server / MariaDB / Custom</li>
+      <li>Provisioned RDS instance size and EBS Volume Type & Size.</li>
+      <li>Auto-Scaling capability for storage.</li>
+      <li>Support for Read Replicas and Multi-AZ</li>
+      <li>Security through IAM, Security Groups, KMS, SSL in transit.</li>
+      <li>Automated Backup with Point in time restore feature (up to 35 days)</li>
+      <li>Manual DB snapshots for longer-term recovery.</li>
+      <li>Managed and Scheduled maintenance (with downtime)</li>
+      <li>Support for IAM Authentication, integration with Secrets Manager.</li>
+      <li>RDS Custom for access and customize the underlying instance (Oracle & SQL server)</li>
+      <li>Use cases: Store relational datasets (RDBMS/OLTP), perform SQL queries, transactions.</li>
+    </ul>
+
+    </div>
+
+    <h2 id="rds">Amazon Aurora</h2>
+    <div id="rdsdetails">
+      <ul>
+        <li>A propriatory technology from AWS.</li>
+        <li>Postgres and MySQL are both supported as Aurora DB (your drivers will work as if Aurora was a Postgress or MySQL Database)</li>
+        <li>"AWS cloud optimized" , 5X performance over MySQL, 3X pefromace over Postgres.</li>
+        <li>Storage automatcially grows in increaments of 10GB, up to 128TB.</li>
+        <li>Can have up to 15 replicas and the replication process is faster than MySQL (sub 10ms replica lag)</li>
+        <li>Failover in Aurora is instantaneous. It is HA (High availability) native.</li>
+        <li>Aurora costs more than RDS (20% more) - but is more efficient.</li>
+      </ul>
+      <h5>Aurora High Availability and Read Scalling</h5>
+      <ul>
+        <li>6 copies of your data across 3 AZ:
+          <ul>
+            <li>4 copies out of 6 needed for writes.</li>
+            <li>3 copies out of 6 need for reads.</li>
+            <li>Self healing with peer-to-peer replication.</li>
+            <li>Storage is striped across 100s of volumes.</li>
+          </ul>
+        </li>
+        <li>One Aurora Instance takes writes (master)</li>
+        <li>Automatic failover for master in less than 30 seconds.</li>
+        <li>Master + 15 read replicas.</li>
+        <li>Supports Cross Region Replication.</li>
+      </ul>
+      <h5>Features of Aurora</h5>
+      <ul>
+        <li>Automatic fail-over</li>
+        <li>Backup and Recovery</li>
+        <li>Isolation and security</li>
+        <li>Industry compliance.</li>
+        <li>Push-button scaling.</li>
+        <li>Automated Patching with Zero Downtime.</li>
+        <li>Advanced Monitoring.</li>
+        <li>Routine Maintenance.</li>
+        <li>Backtrack: restore data at any point of time without using backups.</li>
+      </ul>
+      <ul>
+        <li>Aurora Replicas can be setup to Auto scale.</li>
+        <li>Aurora Custom endpoints can be setup with  a subset of Aurora instances. (EX: to run analyitical queries)</li>
+      </ul>
+      <h5>Aurora Serverless</h5>
+      <ul>
+        <li>Automated database instantiation and auto-scaling based on actual usage.</li>
+        <li>Good for infrequent, intermittent or unpredictable workloads.</li>
+        <li>No capacity planning needed.</li>
+        <li>Pay per second, can be more cost-effective.</li>
+      </ul>
+
+      <h5>Aurora Multi-Master</h5>
+      <ul>
+        <li>In case you want Contineous write availability for write nodes.</li>
+        <li>Every node does R/W - Vs promoting a Read Replica as the new master.</li>
+      </ul>
+
+      <h5>Global Aurora</h5>
+      <ul>
+        <li>Aurora Cross Region Replicas:
+          <ul>
+            <li>Useful for Disaster Recovery.</li>
+            <li>Simple to put in place.</li>
+          </ul>
+        </li>
+        <li>Aurora Gobal Database (recommended)
+          <ul>
+            <li>1 Primary Region (read/write)</li>
+            <li>Up to 5 secondary (read-only) regions, replication lag is less than a second.</li>
+            <li>Up to 16 Read Replicas per secondary regions.</li>
+            <li>Helps for decreasing latency.</li>
+            <li>Promote another region (for DR) has RTO of less than 1min</li>
+            <li>Tipical cross region replication takes place less than 1 sec.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h5>Aurora Machine Learning</h5>
+      <ul>
+        <li>Enables you to add ML-based predictions to your applications via SQL.</li>
+        <li>Simple, Optimized, and Secured integration between Aurora and AWS ML services.</li>
+        <li>Supported Services: Amazon SageMaker, Amazon Comprehend</li>
+        <li>You don't need to have ML experice.</li>
+        <li>Use cases: fraud detection, ads targeting, sentiment analysis, product recommendations.</li>
+      </ul>
+
+      <h5>Aurora Backups</h5>
+      <ul>
+        <li>Automated Backups: 1 to 35 days (can not be disabled) , Point time recovery in that timeframe.</li>
+        <li>Manual DB Snapshot: Retention of backup as long as you want.</li>
+      </ul>
+   
+
+    <h5>RDS and Aurora Restore Options</h5>
+    <ul>
+      <li>Restoring a RDS/ Aurora back up or a snapshot creates a new database.</li>
+      <li>Restoring MySQL RDS database from S3 
+        <ul>
+          <li>Create a backup of your on-promise database.</li>
+          <li>Store it on AWS S3</li>
+          <li>Restore the backup file onto a new RDS instance running MySQL</li>
+        </ul>
+      </li>
+      <li>Restoring MySQL Aurora cluster from S3 
+        <ul>
+          <li>Create a backup of your on-promise database using Percona XtraBackup  .</li>
+          <li>Store it on AWS S3</li>
+          <li>Restore the backup file onto a new Aurora cluster running MySQL</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h5>Aurora Database Cloning</h5>
+    <ul>
+      <li>Craete a new Aurora DB cluster from an existing one.</li>
+      <li>Faster than snapshot & restore.</li>
+      <li>Uses copy-on-write protocol 
+        <ul>
+          <li>Initially the new DB cluster uses the same data volume as the original DB cluter (fast and efficient - no copying needed).</li>
+          <li>Wnen updates are made to the new DB cluster data, then additional storage is allocated and data is copied to be seperated.</li>
+          <li>Very fast & cost-effective.</li>
+          <li>Useful to create a "staging" database from a "production" database without impacting the production database.</li>
+        </ul>
+      </li>
+    </ul>
+    <h5>RDS & Aurora Security</h5>
+    <ul>
+      <li>At rest encryption <br>
+        - Database master & Replicas encryption using AWS KMS - must be defined at lauch time. <br>
+        - If the master is not encrypted, then read replicas can not be encrypted. <br>
+        - To encrypt and un-encrypted database, go through a DB snapshot & restore as encrypted.
+      </li>
+      <li>In-flight encryption: TLS-ready by default, use the AWS TLS root certificate client-side.</li>
+      <li>IAM Authentication: IAM roles to connect to your database (Instead of username/password)</li>
+      <li>Security Groups: Control network access to your RDS / Aurora DB.</li>
+      <li>No SSH available except on RDS Custom.</li>
+      <li>Audit Logs can be enabled and sent to CouldWatch Logs for longer retention.</li>
+    </ul>
+
+    <h5>Amazon RDS Proxy</h5>
+    <ul>
+      <li>Fully managed database proxy for RDS.</li>
+      <li>Allows apps to pool and share DB connections established with the Database.</li>
+      <li>Improving database efficiency by reducing the stress on database resources (eg: CPU, RAM) and minimize open connections (and timeouts)</li>
+      <li>Serverless, autoscaling, highly available (multi-AZ)</li>
+      <li>Reduces RDS & Aurora failover time by up to 66%</li>
+      <li>Supports RDS (MySQL, PostgreSQL, MariaDB, MS SQL Server) and Aurora (MySQL, PostgreSQL)</li>
+      <li>No code changes required for most apps.</li>
+      <li>Enforce IAM Authentication for DB, and securely store credencials in AWS Secrets Manager.</li>
+      <li>RDS proxy is never publicly accessible (Must be access from VPC)</li>
+      <li>Use cases: Store relational datasets (RDBMS/OLTP), perform SQL queries, transactions.</li>
+    </ul>
+
+    <h5>Summary</h5>
+    <ul>
+      <li>Compatible API for PostgreSQL / MySQL, seperation of storage and compute.</li>
+      <li>Storage: data is stored in 6 replicas, across 3 AZ - highly available, self-healing, auto-scaling.</li>
+      <li>Compute: Cluster of DB instance across mutiple AZ, auto-scalling of Read Replicas.</li>
+      <li>Same security/ monitoring / maintenance features as RDS.</li>
+      <li>Know the backup and restore options for Aurora.</li>
+      <li>Aurora Serverless: for unpredictable / intermittent workloads, no capacity planning.</li>
+      <li>Aurora Multi-master: for contineous write failover (high write availability)</li>
+      <li>Aurora Global: up to 16 DB Read Instances in each region, less than 1 sec storage replication.</li>
+      <li>Aurora Machine Learning: perform ML using SageMaker & Comprehend on Aurora.</li>
+      <li>Aurora Database Cloning: new cluster from existing one, faster than restoring a snapshot.</li>
+      <li>Use case: same as RDS, but with less maintenance / more flexibility / more performance / more features. </li>
+    </ul>
+  </div>
+
+
+
+  <h2 id="rds">Amazon ElastiCache</h2>
+    <div id="rdsdetails">
+      <ul>
+        <li>Managed Redis or Memcached.</li>
+        <li>Caches are in-memeory databases with really high performance, low latency.</li>
+        <li>Helps reduce load off of databases for read intensive workloads.</li>
+        <li>Helps to make your application stateless.</li>
+        <li>AWS takes care of OS maintenance / patching, optimizations, setup, configuration, monitoring, failure recovery and backups.</li>
+        <li>Using ElastiCache involves heavy application code changes.</li>
+        <li>ElastiCache can also used for DB Cache to relive load on RDS. Cache must have invalidation strategy to make sure only the most current data is used in there.</li>
+        <li>Can also be used for User Session Store.</li>
+      </ul>
+      <h5>ElastiCache - Redis Vs Memecached</h5>
+        <table>
+          <tr><th>Redis</th><th>Memcached</th></tr>
+          <tr>
+            <td>
+              <ul>
+                <li>Multi-AZ with Auto-Failover</li>
+                <li>Read Replicas to scale reads and have high availability.</li>
+                <li>Data Durability using AOF (Append-Only-File) persistence.</li>
+                <li>Backup and restore features.</li>
+                <li>Supports Sets and Sorted Sets.</li>
+              </ul>
+            </td>
+            <td>
+              <ul>
+                <li>Multi-node for partitioning of data (sharding)</li>
+                <li>No high availability (replication)</li>
+                <li>Non persistent.</li>
+                <li>No backup and restore</li>
+                <li>Multi-threaded architecture.</li>
+              </ul>
+            </td>
+          </tr>
+        </table>
+      <h5>ElastiCache - Cache Security</h5>
+      <ul>
+        <li>ElastiCache supports IAM Authentication for Redis.</li>
+        <li>IAM policies on ElastiCache are only used for AWS API-level security.</li>
+        <li>Redis AUTH <br>
+          <ul>
+            <li>You can set "usename/token" when you create Redis Cluster.</li>
+            <li>This is an extra level security for your cache (on top of security group)</li>
+            <li>Support SSL in flight encryption.</li>
+          </ul>
+        </li>
+        <li>Memecached: Supports SASL-based authentication (advanced)</li>
+      </ul>
+
+    <h5>Patterns of ElastiCache</h5>
+    <ul>
+      <li>Lazy Loading: all the read data is cached, data can become stale in cache.</li>
+      <li>Write Through: Adds or update data in cache when written to a DB (no stale data).</li>
+      <li>Session Store: store temporary session data in a cache (using TTL features).</li>
+    </ul>
+
+    <h5>ElastiCache - Redis Use Case</h5>
+    <ul>
+      <li>Gaming Leaderboards are computationally complex.</li>
+      <li>Redis Sorted Sets gaurantee both uniqueness and element ordering.</li>
+      <li>Each time a new element added, it's ranked  in real time, then added in correct order.</li>
+    </ul>
+
+    <h5>Summary</h5>
+    <ul>
+      <li>Managed Redis / Memcached (Similar offering as RDS, but for caches)</li>
+      <li>In-memory data store, sub-millsecond latency.</li>
+      <li>Select an ElastiCache instance type (eg:cache.m6g.large)</li>
+      <li>Support for Clustoring (Redis)  and Multi AZ, Read Replicas (Sharding)</li>
+      <li>Security through IAM, Security Groups, KMS, Redis Auth.</li>
+      <li>Backup / Snapshot / Point in time restore feature.</li>
+      <li>Managed and Scheduled maintenance.</li>
+      <li>Requires some application code changes to be leveraged.</li>
+      <li>Use Cases: Key/Value store, Frequent reads, less writes, cache results for DB queries, store session data for websites, can not use SQL.</li>
+    </ul>
+  </div>
+    
+    <h2 id="dynamoDB">Amazon DynamoDB</h2>
+    <div id="ddbdetails">
+      <ul>
+        <li>Fully managed, highly available with replication across multi AZs</li>
+        <li>No SQL database - with transaction support</li>
+        <li>Scales massive workloads, distribute databse</li>
+        <li>Millions of requests per second, trillions of rows, 100s of TB of storage.</li>
+        <li>Fast and consistent in performance (single-digit millisecond)</li>
+        <li>Integrated with IAM for security, authorization and administration.</li>
+        <li>Low cost and Auto scalling capability.</li>
+        <li>Standard & Infrequent Access (IA) Table class</li>
+        <li>Define Primary key and Sort Key</li>
+        <li>Can rapidly evolve schema.</li>
+      </ul>
+      
+      <h5>Read/Write Capacity</h5>
+      <ul>
+        <li>Provistion Mode (default) <br>
+          - You specify the number of reads/writes per second. <br>
+          - You need to plan capacity beforehand. <br>
+          - Pay for provisioned Read Capacity Units (RCU) & Write Capacity Units (WCU) <br>
+          - Possibility to add auto-scaling mode for RCU & WCU
+        </li>
+        <li>On-Demand Mode <br>
+          - Read/Writes automatically scale up/down with your workloads. <br>
+          - No capacity palanning needed. <br>
+          - Pay for what you use, more expensive ($$$) <br>
+          - Great for unpredictable workloads, steep sudden spikes.
+        </li>
+      </ul>
+
+      <h5>Dynamo DB Accelarator (DAX)</h5>
+      <ul>
+        <li>Fully-managed, highly available, seamless in-memeory cache for DyanamoDB.</li>
+        <li>Help resolve read congestion by caching.</li>
+        <li>Microseconds latency for cache dta.</li>
+        <li>Doesn't require applicaiton logic modification (compatible with existing  DynamoDB API)</li>
+        <li>5 minutes TTL for cache (default)</li>
+        <li>Use ElastiCache if you want catch the aggregated results of query.</li>
+      </ul>
+      
+      <h5>DynamoDB - Stream Processing</h5>
+      <ul>
+        <li>Ordered Stream of item-level modification (create/update/delete) in a table.</li>
+        <li>Use cases: <br>
+          - React to changes in real-time (welcome emails) <br>
+          - Realtime usage analytics <br>
+          - Insert into derivative table <br>
+          - Implement cross-region replication <br>
+          - Invoke AWS lambda on changes to your DynamoDB table.
+        </li>
+        <li>24 hours retention</li>
+        <li>Limited number of consumers</li>
+        <li>Process using AwS Lambda Triggers, or DynamoDB Stream Kenisis Adapater.</li>
+      </ul>
+      
+      <h5>DynamoDB Global Tables</h5>
+      <ul>
+        <li>Make DynamoDB table accessible with low latency  in multiple-regions</li>
+        <li>Active-Active Replication</li>
+        <li>Applications can READ and WRITE to the table in any region.</li>
+        <li>Must enable DynamoDB streams as pre-requisite.</li>
+      </ul>
+      <h5>Time to Live (TT)</h5>
+      <ul>
+        <li>Automatically delete items after an expiry timestamp.</li>
+        <li>Use case: reduce stored data by keeping only current times, adhere to regulatory obligations, Web session handling.</li>
+      </ul> 
+      
+      <h5>Backups for DR</h5>
+      <ul>
+        <li>Contineous Backups using Point-in-time recovery (PITR): <br>
+          - Optionally enabled for the last 35 days. <br>
+          - Point-in-time recovery to any time within the backup window. <br>
+          - The recovery process creates a new table.
+        </li>
+        <li>On-demand backups: <br>
+          - Full backups for long-term ternetion, until explicitly deleted. <br>
+          - Doesn't effect  peformance or latency. <br>
+          - Can be configured and managed in AWS Backup (enables cross-region copy) <br>
+          - The recovery process creates new table.
+        </li>
+      </ul>
+
+      <h5>Integration with S3</h5>
+      <ul>
+        <li>Export S3 (must enable PITR) <br>
+          - Works for any point of time in the last 35 days. <br>
+          - Doesn't effect read capacity of your table. <br>
+          - Perform data analaysis on top of DynamoDB. <br>
+          - Retain snapshots for auditing. <br>
+          - ETL on top of S3 data before importing back in to DyanamoDB. <br>
+          - Export in DyanamoDB JSON or ION format.
+        </li>
+        <li>Import from S3: <br>
+          - Import CSV, DyanamoDB JSON or ION format. <br>
+          - Doesn't consume any write capacity <br>
+          - Create new table. <br>
+          - Import errors are logged in CloudWatch logs.
+        </li>
+      </ul>
+
+      <h5>Summary</h5>
+      <ul>
+        <li>AWS propriatory technology, managed serverless NoSQL database, millisecond latency.</li>
+        <li>Capacity modes: provisioned capacity with optional auto-scalling or on-demand capacity.</li>
+        <li>Can replace ElastiCache as a key/value store (storing session data for example, using TTL feature)</li>
+        <li>Highly Available, Multi AZ by default, Read and Writes are decoupled, transaction capability.</li>
+        <li>DAX cluster for read cache, microsecond read latency.</li>
+        <li>Security, Authenitcation and authorization is done through IAM.</li>
+        <li>Event Processing: DynamoDB streams to integrate with AWS Lambda, or Kinesis Data Streams.</li>
+        <li>Global Table feature: active-active setup</li>
+        <li>Automated backups for 35 days with PIRT (restore to new table), or on-demand backups.</li>
+        <li>Export to S3 without using RCU withing PITR window, import from S3 without using WCU.</li>
+        <li>Great for rapidly evolving schemas.</li>
+        <li>Use Case: Serverless applications development (small documents 100s KB), distributed serverless cache.</li>
+      </ul>
+    </div>
+
+
+    <h2 id="docDB">Amazon DocumentDB</h2>
+    <div id="docdbdetails">
+      <h5>Summary</h5>
+      <ul>
+        <li>Document DB is "AWS-implementation" for MongoDB (similar to Aurora for PostgreSQL/MySQL)</li>
+        <li>MongoDB is used to store, query, and index JSON data.</li>
+        <li>Similar "deployment concepts" as Aurora.</li>
+        <li>Fully Manged, high available with replication across 3 AZ</li>
+        <li>DocumentDB Storage automatcially grown in increaments of 10GB, up to 64TB.</li>
+        <li>Automatically scales to workloads with millions of requests per seconds.</li>
+      </ul>
+    </div>
+    <h2 id="neptune">Amazon Neptune</h2>
+    <div id="nepdetails">
+      <h5>Summary</h5>
+      <ul>
+        <li>Fully managed graph database.</li>
+        <li>A popular graph database would be a social network. <br>
+          - Users have friends, <br>
+          - Posts have comments <br>
+          - Comments have likes from users. <br>
+          - Users share and like posts...
+        </li>
+        <li>Highly avaialble across 3 AZ, with up to 15 read replicas.</li>
+        <li>Built and run applications working with highly connnected datasets - optimized for these complex and hard queries.</li>
+        <li>Can store up to billions of query the graph with milliseconds latency.</li>
+        <li>Highly available with replications across multiple AZs</li>
+        <li>Great for knowledge graphs (Wikipedia), fraud detection, reccomendation engine, social networking.</li>
+      </ul>
+    </div>
+
+    <h2 id="keyspace">Amazon Keyspaces (for Apache Cassandra)</h2>
+    <div id="keyspacedetails">
+      <h5>Summary</h5>
+      <ul>
+        <li>Apache Cassandara is an open-source NoSQL distributed database.</li>
+        <li>A managed Apache Cassandra-compatible database service.</li>
+        <li>Serverless, Scalable, Highly Available, fully managed by AWS.</li>
+        <li>Automatically scale tables up/down based on the application traffic.</li>
+        <li>Tables are replicated 3 times across multiple AZ</li>
+        <li>Using the Cassandra Query Language (CQL)</li>
+        <li>Single-digit millisecond latency at any scale, 1000s of requests per second.</li>
+        <li>Capacity: On-demand mode or provisioned mode with auto-scalling </li>
+        <li>Encryption, backup, Point-In-Time recovery up to 35 days.</li>
+        <li>Use cases: store IoT device info, time-series data,...</li>
+      </ul>
+    </div>
+
+    <h2 id="qldb">Amazon QLDB (Quantum Ledger Database)</h2>
+    <div id="qldbdetails">
+      <h5>Summary</h5>
+      <ul>
+        <li>A ledger a book recording finalcial transactions.</li>
+        <li>Fully managed, serverless, highly available, Replication across 3Z</li>
+        <li>Used to review history of all the changes made to your applicaiton data over time.</li>
+        <li>Immutable system: no entry can be removed or modified, cryptographically verifiable.</li>
+        <li>2-3x better peformance than common ledger blockchanin frameworks, manipulate data using SQL.</li>
+        <li>Difference with Amazon Managed Blockchain: no decentralization componenet, in accordance with financial regulation rules.</li>
+      </ul>
+    </div>
+
+    <h2 id="timestream">Amazon Timestream</h2>
+    <div id="timestdetails">
+      <h5>Summary</h5>
+      <ul>
+        <li>Fully managed, fast, scalable, serverless time series database.</li>
+        <li>Automatically scales up/down to adjust capacity.</li>
+        <li>Store and analyze trillions of events per day.</li>
+        <li>1000s time faster & 1/10th the cost of relational databases.</li>
+        <li>Scheduled queries, multi-measure records, SQL compatibility.</li>
+        <li>Data storage tiering: recent data kept in memory and historical data kept in a cost-optimized storage.</li>
+        <li>Built-in time series analytics functions (helps you identify patterns in your data in near real-time)</li>
+        <li>Encryption in transit and rest.</li>
+        <li>Use cases: IoT apps, operational applications, real-time analytics...</li>
+      </ul>
+    </div>
+
+  </body>
+</html>

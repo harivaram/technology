@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>UML</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>Oject Oriented Programming (OOPS)</h1>
+    <div>
+      <h2>Association - Aggregation - Composition</h2>
+      <h3>Association:</h3>
+      <p>If two classes in a model need to communicate with each other, there must be a link between them, and that can be represented by an association (connector). <br>
+        Association can be represented by a line between these classes with an arrow indicating the navigation direction. In case an arrow is on both sides, the association is known as bi-directional association.
+      </p>
+      <p>
+        Aggregation and Composition are subsets of Association, meaning they are specific cases of association. In both aggregation and composition object of one class owns object of another class.
+      </p>
+    </div>
+      <h3>Aggregation:</h3>
+      <p>
+        It implies a relationship where the child can exist independent of the parent. <br>
+        Aggregation link doesn't state in any way that class A owns class B, nor that there is parent and child relationship. <br>
+        The aggregation link is usually used to stress the point that class A instance is not the exclusive of class B instance, as infact the same class B isntance has another container.
+      </p>
+      <img src="images/uml/aggregation-example.webp" alt="" width="300px" height="200px">
+      
+      <h3>Composition:</h3>
+      <p>It implies a releationship where the child can not exist indepenedent of the parent. <br>
+        There is a strong life cycle dependency between the two, meaning that when one object deletion result delting the other object.
+      </p>
+      <img src="images/uml/composition-example.webp" alt="" width="300px" height="200px">
+
+
+      <h2>Generalization Vs Specializaton</h2>
+      <h3>Generalization:</h3>
+      <p>Generalization is a mechanism for combining similar classes of objects in to a single, or more generic class. <br>
+        Generalization identifies commonalities among a set of entities. The commonality may be of attributes, behavior or both. <br>
+        In onther words, a super class has most general attributes, operations, and relationships that may be shared with subclasses. A subclass may have more specialized attributes and operations.
+      </p>
+      <h3>Specialization:</h3>
+      <p>Specialization is the reverse process of Generalization means creating new subclass from an existing class.</p>
+      <p>For Example, a Bank Account is of two types - Savings Account and Credit Card Account. Savings Account and Credit Card Account inherit the common/ generalized properties like Account Number, Account Balance, etc. from a Bank Account and also have their specialized properties like unsettled payment etc.</p>
+      <img src="images/uml/generalization-and-specialization.webp" alt="" width="400px" height="200px">
+      <h2>Generalization Vs Inheritance</h2>
+      <p>Generalization is the term that we use to denote abstraction of common properties in to a base class in UML. <br>
+        The UML diagram's Generalization is also known as Inheritance. When we implement Generalization in programming langugage, it often called inheritance instead. <br>
+        Generalization and Inheritance are the same. The terminology just differes depending on the context where it is being used.
+
+      </p>
+      <h3>Reference</h3>
+
+    <p>
+      <a href="https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-aggregation-vs-composition/">UML Association vs Aggregation vs Composition</a>
+    </p>
+
+
+  </body>
+  </html>

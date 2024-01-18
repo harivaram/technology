@@ -1,0 +1,697 @@
+<html lang="en" dir="ltr">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../styles.css">
+    </style>
+  </head>
+  <body>
+    <h1>Security, Identity and Compliance</h1>
+
+
+    <h2 id="iam">Identity Access Management (IAM)</h2>
+    <div id="iamdetails">
+        <ul>
+            <li>Global Service.</li>
+            <li>Root account created by default, shouldn't be used or shared.</li>
+            <li>Users are people within your organization, and can be grouped.</li>
+            <li>Groups only contain users, not other groups.</li>
+            <li>Users don't have to belong to a group, and user can belong to multiple groups.</li>
+        </ul>
+
+        <h5>IAM permissions</h5>
+        <ul>
+            <li>Users and Groups can be assigned Json documents called Policies. These policies define the permissions of the users.</li>
+            <li>In AWS apply the least privilege principle.</li>
+        </ul>
+        <h5>IAM Policy Structure</h5>
+        <ul>
+            <li>Version: policy language version, always include "2012-10-17"</li>
+            <li>Id: an identifier for the policy. (optional)</li>
+            <li>Statement: one or more individual statements (required)</li>
+            <li>Statement consists of <br>
+                - Sid: an identifier for the statement (optional) <br>
+                - Effect: whether the statement allows or denies access (Allow/Deny) <br>
+                - Principal: account/user/role to which this policy applied to <br>
+                - Action: list of actions this policy allows or denies <br>
+                - Resources: list of resources to which the action applied to <br>
+                - Condition: conditions for when this policy is in effect (optional).
+            </li>
+            <li>Create IAM Roles to give access permissions to AWS resources (Ex: EC2, Lamda, Cloud Formation etc).</li>
+        </ul>
+        <h5>Access AWS</h5>
+        <ul>
+            <li>User can access AWS in 3 ways <br>
+                1. AWS Management Console (protected by password + MFA) <br>
+                2. AWS Command Line Interface (CLI) : protected by access keys. <br>
+                3. AWS Software Development Kit (SDK): for code: protected by access keys.
+            </li>
+            <li>Access keys are generated through AWS Management Console.</li>
+            <li>Users manage their own access keys.</li>
+            <li>Access key Id ~= Username &  Secret Access Key ~= password </li>
+            <li>With AWS CLI, you can develop scripts to manage your resources.</li>
+            <li>AWS CLI is built on AWS SDK for Phyton.</li>
+        </ul>
+
+        <h5>IAM Security Tools</h5>
+        <ul>
+            <li>IAM Credentials Report (account-level): lists all your account's users the status of their verious credentials.</li>
+            <li>IAM Access Advisor (user-level) : shows permissions granted to a user and the last access details.</li>
+        </ul>
+
+        <h5>IAM Guidelines & Best Practices</h5>
+        <ul>
+            <li>Don't use root account except for AWS account setup.</li>
+            <li>One physical user = One AWS user</li>
+            <li>Assign users to group and assign permissions to groups.</li>
+            <li>Create a strong password policy.</li>
+            <li>Use and enforce the use of Multi Factor Authentication (MFA)</li>
+            <li>Create and use Roles for giving pemrmissions to AWS services.</li>
+            <li>Use Access keys for programmatic access (CLI/SDK)</li>
+            <li>Audit permissions of you account using IAM Credentials Report & IAM Access advisor.</li>
+            <li>Never share IAM users & Access keys.</li>
+        </ul>
+
+        <h5>IAM Conditions</h5>
+        <ul>
+            <li>aws:SourceIP -> restrcit the client IP from which the API calls are being made.</li>
+            <li>aws:RestrictedRegions -> restric the region the API calls are made to.</li>
+            <li>ec2:ResourceTag -> restrict based on tags</li>
+            <li>aws:MultiFactorAuthPresent -> to force MFA</li>
+        </ul>
+        
+        <h5>IAM for S3</h5>
+        <ul>
+            <li>Bucket level permissions <br>
+                Ex: s3:ListBucket permission applies to arn:aws:S3:::test 
+            </li>
+            <li>Object level permissions <br>
+                Ex: s3:GetObject, s3:PutObject, s3:DeleteObject applies to arn:aws:s3:::test/*
+            </li>
+        </ul>
+
+        <h5>IAM Role Vs Resource-Based Policies</h5>
+        <ul>
+            <li>Cross Account Access: attaching a resource-based policy to a resource (ex: S3 bucket policy) OR using a role as proxy.</li>
+            <li>When you assume a role (user, application or service), you give up your original permissions and take permission assigned to your role.</li>
+            <li>When using resource-based policy, the principal doesn't have to give up his permissions.</li>
+            <li>Supported by: S3 buckets, SNS topics, SQS queues etc...</li>
+            <li>Ex: Amazon EventBridge - Sercurity <br>
+                - When a rule runs, it needs permissions on the target. <br>
+                - Resource-based policy: Lambda, SNS, SQS, CloudWatch Logs, API Gateway..... <br>
+                - IAM role: Kenisis stream, Systems Manage Run Command, ECS task...
+            </li>
+        </ul>
+
+        <h5>IAM Permission Boundaries</h5>
+        <ul>
+            <li>Supported by users and roles (not groups)</li>
+            <li>Advanced featrue to use a managed policy to set maximum permissions an IAM entity can get.</li>
+            <li>Can be used in combination of AWS Organizations SCP </li>
+            <li>Use cases: <br>
+                - Delegate responsibility to non administrators within their permission boundaries <br>
+                - Allow developers to self-assign policies and manage their own permissions, while making sure they can't "escalate their privileges (= make themselves admin). <br>
+                - Useful to restrict one specific user (instead of a whole account using Organizations & SCP)
+            </li>
+        </ul>
+
+        <h5>IAM Plolicy Evaluation Logic</h5>
+        <pre><code>
+            if(any explicity Deny from any policies){
+                "Deny" - explicit
+            }else if((is pricipal's account a member of an organization with an applicable SCP) && (there is No Allow)) {
+                "Deny" - implicit
+            }else if((Does Requested resource have a resrouce-based policy) && (There is Allow)){
+                "See the Resoure base policies section"
+            }else if( principal have no identity based policy){
+                "Deny"- implicit
+            }else if(principal have identity based policy && there is no Allow){
+                "Deny" - implicit
+            }else if(Priciple has permission boundary && there is no allow){
+                "Deny" - implicit
+            }else if(principal is a session principal & there is a session policy && there is no Allow){
+                "Deny" - implicit
+            }else if(principal is a session principal & there is no session policy && this is not a role session){
+                "Deny" - implicit
+            }else{
+                "Ällow"
+            }
+
+        </code></pre>
+
+        <ul>
+            <li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html">https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html</a></li>
+        </ul>
+
+    </div>
+    <h2 id="org">AWS Organizations</h2>
+    <div id="orgdetails">
+        <h5>Organizational Units (OU)</h5>
+        <ul>
+            <li>Global service</li>
+            <li>Allows to manage multiple AWS accounts. The main account is management account. Other accounts are member accounts.</li>
+            <li>Member accounts can only be part of one organization.</li>
+            <li>Consolidated billing across all accounts - single payment method.</li>
+            <li>Pricing benefits from aggregated usage (volume discount for EC2, S3...)</li>
+            <li>Shared reserved instances and Saving Plans discounts across accounts.</li>
+            <li>API is available to automate AWS account creation.</li>
+            <li>Multi Account Vs One Account Multi VPC</li>
+            <li>Use tagging standards for billing purposes.</li>
+            <li>Enable CloudTrail on all accounts, send logs to central S3 account.</li>
+            <li>Send CloudWatch logs to central logging account.</li>
+            <li>Establish Cross Account Roles for Admin puposes.</li>
+        </ul>
+        <h5>Security: Service Control Policies (SCP)</h5>
+        <ul>
+            <li>IAM policies applied to OU or Accounts to restrict User and Roles.</li>
+            <li>They do not apply to the management account (full admin power)</li>
+            <li>Must have an explicit Allow (does not allow anything default - like IAM)</li>
+            <li>aws:PrincipleOrgID can be used in any resource policies to restrict access to accounts that are members of an AWS Organization.</li>
+        </ul>
+    </div>
+    <h2 id="iam">Amazon Cognito</h2>
+    <div id="iamdetails">
+        <ul>
+            <li>Give uses an identity to interact with out web or mobile application</li>
+            <li>Congnito User Pools: <br>
+                - Sign in functionality for app users. <br>
+                - Integrate with API Gateway & Application Load Balancer.
+            </li>
+            <li>Congnito Identity Pools (Federated Identity): <br>
+                - Provide AWS credentials to users so they can access AWS resources directly. <br>
+                - Integrate with Cognito User Pools as an Identity provider.
+            </li>
+            <li>Cognto Vs IAM: "hundreds of users", "mobile users", "authenticate with SAML"</li>
+        </ul>
+
+        <h5>Cognito User Pools (CUP) - User Features</h5>
+        <ul>
+            <li>Create a serverless database of user for your web and mobile apps.</li>
+            <li>Simple login: Username (or email) / password.</li>
+            <li>Password Reset</li>
+            <li>Email & Phone number verification.</li>
+            <li>Multi-factor Authentication (MFA)</li>
+            <li>Federated Identities: users form Facebook, Google, SAML..</li>
+            <li>CUP integrates with API Gateway and Application Load Balacer.</li>
+        </ul>
+
+        <h5>Cognito Identity Pools (Federated Identities)</h5>
+        <ul>
+            <li>Get identities of "users" so they obtain temporary AWS credentials.</li>
+            <li>Users source can be Congnito User Pools, 3rd party logins etc..</li>
+            <li>Users can then  access AWS services directly or throgh API Gateway.</li>
+            <li>The IAM policies applied to the credentials are defined in Cognito.</li>
+            <li>They can be customized based on the user_id for grained control.</li>
+            <li>Default IAM role for authenticated and guest users.</li>
+            <li>Can setup Row level security in DyanmoDB with Cognito Identity Pools.</li>
+        </ul>
+    </div>
+
+    <h2 id="idttr">AWS IAM Identity Center </h2>
+    <div id="idtctrdetails">
+        <ul>
+            <li>Successor to AWS Single Sign-On</li>
+            <li>One login (single sing-on) for all your <br>
+                - AWS accounts in AWS Organization <br>
+                - Business cloud applications (eg: Salesforce, Box, Microsoft 365...) <br>
+                - SAML2.0-enabled applications <br>
+                - EC2 Windows Instances.
+            </li>
+            <li>Identiy providers <br>
+                - Built-in identity store in IAM Identity Center <br>
+                - 3<sup>rd</sup> party: Active Directory (AD), OneLogin, Oka...  
+            </li>
+        </ul>
+
+        <h5>Fine-grained permissions and Assignments</h5>
+        <ul>
+            <li>Multi Account Permissions <br>
+                - Manage access across AWS accounts in your AWS Organization. <br>
+                - Permission Sets - a collection of one or more IAM Policies assigned to users and groups to define AWS access.
+            </li>
+            <li>Application Assignments <br>
+                - SSO access to many SAML 2.0 business applications (Salesforce, Box, Microsoft 365...) <br>
+                - Provide required URLs, certificates, and metadata.
+            </li>
+            <li>Attributed-based Access Control (ABAC) <br>
+                - Fine-grained permissions based on user's attributes stored in IAM Identity Center Identity Store. <br>
+                - Ex: cost center, title, locale,... <br>
+                - Use case: Define permissions once, then modify AWS access by changing the attributes.
+            </li>
+        </ul>
+
+        <h5>AWS Directory Service</h5>
+        <ul>
+            <li>AWS Managed Microsoft AD: <br>
+                - Create you own AD in AWS, manage users locally supports MFA. <br>
+                - Establish "trust" connetions with your on-promises AD.
+            </li>
+            <li>AD Connector <br>
+                - Directory Gateway (proxy) to redirect to on-promises AD, supports MFA. <br>
+                - Users are managed on the on-promises AD.
+            </li>
+            <li>Simple AD <br>
+                - AD-compatible managed directory on AWS. <br>
+                - Cannot be joined with on-promises AD.
+            </li>
+        </ul>
+
+        <h5>IAM Identity Center - Active Directory Setup</h5>
+        <ul>
+            <li>Connect to an AWS Managed Microsoft AD.</li>
+            <li>Connect to a Self-Managed Directory</li>
+        </ul>
+
+    </div>
+    
+    <h2 id="ctltw">AWS Control Tower</h2>
+    <div id="ctltwdetails">
+        <ul>
+            <li>Easy way to setup and govern a secure and compliant multi-account AWS environment based on best practices.</li>
+            <li>AWS Control Tower uses AWS Organizations to create accounts.</li>
+            <li>Benefits: <br>
+                - Automate the setup of your environment in a few clicks. <br>
+                - Automate ongoing policy management using gaurdrails. <br>
+                - Detect policy vialiations and remediate them. <br>
+                - Monitor compliance through an interactive dahsboard.
+            </li>
+        </ul>
+
+        <h5>AWS Contro Tower - gaurdrails</h5>
+        <ul>
+            <li>Provides on-going governance for your Control Tower environment (AWS Accounts)</li>
+            <li>Preventive Gaurdrails - using SCPs (eg: Restrict Regions across all your accounts)</li>
+            <li>Detective Gaurdrails - using AWS Config (eg: identify tagged resources)</li>
+        </ul>
+    </div>
+
+    <h2 id="kms">AWS Key Managment Service (KMS)</h2>
+    <div id="kmsdetails">
+        <ul>
+            <li>AWS Managed Encryption keyss</li>
+            <li>Fully integrated with IAM for authorization.</li>
+            <li>Easy way to control access to your data.</li>
+            <li>Able to audit KMS Key usage using CloudTrail </li>
+            <li>Seamless integration into most AWS services (EBS, S3, RDS, SSM...)</li>
+            <li>Never ever store your secrets in plaintext, sepecially in to your code <br>
+                - KMS Key Encryption also availbale through API calls (SDK, CLI) <br>
+                - Encrypted secrets can be stored in the code / environment variables.
+            </li>
+        </ul>
+
+        <h5>KMS Keys Types:</h5>
+        <ul>
+            <li>KMS Keys is the new name for KMS Customer Master Key.</li>
+            <li>Symmetric (AES-256 keys):
+                - Single encryption key that is used to Encrypt and Decrypt <br>
+                - AWS services that are integrated with KMS use Symmetric CMKs <br>
+                - You never get access to KMS key unencrypted (must call KMS API to use)
+            </li>
+            <li>Asymetric (RSA & ECC Key pairs) <br>
+                - Public (Encrypt) and Private Key (Decrypt) pair <br>
+                - Used for Encrypt/Decrypt or Sign/Verify operations. <br>
+                - The public key is downloadable, but can't access the Private Key unencrypted. <br>
+                - Use cases: encryption ouside of AWS by users who can't call the KMS API.
+            </li>
+        </ul>
+        
+        <h5>Type of KMS Keys</h5>
+        <ul>
+            <li>AWS Owned keys (free): SSE-S3, SSE-SQS, SSE-DDB (default key)</li>
+            <li>AWS Managed Keys : free (aws/service-name , example: aws/rds or aws/ebs)</li>
+            <li>Customer managed keys created in KMS: $1 / month</li>
+            <li>Customer managed keys imported (must be symmetric key) : $1 / month</li>
+            <li>+ pay for API call to KMS ($0.03/10000 calls) </li>
+        </ul>
+
+        <h5>Automatic Key Rotation:</h5>
+        <ul>
+            <li>AWS-managed KMS Key: automatic every 1 year.</li>
+            <li>Customer-managed KMS Key: (must be enabled) automatic every 1 year.</li>
+            <li>Imported KMS Key: only manual rotation possible using alias.</li>
+        </ul>
+
+        <h5>KMS Key Policies</h5>
+        <ul>
+            <li>Control access to KMS keys, "similar" to S3 bucket policies.</li>
+            <li>Difference: you cannot control access without them.</li>
+            <li>Default KMS Key Policy: <br>
+                - Created if you don't provide a specific KMS Key Policy. <br>
+                - Complete access to the key to the root account = entire AWS account.
+            </li>
+            <li>Custom KMS Key Policy: <br>
+                - Define users, roles that can access the KMS key. <br>
+                - Define who can administer the key. <br>
+                - Useful for cross-account access of you KMS key.
+            </li>
+        </ul>
+
+        <h5>Copying Snapshots across accounts</h5>
+        <ul>
+            <li>Create a snapshot, encrypted with your own KMS key (Customer Managed Keys)</li>
+            <li>Attach a KMS Key Policy to authorize cross-account access.</li>
+            <li>Share the encrypted snapshot.</li>
+            <li>(in target) Create a copy of the Snapshot, encrypt it with a CMK in your account.</li>
+            <li>Create a volume for the snapshot.</li>
+        </ul>
+
+        <h5>KMS Multi-Region Keys</h5>
+        <ul>
+            <li>Identical KMS keys in different AWS Regions that can be used interchangably.</li>
+            <li>Multi-Region keys have the same key ID, key material, automatic rotation.</li>
+            <li>Encrypt in one Region and decrypt in other Region.</li>
+            <li>No need to re-encrypt or making cross-region API calls</li>
+            <li>KMS Multi-Region are NOT global (Primary + Replicas)</li>
+            <li>Each Multi-Region key is managed idependenlty.</li>
+            <li>Use cases: gobal client-side encryption, encryption on Global DynamoDB, Global Aurora.</li>
+        </ul>
+
+        <h5>DynamoDB Global Tables and KMS Multi-Region Keys Client-Side encryption</h5>
+        <ul>
+            <li>We can encrypt specific attributes client-side in our DynamoDB table using the Amazon DynamoDB Encryption Client.</li>
+            <li>Combined with Global Tables, the clinet-side encrypted data is replicated to other regions.</li>
+            <li>If we use a multi-region key, replicateed in the same region as the DynamoDB Global table, then clients in these regions can use low latency API calls to KMS in their region to decrypt the data client-side.</li>
+            <li>Using client-side encryption we can protect secific fields and guarantee only decryption if the client has access to an API key</li>
+        </ul>
+
+        <h5>S3 Replication Encryption Considerations</h5>
+        <ul>
+            <li>Unencrypted objects and objects encrypted with SSE-S3 are replicated by default.</li>
+            <li>Objects encrypted with SSE-C (customer provided key) are never replicated.</li>
+            <li>For objects encrypted with SSE-KMS, you need to enable the option <br>
+                - Specify which KMS key to encrypt the objects within the target bucket. <br>
+                - Adapt the KMS Key Policy for the target key <br>
+                - An IAM Role with kms:Decrypt for the source KMS Key and kms:Encrypt for the target KMS Key. <br>
+                - You might get KMS throttling errors, in which case you can ask for a Service Quotas increase.
+            </li>
+            <li>You can use multi-region AWS KMS keys, but they are currently treated as independent keys by Amazon S3 (the object will still be decrypted and then encrypted)</li>
+        </ul>
+
+        <h5>AMI Sharing Process Encrypted via KMS</h5>
+        <ol>
+            <li>AMI in source account is encrypted with KMS key from Source account</li>
+            <li>Must modify the image attribute to add a Launch Permission which corresponds to the specific target AWS account. </li>
+            <li>Must share AMS keys used to encrypt the snapshot the AMI refereces with target account /  IAL Role.</li>
+            <li>The IAM Role / User in the target account must have the permissions to DecryptKey, ReEncrypted, CreateGrant, Decrypt</li>
+            <li>When lanching an EC2 instance from the AMI, optionally the target account can specify a new KMS key in its own account to re-encrypt the volume.</li>
+        </ol>
+    </div>
+
+    <h2 id="ssm">SSM Parameter Store</h2>
+    <div id="ssmdetails">
+        <ul>
+            <li>Secure storage of configuraiton and secrets</li>
+            <li>Optional Seamless Encryption using KMS</li>
+            <li>Severless, scalable, durable, easy SDK</li>
+            <li>Version tracking of configurations/secrets</li>
+            <li>Security through IAM</li>
+            <li>Notificaitons with Amazon EnventBridge</li>
+            <li>Integration with CloudFormation</li>
+            <li>SSM Parameter Store Hierarchy - Get secret by providing the path</li>
+        </ul>
+        <h5>Standard and Advanced parameters tier</h5>
+        <table>
+            <tr><th></th><th>Standard</th><th>Advanced</th></tr>
+            <tr><td>Total no. of parameters allowed (per AWS account and Region)</td><td>10,000</td><td>100,000</td></tr>
+            <tr><td>Max size of parameter value</td><td>4 KB</td><td>8 KB</td></tr>
+            <tr><td>Parameter policies available</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Cost</td><td>No additional charge</td><td>Charges apply</td></tr>
+            <tr><td>Storage Pricing</td><td>Free</td><td>$0.05 per advanced parameter per month.</td></tr>
+        </table>
+
+        <h5>Parameter Policies (for Advanced Parameters)</h5>
+        <ul>
+            <li>Allow to assign a TTL to a parameter (expiration date) to force updating or deleting sensitive data such as password.</li>
+            <li>Can assign multiple policies at a time</li>
+        </ul>
+    </div>
+
+    <h2 id="secmgr">AWS Secrets Manager</h2>
+    <div id="secmgrdetails">
+        <ul>
+            <li>New service, meant for storing secrets.</li>
+            <li>Capability to force rotation of secrets every X days</li>
+            <li>Automate generation of secrets on rotation (use Lambda)</li>
+            <li>Integration with Amazon RDS (MySQL, PostgreSQL, Aurora)</li>
+            <li>Secrets are encrypted using KMS</li>
+            <li>Mostly meant for RDS integration.</li>
+        </ul>
+        
+        <h5>Muti-Region Secrets</h5>
+        <ul>
+            <li>Replicate Secrets across multiple AWS Regions.</li>
+            <li>Secret Manager keeps read replicas in sync with the primary Secret.</li>
+            <li>Ability to promote a read replica Secret to a Standalone Secret.</li>
+            <li>Use cases: Multi-Region apps, disaster recovery strategies, multi-region DB.</li>
+        </ul>
+    </div>
+
+    <h2 id="acm">AWS Certificate Manager (ACM)</h2>
+    <div id="acmdetails">
+        <ul>
+            <li>Easily provision, manange, and deploy TLS Certificates.</li>
+            <li>Provide In-flight encryptioin for websites (HTTPS)</li>
+            <li>Supports both public and private TLS certificates.</li>
+            <li>Free of charge for public TLS certificates.</li>
+            <li>Automatic TLS certificate renewal.</li>
+            <li>Integrations with (load TLS certificate on) <br>
+                - Elastic Load Balancers (CLB, ALB, NLB) <br>
+                - CloudFormation Distributions <br>
+                - APIs on API Gateway.
+            </li>
+            <li>Cannot use ACM with EC2 (can't be extracted)</li>
+        </ul>
+
+        <h5>Requesting Public Certificate</h5>
+        <ol>
+            <li>List domain names to be included in the certificate <br>
+                - Fully Qualified Domain Name (FQDN): corp.example.com <br>
+                - WildCard Domain: *.example.com
+            </li>
+            <li>Select Validation method: DNS Validation or Emain validation <br>
+                - DNS Validation is preffered for automation purposes. <br>
+                - Email Validation will send emails to contact addresses in the WHOIS databse. <br>
+                - DNS Validation will leverage a CNAME record to DNS config (ex: Route 53)
+            </li>
+            <li>It will take a few hours to get verified.</li>
+            <li>The Public Certificate will be enrolled for automatic renewal. <br>
+                - ACM automatically renews ACM-generated certificates 60 days before expiry.
+            </li>
+        </ol>
+
+        <h5>Importing Public Certificates</h5>
+        <ul>
+            <li>Option to generate the certificate outside of ACM and then import it.</li>
+            <li>No automatic renewal, must import a new certificate before expiry.</li>
+            <li>ACM sends daily expiration evetns <br>
+                Starting 45 days prior to expiration <br>
+                - The # days can be configured. <br>
+                - Events are appearing in EventBridge.
+            </li>
+            <li>AWS Config has managed rule named acm-certificate-expiration-check to check for expiring certificates. (configurable number of days)</li>
+        </ul>
+
+        <h5>Integration with API Gateway</h5>
+        <ul>
+            <li>Create a Custom Domain Name in API Gateway.</li>
+            <li>Edge-optimized (default): For Global clients <br>
+                - The TLS certificate must be in the same region as CloudFront <br>
+                - Then setup CNAME or (better) A-Alias record in Route 53
+            </li>
+            <li>Regional: <br>
+                - The TLS certificate must be imported on API Gateway, in the same region as the API Stage. <br>
+                - Then setup CNAME or (better) A-Alias record in Route 53
+            </li>
+        </ul>
+    </div>
+
+    <h2 id="wat">AWS WAF (Web Application Firewall)</h2>
+    <div id="watdetails">
+        <ul>
+            <li>Protects your web applications from common web exploits (Layer 7)</li>
+            <li>Layer 7 is HTTP (vs Layer 4 is TCP/UDP)</li>
+            <li>Deploy on <br>
+                - Application Load Balancer <br>
+                - API Gateway <br>
+                - CouldFront <br>
+                - AppSync GraphQL API <br>
+                - Congnito User Pool
+            </li>
+        </ul>
+
+        <h5>AWS WAF - Web Application Firewall</h5>
+        <ul>
+            <li>Define Web ACL (Web Access Contol List) Rules: <br>
+                - IP Set: up to 10,000 IP addresses - use multiple Rules from more IPs. <br>
+                - HTTP headers, HTTP body, or URI string protects from common attack - SQL injection and Cross-Site scription (XSS) <br>
+                - Size constraints, geo-match (block coutries) <br>
+                - Rete-based rules (to count occurances of events) - for DDoS protection.
+            </li>
+            <li>WebACL are Regional except for CloudFront.</li>
+            <li>A rule group is a reusable set of rules that you can add to a web ACL</li>
+        </ul>
+
+        <h5>WAF - Fixed IP while using WAF with Load Balancer</h5>
+        <ul>
+            <li>WAF does not support the Network Load Balancer (Layer 4)</li>
+            <li>We can use Global Accelarator for fixed IP and WAF on the ALB</li>
+        </ul>
+    </div>
+
+    <h2 id="shield">AWS Sheild</h2>
+    <div>
+        <ul>
+            <li>Protect from DDoS (Distributed Denial of Service) attack - many requests at the same time. </li>
+            <li>AWS Sheild Standard: <br>
+                - Free serivce that is activated for every AWS Customer. <br>
+                - Provides protection from attacks such as SYN/UDP Floods, Reflection attacks and other layer 3 / layer 4 attacks. <br>
+            </li>
+            <li>AWS Sheild Advanced: <br>
+                - Optional DDoS mitigation service ($3,000 per month per organization) <br>
+                - Protect against more sophisticated attack on Amazon EC2, Eleastic Load Balancing (ELB), Amazon CloudFront, AWS Global Accelarator, Route 53.
+                - 24/7 access to AWS DDoS response team (DRP). <br>
+                - Protect against higher fees during usage spike due to DDoS <br>
+                - Shield Advanced automatic applicaiton layer DDoS mitigation automatically create, evaluates and deploys AWS WAF rules to mitigate layer 7 attacks.
+            </li>
+        </ul>
+    </div>
+       
+    <h2 id="fm">AWS Firewall Manager</h2>
+    <div>
+        <ul>
+            <li>Manage rules in all accounts of an AWS Organization.</li>
+            <li>Security policy: <br>
+                - WAF rules (Applicaiton Load Balancer, API Gateways, CloudFront) <br>
+                - AWS Sheild Advanced (ALB, CLB, NLB, ElasticIP, CloudFront) <br>
+                - Security Groups for EC2, Application Load Balancer and ENI resources in VPC <br>
+                - AWS Network Firewall (VPC Level) <br>
+                - Amazon Route 53 Resolver DNS Filewall. <br>
+                - Policies are created at region level.
+            </li>
+            <li>Rules are applied to new resources as they are created (good for compliance) across all and future accounts in your Organization.</li>
+        </ul>
+    </div>
+
+    <h2>AWS Best Practices from DDoS Resiliency Edge Location Mitigation (BP1, BP3)</h2>
+    <div>
+        <h5>BP1 - Cloud Front</h5>
+        <ul>
+            <li>Web Application Delivery at Edge</li>
+            <li>Protect from DDoS Common Attacks (SYN floods, UDP reflection...)</li>
+        </ul>
+
+        <h5>BP1 - Global Accelarator</h5>
+        <ul>
+            <li>Access you application from the Edge.</li>
+            <li>Integration with Shield for DDoS protection.</li>
+            <li>Helpful if your backend is not compliant with CloudFront.</li>
+        </ul>
+
+        <h5>BP3 - Route 53</h5>
+        <ul>
+            <li>Domain Name Resolution at the edge.</li>
+            <li>DDoS Protection mechanism.</li>
+        </ul>
+
+        <h5>Infrastructure Layer Defense (BP1, BP3, BP6)</h5>
+        <ul>
+            <li>Protect Amazon EC2 against high traffic.</li>
+            <li>That includes using Global Acceelarator, Route 53, CloudFront, Elastic Load Balacing.</li>
+        </ul>
+
+        <h5>Amazon EC2 with AutoScaling (BP7)</h5>
+        <ul><li>Helps scale incase of sudden traffic surges including a flash crowd for a DDoS attck.</li></ul>
+
+        <h5>Elastic Load Balancing (BP6)</h5>
+        <ul><li>Elastic Load Balancing scales with the traffic increases and will distribute the traffic to many EC2 instances.</li></ul>
+
+        <h5>Detect and filter malicious web request (BP1, BP2)</h5>
+        <ul>
+            <li>CloudFront cache static content and serve it from edge locations, protecting your backend.</li>
+            <li>AWS WAF is used on top of CloudFront and Application Load Balancer to filter and block requests based on request signature.</li>
+            <li>WAF rate-based rules can automatically block the IPs of bad actors.</li>
+            <li>Use managed rules on WAF to block attacks based on IP reputation or block ananymous IPs.</li>
+            <li>CloudFront can block specific geographies.</li>
+        </ul>
+
+        <h5>Sheld Advanced (BP1, BP2, BP6)</h5>
+        <ul>
+            <li>Shield Advanced automatic application layer DDoS mitigation automatically creates, evaluates and deploy AWS WAF rules to mitigate layer 7 attacks.</li>
+        </ul>
+
+        <h5>Ofcuscating AWS resources (BP1, BP4, BP6)</h5>
+        <ul>
+            <li>Using CloudFront, API Gateway, Elastic Load Balancing to hide your backend resorces (Lamda Functions, EC2 instances)</li>
+        </ul>
+
+        <h5>Security Groups and Network ACLs (BP5)</h5>
+        <ul>
+            <li>Use security groups and NACLs to filter traffic based on specific IP at the subnet to ENI-level</li>
+            <li>Elastic IP are protected by AWS Shield Advanced</li>
+        </ul>
+
+        <h5>Protecting API endpoints (BP4)</h5>
+        <ul>
+            <li>Hide EC2, Lambda, elsewhere</li>
+            <li>Edge-optimized mode, or CloudFront + regional mode (more control for DDoS)</li>
+            <li>WAF + API Gateway: burst limits, headers filtering, use API keys.</li>
+        </ul>
+    </div>
+
+    <h2>Amazon Gaurd Duty</h2>
+    <div>
+        <ul>
+            <li>Intelligent Threat discovery to protect your AWS Account. </li>
+            <li>Uses Machine Learning algorithms, anomaly detection, 3rd party data.</li>
+            <li>One click to enable (30 days trial), no need to install software</li>
+            <li>Input data includes: <br>
+                - CloudTrail Event logs : unusual API calls, unauthorized deployments. <br>
+                   CloudTrial Management Events : create VPC subnet, create trail,... <br>
+                   CloudTrial S3 Data Events: get object, list objects, delete objects...
+                - VPC Flow Logs : unusual internal traffic, unusual IP adresses. <br>
+                - DNS logs: compromised EC2 instances sending encoded data within DNS queries <br>
+                - Optional Features: EKS Audit Logs, RDS & Aurora, EBS, Lambda, S3 Data Events...    
+            </li>
+            <li>Can setup EventBridge rules to be notified  in case of findings.</li>
+            <li>EventBridge rules can target AWS Lambda on SNS.</li>
+            <li>Can protect against CryptoCurrency attackes (has a dedicated "findings" for it)</li>
+        </ul>
+    </div>
+
+    <h2>Amazon Inspector</h2>
+    <div>
+        <ul>
+            <li>Automated Security Assessments (only for EC2, ECR, Lambda functions)</li>
+            <li>Contineous scaning of the infrastucture, only when needed</li>
+            <li>Package vulnarabilities (EC2, ECR & Lambda) - database of CVE</li>
+            <li>Network reachability (EC2)</li>
+            <li>A risk score is associated with all vulnarabilities for Prioritization.</li>
+            <li>For EC2 instances: <br>
+                - Leveraging the AWS System Manager (SSM) agent <br>
+                - Analyze agaist unintended network accessibility <br>
+                - Analyze the running OS against known Vulnarabilities.
+            </li>
+            <li>For Container Images pushed to Amazon ECR: <br>
+                - Assessment of Container Images as they are pushed.
+            </li>
+            <li>For Lambda Function: <br>
+                - Identifies software vulnarabilities in function code and package dependencies. <br>
+                - Assesment of functions as they are deployed.
+            </li>
+            <li>Reporting & Integration with AWS Security Hub.</li>
+            <li>Send findings to Amazon EventBridge</li>
+
+        </ul>
+    </div>
+
+    <h2>Amazon Macie</h2>
+    <div>
+        <ul>
+            <li>A fully managed data security and data privacy service that uses machine learning and pattern matching to discover and protect your sensitive data in AWS.</li>
+            <li>Macie helps identify and alert you to sensitive data, such as personally identifiable information (PII)</li>
+        </ul>
+    </div>
+</body>
+</html>

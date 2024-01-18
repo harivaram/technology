@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>UML</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>Unified Modified Language (UML)</h1>
+
+    <div class="">
+      <h2>What are UML diagrams</h2>
+      <p>UML is a way to visually represent architecure, design, implementation of a complex software system. <br>
+        UML diagrams divide the software system into componenets and sub componenets. <br>
+        It is a core concept of documentation.
+      </p>
+      <p>
+        UML diagrams helps :<br>
+          - Bring new team memebers or developers up to speed quickly. <br>
+          - Navigate source code. <br>
+          - Plan out new features before any programming takes place. <br>
+          - Communicate with technical and non-techinical audiences more easily. <br>
+          
+        </ul>
+      </p>
+    </div>
+
+    <div>
+      <h2>What are the types of UML diagrams</h2>
+      UML standards identify 13 types of diagrams that are divided in to two catergories.
+      <h3>Structural UML diagrams</h3>
+      <p>It shows how the system is structured, including the classes, objects, packages,componenets, etc. in the system and relationship between those elements.</p>
+      <h4>Class Diagram</h4>  
+      <p>Class diagrams show the static structure of the system, including classes, their attribute and behaviors, and relationships between each class. <br>
+        A class is represented by a rectangle that contains three compartment contains the class's name is mandatory, but the bottom two compartments give details about the class attributes and class operations and behaviors.
+      </p>
+      <p><img src="images/uml/domain-model-class-diagram.png" alt="" width="500px" height="500px">
+      </p>
+      <h4>Component Diagram</h4>
+      <p>A Component diagram is essentially is a more specialized version of the class diagram - The same notation rules apply for both. <br>
+        A component diagram breaks a complext software system down into smaller componenets and visualize the relationship between those components.
+      </p>
+      <p><img src="images/uml/component-diagram.png" alt="" width="500px" height="500px"></p>
+      <h4>Deployment Diagrams</h4>
+      <p>Deployment Diagrams show how software is deployed on hardware componenets in a system. <br>
+        These diagrams are most useful for system engineers, and they usually show performance, scalability, and maintainability. <br>
+        When hardware compoinenets are displyed in relation to each other, it's easier to keep track of your entire hardware mesh and make sure that all the elemenets are accounted for in a deployment.
+      </p>
+      <img src="images/uml/deployment-diagram-higher-level.png" alt="" width="700px" height="400px"> 
+      <img src="images/uml/deployment-diagram-lower-level.png" alt="" width="700px" height="400px">
+      
+      <h4>Composit Structure diagram</h4>
+      <p>These types of diagrams are essentially the blueprints for the internal structure of a classifier. 
+        They can also be used to show the behavour of a collaboration or classifier interactions with their environment through ports. 
+      They can easily depict internal componenet of any hardware to more thoroughly understand the inner workings. </p>
+      <img src="images/uml/composite-structure-diagram.png" alt="" width="700px" height="400px"> 
+      
+      <h4>Object Diagram</h4>
+      <p>Object diagram show examples of data structures at a specific time. <br>
+        You could use a class diagram to show a structure and use object diagrams to test cases to verify the completeness of your class diagrams. 
+        Or you could create an object diagram to discover information about model elemenets and thier links.
+      </p>
+      <img src="images/uml/object-diagram.png" alt="" width="700px" height="400px"> 
+    
+      <h4>Package Diagram</h4>
+      <p>
+        Package diagram are used to show dependencies between different packages in the system. <br>
+        A Package, depecited as a file folder, orgaizes model elements, such as use cases or classes into groups. 
+      </p>
+      <img src="images/uml/package-diagram.png" alt="" width="700px" height="400px"> 
+
+      <h3>Behavioral UML Diagarams</h3>
+      These UML diagrams visualize how the system behaves and interacts with itself and with users, other systems, and other entities.
+      <h4>Timing Diagram</h4>
+      <p>Often described as an inverted sequence diagram, a timing diagram shows how object interact with each other in a given timeframe. <br>
+        Use these diagrams to see how long each step of a process takes and find areas for improvement.
+      </p>
+
+      <h4>Interaction overview diagram</h4>
+      <p>This diagram overviews the flow of control between interacting nodes. <br>
+        They inlucde initial nodes, flow final nodes, activity final nodes, decision nodes, merge nodes, fork nodes, and join nodes.</p>
+      <img src="images/uml/interaction-overview.png" alt="" width="700px" height="400px"> 
+      
+      <h4>Communication diagram</h4>
+      <p>Communication diagarams, which used to be called collaboration diagrams, show how objects relate to each other. <br>
+        They model the way objects associated and connect through messages within an architectural design of a system. <br>
+        They can also show alternative scenarios within usecases or operations that require the collaboration of different objects and interactions. 
+      </p>
+      <img src="images/uml/communication-diagram.png" alt="" width="700px" height="400px"> 
+
+      <h4>State diagram</h4>
+      <p>
+      State diagrams, simply put, depict state and transitions. A state refers to different combinations of information that an object can hold, 
+      and this UML diagram can visualize all possible states and the way the object transitions from one state to the next.
+      </p>
+      <img src="images/uml/state-diagram.png" alt="" width="700px" height="400px"> 
+
+      <h4>Use case diagram</h4>
+      <p>Use case diagrams model how users/actors interact with system. 
+        This type of UML diagram should be a high-level overview of the relationship between actors and systems, so it can be a great tool for explaining your system to non-techincal audience. 
+      </p>
+      <img src="images/uml/use-case-diagram.png" alt="" width="700px" height="400px"> 
+      
+      <h4>Sequence diagram</h4>
+      <p>A Sequence diagram, sometimes referred to as an event diagram or an event scenario, shows the order in which objects interact. 
+        This way, you can visually represent simple runtime scenarios.  </p>
+      <img src="images/uml/sequence-diagram.png" alt="" width="700px" height="400px"> 
+      
+      <h4>Activity diagram</h4>
+      <p>Activity diagrams visualize the steps performed in a use case - the activites can be sequencial, branched or concurrent. <br>
+        This type of UML diagram is used to show dynamic behavior of system, but it can also be useful in business process modelling.
+      </p>
+      <img src="images/uml/activity-diagram.png" alt="" width="500px" height="700px"> 
+      
+    </div>
+
+    <h3>Reference</h3>
+    <p>
+      <a href="https://www.lucidchart.com/blog/types-of-UML-diagrams">Types of UML Diagrams</a>
+    </p>
+
+
+  </body>
+  </html>

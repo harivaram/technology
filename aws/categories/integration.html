@@ -1,0 +1,274 @@
+<html lang="en" dir="ltr">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../styles.css">
+    </style>
+  </head>
+  <body>
+    <h1>Integration</h1>
+
+
+    <h2 id="sqs">Amazon SQS</h2>
+    <div id="sqsdetails">
+        <ul>
+            <li>Queue Model - Fully managed service</li>
+            <li>Unlimited throughput and unlimited number of messages in queue</li>
+            <li>Default retention 4 days, can be exteded to 14 days.</li>
+            <li>Low latency (less than 10ms on publish and recieve)</li>
+            <li>Limitation of 256KB per message sent.</li>
+            <li>Can have duplicate Messages</li>
+            <li>Can have out of order messages (best effort ordering)</li>
+            <li>Message is persisted in SQS untill a consumer delete it.</li>
+            <li>Consumers (running EC2 instances, servers or AWS Lamda..)</li>
+            <li>Consumers poll SQS for messages, (recieves up to 10 messages at a time)</li>
+            <li>Consumers delete the message after processing by using DeleteMessage API</li>
+            <li>Consumers recives and process messages in parellel.</li>
+            <li>We can scale consumers horizantally to improve throughput of processing.</li>
+            <li>We can set Automatic scalling with help of CloudWatch Metric (Queue Length) and ClouldWatch Alarm.</li>
+            <li>If the load to SQS is too big some transactions may be lost. Leverage DB persistance for mitigation.(RDS, Aurora, DynamoDB)</li>
+            <li>SQS can be used as buffer to database writes. as SQS can scale infinitly compared to DB scalling.</li>
+        </ul>
+        <h5>SQS - Security</h5>
+        <ul>
+            <li>In-flight encryption using HTTPS API, At-rest using KMS keys (OR) Client side encryption.</li>
+            <li>Access controls: IAM to regulate access to the SQS API.</li>
+            <li>SQS Policies: Similar to S3 bucket policies, useful for cross account access to SQL queue. <br>
+                Useful for other services (SNS, S3..) to write to an SQS queue.
+            </li>
+            <li></li>
+        </ul>
+        <h5>SQS- Message Vissibility Timeout</h5>
+        <ul>
+            <li>After a message is polled by a consumer, it will become invisible to other consumers.</li>
+            <li>default 30 sec, Consumer can call the ChangeMessageVisibilityAPI to get more time.</li>
+            <li>If high (hours), when consumer crashes, reprocessing will take time.</li>
+            <li>if too low (seconds), we may get duplicates.</li>
+        </ul>
+        <h5>Long Polling</h5>
+        <ul>
+            <li>Consumer waits for the messages to arrive if there is none in the queue (1 sec to 20 sec)</li>
+            <li>Long polling decreases the number of API calls made to SQS while increasing the efficiency and reducing latency of your application.</li>
+            <li>Can be enabled at QueueLevel or at API level using WaitTimeSeconds.</li>
+        </ul>
+        <h5>FIFO Queue</h5>
+        <ul>
+            <li>First In First Ordering messages in the queue</li>
+            <li>Limited throughput: 300 msg/s without batching, 3000 msg/s with batching.</li>
+            <li>Exaclty-once send capability (by removing duplicates)</li>
+            <li>Messages are processed in order by the consumers.</li>
+        </ul>
+    </div>
+
+
+    <h2 id="sns">Amazon SNS</h2>
+    <div id="snsdetails">
+        <ul>
+            <li>Pub/Sub model</li>
+            <li>Up to 12,500,000 subscriptions per topic.</li>
+            <li>100,000 topics limit.</li>
+            <li>Publishers can be CloudWatch Alarm, AWS Budget, Lamda, Autoscaling Group notifications, S3 Bucket Events, DyanamoDB, CloudFormation (StateChange), DMS (New Replica), RDS Events...</li>
+            <li>Subscribers can be SQS, Lamda, Kenesis Data Firehouse, Emails, SMS & Mobile Notifications, HTTP(S) Endpoints...</li>
+            <li>Topic Publish using the SDK</li>
+            <li>Direct Publish for mobile apps SDK (to platform endpoints)</li>
+            <li>Encryption: In-flight encrytpoin using HTTPS API, At-Rest using KMS keys, Client side encryption</li>
+            <li>AccessControls: IAM policies to regulate access to the SNS API.</li>
+            <li>SNS Access Policies (similar to S3 bucket policies): useful for cross account access to SNS topic, useful for allowing other services (s3..) to write to an SNS topic.</li>
+            <li>SNS + SQS Fan Out: Push once to SNS, recieve in all SQS queues that are subscribers. <br>
+                - Fully decoupled, No data loss. <br>
+                - SQS allows for: Data persistence, delayed processing and retries of work. <br>
+                - Ability to add more subscriptions overtime. <br>
+                - Make sure your SQS queue access policy allows for SNS to write. <br>
+                - Cross-Region Delivery: works with SQS queues in other regions.
+            </li>
+            <li>FIFO topics: Similar to SQS FIFO <br>
+                - Ordering by Message Group ID (all messages in the same group are ordered). <br>
+                - Deduplication using Deduplication ID or Content Based Deduplication
+            </li>
+            <li>Can only have SQS FIFO queues as subscribers.</li>
+            <li>Limited throughput (same throughput as SQS FIFO)</li>
+            <li>SNS FIFO + SQS FIFO : Fan Out - Incase you fanout + ordering + deduplication.</li>
+            <li>Message Filtering can be placed using JSON policy sent to SNS topic's subsciptioin</li>
+        </ul>
+    </div>
+    
+    <h2 id="kenesis">Kenesis</h2>
+    <div id="kendetails">
+        <ul>
+            <li>Makes it easy to collect, process and analyse streaming data in realtime.</li>
+            <li>Ingest real-time data such as: Application logs, Metrics, Website clickstreams, IoT telemetry data....</li>
+            <li>Kenisis Data Streams: capture, process and store data stream.</li>
+            <li>Kenisis Data Firehouse: load data streams in to AWS data stores.</li>
+            <li>Kenesis Data Analytisc: Analyze data streams with SQL or Apache Flink</li>
+            <li>Kenesis Vedio Streams: catpure, process, and store vedio streams.</li>
+        </ul>
+
+        <h5>Kenesis Data Streams</h5>
+        <ul>
+            <li>Retention between 1 day to 365 days.</li>
+            <li>Ability to reprocess (replay) data.</li>
+            <li>Once data is inserted in Kenisis, it can't be deleted (immutability)</li>
+            <li>Data that shares the same partition goes to the same shard (ordering)</li>
+            <li>Partition Key is in Kenisis is siilar to GroupID in SQL for ordering.</li>
+            <li>Producers: AWS SDK, Kenesis Producer Libraries (KPL), AWS SDK.</li>
+            <li>Consumers: Own consumers with SDK/KPL, AWS Lambda, Kenesis Data Firehouse, Kenesis Data Analytics.</li>
+            <li>With Amazon Kinesis Data Streams, you can scale up to a sufficient number of shards (note, however, that you'll need to provision enough shards ahead of time).</li>
+            <li>Performance:
+                - 2MB per shard (Standard : pull data)
+                - 2MB per shard per consumer (Enhanced-fan out: push data)
+            </li>
+            <li>Capacity:Provisioned mode <br>
+                - Choose no of shards provisioned, scale manually or using API. <br>
+                - Each shard gets 1 MB/s in (or 1000 records per second) <br>
+                - Each shard gets 2 MB/s out (classic or enhanced fan-out consumer) <br>
+                - You pay per shard provisioned per hour.
+            </li>
+            <li>Capacity:Ondemand mode <br>
+                - No need to provision or manage capacity. <br>
+                - Default capacity provisioned (4 MB/s in or 4000 records per second) <br>
+                - Scales automatcally based on observed throughput peak during the last 30 days. <br>
+                - Pay per stream per hour &  data in/out per GB.
+            </li>
+            <li>Security <br>
+                - Control access / authorization using IAM policies. <br>
+                - Encryption in flight using HTTPS endpoints. <br>
+                - Encryption at rest using KMS. <br>
+                - Encryption at clinet side. <br>
+                - VPC Endpoint available for Kenesis to access within VPC. <br>
+                - Monitor API calls using CloudTrail.
+            </li>
+            <li>It is meant for real-time big data, analytics and ETL.</li>
+        </ul>
+
+        <h5>Kenisis Data Firehouse</h5>
+        <ul>
+            <li>Fully Managed Service, no administration, automatic scalling, serverless.</li>
+            <li>Producers: Appications, Cients, SDK/KPL, KenisisAgent, Kenesis Data Stream, Amazon CloudWatch (Logs & Events), AWS IoT..</li>
+            <li>Destinations <br>
+                AWS: Redshift / Amazon S3 / OpenSearch <br>
+                3rd party partners: Splunk / MongoDB / DataDog / NewRelic /.... <br>
+                Custom: send to any Http endpoint.
+            </li>
+            <li>Pay for data going through Firehouse.</li>
+            <li>Near Realtime</li>
+            <li>Supports many data formats, conversions, transformations, compression</li>
+            <li>Supports custom data transformations using AWS Lamda</li>
+            <li>Can send failed or all  data to back up S3 bucket.</li>
+            <li>When a Kinesis data stream is configured as the source of a Firehose delivery stream, Firehose’s PutRecord and PutRecordBatch operations are disabled and Kinesis Agent cannot write to Firehose delivery stream directly. Data needs to be added to the Kinesis data stream through the Kinesis Data Streams PutRecord and PutRecords operations instead. </li>
+        </ul>
+
+        <h5>Kenesis Data Streams Vs Firehouse</h5>
+        <table>
+            <thead><th>Kenesis Data Stream</th><th>Kenesis Data Firehouse</th></thead>
+            <tbody>
+                <tr>
+                    <td><ul>
+                    <li>Steaming service for ingest at scale.</li>
+                    <li>Write custom code (produce/consumer)</li>
+                    <li>Real-time (~200ms)</li>
+                    <li>Managed scaling (shared splitting / merging)</li>
+                    <li>Data storage for 1 to 365 days</li>
+                    <li>Supports reply capability.</li>
+                </ul></td>
+                <td><ul>
+                    <li>Load Straming data into S3 / Redshift / OpenSearch / 3rd party / Custom HTTP</li>
+                    <li>Fully managed.</li>
+                    <li>Near real-time (buffer time in 60 sec)</li>
+                    <li>Automatic scalling.</li>
+                    <li>No data storage.</li>
+                    <li>Doesn't support reply capability.</li>
+                </ul></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 id="amq">Amzaon MQ</h2>
+    <div id="amqdetails">
+        <ul>
+            <li>Managed broker service for RabitMQ, ActiveMQ (protocols: MQTT, AMQP, STOMP, Openwire, WSS)</li>
+            <li>doen't scale as musch as SQS/SNS.</li>
+            <li>Runs on servers, can run in Multi-AZ with failover.</li>
+            <li>Has both Queue and Topic features.</li>
+        </ul>
+    </div>
+
+    <h2 id="apigw">Amazon API Gwateway</h2>
+    <div id="apigwdetails">
+        <ul>
+            <li>AWS Lambda + API Gateway: No infrastructure to manage.</li>
+            <li>Support for the Websocket Protocol.</li>
+            <li>Handle API versioning (V1,V2...)</li>
+            <li>Handle different environments (dev, test, prod...)</li>
+            <li>Handle security (authentication/authorization)</li>
+            <li>Craate API keys, handle request throttling.</li>
+            <li>Swagger / OpenAPI import to quickly define APIs</li>
+            <li>Transform and validate requests and resposes.</li>
+            <li>Generate SDK and API specifications.</li>
+            <li>Cache API responses.</li>
+        </ul>
+        <h5>Integration</h5>
+        <ul>
+            <li>Lambda Function</li>
+            <li>HTTP <br>
+                Ex: Internall HTTP API on promise, Application Load Balancer... <br>
+                Add rate limiting, caching, user authentications, API keys, etc...
+            </li>
+            <li>AWS service <br>
+                - Expose any AWS API through the API gateway. <br>
+                - EX: start an AWS Step Function workflow, post a message to SQS <br>
+                    for Adding athentication, deploy publicly, rate control....
+            </li>
+            <li>Clinet -> API Gateway -> Kenisis Data Stream -> Kenisis Data Firehouse -> S3</li>
+        </ul>
+
+        <h5>Endpoint Types:</h5>
+        <ul>
+            <li>Edge-Optimized (default): For global clients, Request routed through CloudFront Edge locations (improve latency)</li>
+            <li>Regional: For clients within the same region</li>
+            <li>Private: can only be accessed from you VPC using an interface VPC endpoint (ENI), Use resource policy  to define access.</li>
+        </ul>
+
+        <h5>Security</h5>
+        <ul>
+            <li>User Authentication through <br>
+                - IAM Roles (useful for internal applications) <br>
+                - Cognito (identity for external users - example mobile users) <br>
+                - Custom Authorizer (Your own loagic)
+            </li>
+            <li>Custom Domain Name HTTPS secufity though integration with AWS Certificate Manager(ACM) <br>
+                - If using Edge-Optimized endpoint, then the certificate must be in us-east-1. <br>
+                - If using Regional endpoint, the certificate must be in the API Gateway Region. <br>
+                - Must setup CNAME or A-alias record in Route 53. 
+            </li>
+        </ul>
+    </div>
+
+    <h2 id="stepf">AWS Step Funcitons</h2>
+    <div id="stepfdetails">
+        <ul>
+            <li>Build serverless visual workflow to orchestrate your Lambda functions.</li>
+            <li>Features: Sequence, parellel, conditions, timeouts, error handling ...</li>
+            <li>Can integrate with EC2, ECS, On-Promises servers, API Gateway, SQS Queues etc..</li>
+            <li>Possibility of implementing humun approval feature.</li>
+            <li>User cases: order fulfillment, data processing, web applications, any workflow.</li>
+        </ul>
+    </div>
+
+    <h2 id="appfw">AWS AppFlow</h2>
+    <div id="appfwdetails">
+        <ul>
+            <li>Fully managed integration service that enables you to securely transfer data between Software-as-a-Service (SaaS) applications and AWS</li>
+            <li>Sources: Salesforce, SAP, Zendesk, Slack, and ServiceNow</li>
+            <li>Destinations: AWS Service like Amazon S3, Amazon Redshift or non AWS such as SnowFlake and Salesforce</li>
+            <li>Frequency: on a schedule, in response to events, or on demand</li>
+            <li>Data transformation capabilities like filtering and validation</li>
+            <li>Encrypted over the public internet or private over AWS PrivateLink</li>
+            <li>Don't spend time writing the integrations and leverage APIs immedietrly</li>
+        </ul>
+    </div>
+
+  </body>
+</html>

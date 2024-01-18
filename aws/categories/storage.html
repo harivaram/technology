@@ -1,0 +1,442 @@
+<html lang="en" dir="ltr">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <h1>Storage</h1>
+    <h2 id="s3">Amazon Simple Storage Service (S3)</h2>
+    <div>
+      <ul id="s3details">
+        <li>Infinitly scalling storage.</li>
+        <li>S3 Use cases: Backup and Storage, Disaster Recovery, Archive, Hibride Cloud Storage, Application Hosting, Media Hosting, Data lakes & Big data analytics, Software delivery and Static website.</li>
+        <li>Max object size is 5TB (5000GB)</li>
+        <li>If Uploading more than 5GB, use "multi-part" upload.</li>
+        <li>User Based Security: IAM Policy - which API calls sould be allowed for specific user from IAM.</li>
+        <li>
+          Resource Based Security: <br>
+          - Bucket Policies: Bucket wide rules from S3 console - allows across accounts. <br>
+          - Object Access Control List (ACL) - file grained (can be disabled). <br>
+          - Bucket Access Control List (ACL) - less common (can be disabled). <br>
+        </li>
+        <li>An IAM Principle can access an S3 object if the user IAM permission ALLOW it OR the resource policy ALLOWS it AND there is no explicit DENY.</li>
+        <li>
+          Use S3 bucket policy to : <br>
+          - Grant public access to the bucket. <br>
+          - Force objects to be encrypted at upload. <br>
+          - Grant access to another account (Cross Account). <br>
+        </li>
+        <li>If you get a 403 Forbidden error, make sure the bucket policy allows public reads.</li>
+        <li>Versioning is enabled at bucket level.</li>
+        <li>Versioning protects aganist unintended deletes. (by restoring a version)</li>
+        <li>Suspending version will not delete the previous versions.</li>
+        <li>S3 Replication can be done between 2 buckets with the region or cross region <br>
+          - Cross-Region Replication (CRR) : for compliance, low latency access, replication across accounts. <br>
+          - Same-Region Replication (SRR) : log aggregation, live replication between production and test accounts.
+        </li>
+        <li>Versioning must be enabled for souce and target buckets. Must give proper IAM permissions to S3</li>
+        <li>Once Replication is enabled, only new objects replicated. The exising objects can be replicated S3 Batch Replication.</li>
+        <li>Delete Operation can replicate delete markers (Optional setting). Delete with a version ID are not replicated.</li>
+        <li>There is no "chaining" of replication.</li>
+        <li>S3 Durablity (99.999999999%, 11 9's) of objects across multiple AZ and 99.99% availability.</li>
+        <li> S3 Storage Classes :
+          <table>
+            <tr><th>Storage Class (In moving order)</th><th>Descripton</th><th>Use cases</th><th>Min Duration Charges</th></tr>
+            <tr><td>Amazon S3 Standard - General Purpose</td><td>Used for frequently accessed data, Low latency and High Throughput</td><td>Big Data Analytics, Mobile & Gaming applictions, content deliver etc </td><td>None</td></tr>
+            <tr><td>Amazon S3 Intelligent Tiering</td><td>Move objects automatically between Access Tiers based on usage.</td><td></td><td>None</td></tr>
+            <tr><td>Amazon S3 Standard - Infrequent Access (IA)</td><td>Less frequently accessed but requires rapid access when needed</td><td></td><td>30 days</td></tr>
+            <tr><td>Amazon S3 Standard - One Zone-Infrequent Access</td><td>Less frequently accessed but requires rapid access when needed</td><td>Storing secondary backup copies of on-promise data, or data you can recreate.</td><td>30 days</td></tr>
+            <tr><td>Amazon S3 Glacier - Instant Retrieval</td><td>Archival/Backup Milli second retriveal. </td><td>data accessed once a quarter.</td><td>90 days</td></tr>
+            <tr><td>Amazon S3 Glacier - Flexible Retrieval</td><td>Archival/Backup</td><td>Expidited(1 to 5 mins), Standard (3 to 5 hours), Bulk (5 to 12 hours)</td><td>90 days</td></tr>
+            <tr><td>Amazon S3 Glacier - Deep Archive</td><td>Archival/Backup</td><td>Standard (12 hours), Bulk (48 hours)</td><td>180 days</td></tr>
+          </table>
+        </li>
+        <li>Objects can be moved between storage classes manually or automatically using Lifecycle Rules.</li>
+        <li>Delete Rules: Delete after N no. of days - delete old version files - delete incomplete multi-part uploads.</li>
+        <li>Rules can be created for certain prefix , certain object tags.</li>
+        <li>Amazon S3 Analysis - Storage Class Analysis help you to decinde when to transition objects to right storage class.</li>
+        <li>S3 - Request Pays: The requester instead of bucket owner pays the cost of the request and data downloaded from the bucket.</li>
+        <li>S3 Event Notifications (S3:Object creation, S3:Object Removed, S3:ObjectRestore, S3:Replication, Amazon EventBridge ...etc) can be delivered to in secones (sometimes in min or longer) to destinations like SNS, SQS, Lamda Function. </li>
+        <li>S3 Notifications with Amazon EnventBridge can deliver the events to multiple desitnatinations (Ex: Step Function, Kinesis Streams / Firehouse...) with "Advanced Filtering" option with Json rules with capabilities of Archive, Replay, Reliable Delivery.</li>
+        <li>Your application can achieve at least 3500 PUT/COPY/POST/DELETE or 5000 GET/HEAD requests per second per prefix in bucket. You can increase the throughput for you bucket by having multiple prefixes.</li>
+        <li>Multi-part upload is recommended for files > 100MB, must for files > 5GB</li>
+        <li>S3 Transfer Accelaration increses transfer speed by transferring file to AWS edge location which will forward the data to S3 bucket in the target region.</li>
+        <li>S3 Byte-Range Fetches are used to speed up dowloads by paraller GETs or retrieve only partcial data (EX:headers)</li>
+        <li>S3 Select & Glacier Select: Retrieve less data using SQL by performing server-side filtering.</li>
+        <li>S3 Batch Operations performs bulk operations such as Modify object metadata & Properties, Copy objects between S3, Encrypt un-encrypted objects, Modify ACLs, tags, Restore objects from Glacier, Invoke Lamda function to perform custom action on each object.</li>
+        <li>Objects in S3 encrypted using Server side encryption (SSE-S3, SSE-KMS, SSE-C) or Client side encryption</li>
+        <li>SSE-S3 is enabled by default for new buckets & objects. The objects are encrypted by key managed by S3, must set header "x-amz-server-side-encryption":"AES256".</li>
+        <li>SSE-KMS - keys are managed by AWS KMS (has user control, audit), must set header "x-amz-server-side-encryption:aws-kms".</li>
+        <li>SSE-KMS has KMS limits (quota) 5k,10k, 30k req/sec based on the region. Can be increased by requesting throgh Service Quotas Console.</li>
+        <li>SSE-C : Encryption key is managed by client and sent to AWS in request header for server side encryption.</li>
+        <li>Client Side encryption : encryption key management and encryption/decryption done at Cleint side.</li>
+        <li>Encryption in-transit can be acieved with S3 HTTPS endpoints, it is mandatory for SSE-C.</li>
+        <li>Bucket policy can force encryption in transit.</li>
+        <li>Bucket policies can also "force encryption" and refuce API calls to PUT to S3 object with out encryption headers (SSE-KMS or SSE-C)</li>
+        <li>CORS header (Ex: Access-Control-Allow-Origin) for cross orgin requests.</li>
+        <li>MFA will be required to permanantly delete an object, supspend versioning on the bucket.</li>
+        <li>To use MFA Delete, Versioning must be enabled on the bucket. Only bucket owner (root account) can enable/disable MFA Delete.</li>
+        <li>S3 Access Logs (request made to S3,  from any account, Authorised or denied) will be logged into another S3 bucket in the same AWS region.</li>
+        <li>Pre-signed URLs will gives users inherit permissions of the user the generated the URL for GET/PUT.</li>
+        <li>S3 Glacier Vault Lock adopts WORM (Write Once and Read Many) model i.e helpful for compliance and data retention.</li>
+        <li>S3 Object Lock (WORM model) to block version delete for specific amount of time. there are 4 modes. <br>
+          - Retention mode - Compliance <br>
+          - Retention mode - Governance <br>
+          - Retention Period <br>
+          - Legal Hold
+        </li>
+        <li>S3 Access Points has its own DNS name (Internet Origin or VPC Origin), An access point policy manages security at scale. <br>
+          The VPC Endpoint Policy must allow access to the target bucket and Access Point.
+        </li>
+        <li>S3 Object Lamda function can be used to change the object before it is retrieved by caller applicaiton, it requires S3 Access Point and S3 Object Lambda Access Point.</li>
+      </ul>
+
+      <h5>Summary</h5>
+      <ul>
+        <li>S3 is a key/value store for objects.</li>
+        <li>Great for bigger objects, no so great for many small objects.</li>
+        <li>Severless, scales infinitly, max object size is 5 TB, versioning capability.</li>
+        <li>Tiers: S3 Standard, S3 Infrequent Access, S3 Intelligent, S3 Glacier + lifecycle policy</li>
+        <li>Features: Versioning, Encryption, Replication, MFA-Delete, Access logs,...</li>
+        <li>Security: IAM, Bucket Policies, ACL, Access Points, Object Lambda, CORS, Object/Vault Lock.</li>
+        <li>Encryptoin: SSE-S3, SSE-KMS, SSE-C, Client-side, TLS in transit, default encryption.</li>
+        <li>Batch operations: on objects using S3 Batch, listing files using S3 Inventory.</li>
+        <li>Performance: Multi-part upload, S3 Transfer Accelaration, S3 Select.</li>
+        <li>Automation: S3 Event Notificaitons (SNS, SQS, Lambda, EventBridge)</li>
+        <li>Use Cases: static files, key value store for big files, website hosting.</li>
+        <li> By default, an S3 object is owned by the AWS account that uploaded it. This is true even when the bucket is owned by another account. </li>
+      </ul>
+    </div>
+
+    <h2 id="snowfamily">AWS Snow Family</h2>
+    <div>
+      <ul id="sfdetails">
+        <li>Highly-secure, portable devices to collect and process data at the edge, and migrate data (offline) into and out of AWS.</li>
+        <li>Data Migration: Snowcone, Snowball Edge, Snowmobile.</li>
+        <li>Edge Computing: Snowcone, Snowball Edge.</li>
+        <li>If it takes more than a week to transfer over the network, use Snowball devices.</li>
+        <li>
+          <table>
+            <tr><th></th><th>Snowcone & Snowcone SSD</th><th>Snowball Edge</th><th>Snowmobile</th></tr>
+            <tr><th>Storage Capacity</th><td>8TB HDD, 14TB SSD</td><td>80TB usable</td><td>less than 100PB</td></tr>
+            <tr><th>Migration Size</th><td>Up to 24TB, online and offline</td><td>Up to petabytes, offline</td><td>up to Extrabytes, offline</td></tr>
+            <tr><th>Hardware</th><td>2 CPUs, 4GB of memory, wired or wireless access</td><td>104 vCPUs, 416GiB of RAM, Option GPU, 28TB NVMe or 42TB HDD usable Storage</td><td>Up to 40 vCPUs, 80 GiB of RAM, 80TB storage.</td></tr>
+            <tr><th>DataSync agent</th><td>Pre-installed</td><td>X</td><td>X</td></tr>
+          </table>
+        </li>
+        <li>Snowmbile is better than snow ball if you transfer more than 10PB.</li>
+        <li>Use Snowcone where Snowball doesn't fit (Space constrained environements)</li>
+        <li>Edge Computing use cases: <br>
+          - Preprocess Data <br>
+          - Machine learning at the edge. <br>
+          - Transcoding media streams. 
+        </li>
+        <li>All Devices can run EC2 instances & AWS Lamda fucntions (Using AWS IoT Greengrass)</li>
+        <li>Long-term deployment options: 1 to 3 years discouned pricing.</li>
+        <li>AWS Ops Hub is a Software that you can install on your computer/Laptop to manage your Snow Family Device.</li>
+        <li>Snowball cannot import to Glacier directly, You must use S3, in combilation with an S3 life cycle policy.</li>
+      </ul>
+    </div>
+
+    <h2 id="fsx">Amazon FSx</h2>
+    <div>
+      <ul id="fsxdetails">
+        <li>Fully managed third-party high-performance file systems on AWS</li>
+      </ul>
+      <table>
+        <tr><th>FSx for Windows</th>
+          <td>
+            <ul>
+              <li>Supports SMB protocol & Windows NTFS. </li>
+              <li>Can be mounted on Linux EC2 Instances. </li>
+              <li>Microsoft Active Directory integration, ACLs, user quotas </li>
+              <li>Support for Microsoft's Distributed Fine System (DFS) Namespaces. </li>
+              <li>Scale up to 10s of GB/s, millions of IOPS, 100s PB of data. </li>
+              <li>SSD, HDD storage options
+              <li>Can be accessed from on-promise infrastruture (VPN or Direct Connect). </li>
+              <li>Can be configured to be Multi-AZ (high availability). </li>
+              <li>Data is backed-up daily to S3.
+            </ul>
+            
+          </td>
+        </tr>
+        <tr><th>FSx for Luster</th>
+          <td>
+            <ul>
+              <li>Linux and Cluster, parallel distributed file system, for large-scale computing. </li>
+              <li>Machine Learning, High Performance Computing (HPC) </li>
+              <li>Vedio Processing, Financial Modeling, Electronic Design Automation. </li>
+              <li>Scale up to 100 GB/s, millions of IOPS, sub-ms latencies. </li>
+              <li>SSD, HDD storage options. </li>
+              <li>Seamless Integration with S3. Read and Write to S3 as file system (through FSx). </li>
+              <li>Can be used from on-promise servers (VPN or Direct Connect). </li>
+              <li>Has 2 deployment optons i.e Sratch File System and Persistem File System. </li>  
+            </ul>
+          </td>
+        </tr>
+        <tr><th>FSx for NetApp ONTAP</th>
+          <td><ul>
+            <li>Managed NetApp ONTP on AWS </li>
+            <li>Compatible with NFS, SMB, iSCI protocol.</li>
+            <li>Works with Linux, Windows, MacOS, VMware Cloud on AWS, Amazon Workspaces & AppStream 2.0, Amazon EC2, ECS and EKS.</li>
+            <li>Storage shriks and grows automatically.</li>
+            <li>Snapshots, replication, low-cost, compression and data de-duplication.</li>
+            <li>Point-in-time instantaneous cloning (helpful for testing new workloads)</li>
+          </ul></td>
+        </tr>
+        <tr><th>FSx for OpenZFS</th>
+          <td>
+            <ul>
+              <li>File System compatible with NFS (v3, v4, v4.1, v4.2)</li>
+              <li>Works with Linux, Windows, MacOS, VMware Cloud on AWS, Amazon Workspaces & AppStream 2.0, Amazon EC2, ECS and EKS.</li>
+              <li>Up to 1 millon IOPS with in 0.5ms latency.</li>
+              <li>Snapshots, compression and low-cost.</li>
+              <li>Poin-in-time instantaneous cloning (helpful for testing new workloads).</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+
+      <h2 id="sgw">AWS Storage Gateway</h2>
+      <div>
+        <ul id="sgwdetails">
+          <li>Bridge between on-promise data and cloud data.</li>
+          <li>Use cases: Disaster Recovery, backup & restore, tired storage, on-promise cache and low-latency files access.</li>
+          <li>Using Storage Gateway means you need on-promise virtualization, otherwise, you can use a Storage Gateway Hardware Appliance. Helpful for daily NFS backups in small data centre.</li>
+        </ul>
+        <table>
+          <tr><th>S3 File Gateway</th><td>
+            <ul>
+              <li>Configured S3 buckets are accessible using NFS and SMB protocol.</li>
+              <li>Most recently used data is cached in the file gateway.</li>
+              <li>Supports S3 Standard, S3 Standard IA, S3 One-Zone A, S3 Intelligent Tiering.</li>
+              <li>Transition to S3 Glacier using Lifecycle Policy.</li>
+              <li>Bucket access using IAM roles for each File Gateway.</li>
+              <li>SMB protocol has integration with Active Directory (AD) for user authentication.</li>
+            </ul>
+          </td></tr>
+          <tr><th>FSx File Gateway</th><td>
+            <ul>
+              <li>Native access to Amazon FSx for Windows File Server.</li>
+              <li>Local cache for frequently accessed data.</li>
+              <li>Windows native compatibility (SMB, NTFS, Active Directory...)</li>
+              <li>Useful for group of file shares and home directories.</li>
+            </ul>
+          </td></tr>
+          <tr><th>Volume Gateway</th><td>
+            <ul>
+              <li>Block storage using iSCSI protocol backed by S3.</li>
+              <li>Backed by EBS snapshots which can help restore on-promise volumes.</li>
+              <li>Cached Volumes: low latency access to most recent data.</li>
+              <li>Stored Volumes: entire dataset is on promise, scheduled backups to S3.</li>
+            </ul>
+          </td></tr>
+          <tr><th>Tape Gateway</th><td>
+            <ul>
+              <li>Vitual Tape Library (VTL) backed by Amazon S3 and Glacier.</li>
+              <li>Backup data using existing tape-based processes (and iSCSI interface).</li>
+            </ul>
+          </td></tr>
+        </table>
+      </div>
+      <h2 id="ebs">Elastic Block Storage (EBS)</h2>
+      <div>
+        <ul id="ebsdetails">
+          <li>A newwork drive that can be attached to an instance.</li>
+          <li>It is mounted on to one instance at a time.</li>
+          <li>Exists even after the instance termimation</li>
+          <li>bound to specific AZ. To move across a snapshot of the volume is required.</li>
+          <li>Billed based on the provisioned capacity (size in GB and IOPS)</li>
+          <li>Mutiple volumes can be attached to one instance.</li>
+          <li>By default, the root EBS volume is deleted and other EBS volumes are not deleted. You can change this setting. </li>
+        </ul>
+
+        <h4>EBS Snapshot</h4>
+        <ul>
+          <li>Make a backup(snapshot) of you EBS volume at a point in time.</li>
+          <li>Not necessary to detach the volume to do snapshot, but recommended.</li>
+          <li>can copy snapshot across AZ or Region.</li>
+        </ul>
+
+        <h4>EBS Snapshot Archive</h4>
+        <ul>
+          <li>Move the snapshot to an "archive tier" that is 75% cheaper. It takes 24 to 72 hours for restoring.</li>
+          <li>Recyle Bin for snapshot to retain the deleted snapshots (from 1 day to 1 year). </li>
+          <li>Full Snapshot Restore(FSR): Force full utilization  of a snapshot to have no latency on the first use.</li>
+        </ul>
+        
+        <h4>EBS Volume Types</h4>
+        <table>
+          <thead><th>Volume Type</th><th>Volume Size</th><th>Max IOPS per volume</th><th>Use Cases</th></thead>
+          <tr>
+            <th>General Purpose SSD (gp3/gp2)</th>
+            <td>1 GiB - 16 TiB</td>
+            <td>16,000 (16Kib/IO)</td>
+            <td>Low latency intensive apps <br>Development and Test Envronments.</td>
+          </tr>
+          <tr>
+            <th>Provisioned IOPS SSD (io1/io2)</th>
+            <td>4 GiB - 16 Tib</td>
+            <td>64,000 (16Kib/IO)</td>
+            <td>Workload that requires sustained IOPS performance more than 16,000 IOPS. <br>
+              I/O intensive database workloads.
+            </td>
+          </tr>
+          <tr>
+            <th>Provisioned IOPS SSD (iO2 Express)</th>
+            <td>4 GiB - 64 Tib</td>
+            <td>256,000 (16Kib/IO)</td>
+            <td>Workload that requires sub-millisecond latency and sustained IOPS performance more than 64,000 IOPS. <br>
+              I/O intensive database workloads.
+            </td>
+          </tr>
+          <tr>
+            <th>Thoughput Optimized HDD (st1)</th>
+            <td>125GiB - 16TiB</td>
+            <td>500 Mib IO</td>
+            <td>BigData, Data wearehouse, Log processing</td>
+          </tr>
+          <tr>
+            <th>Cold HDD</th>
+            <td>125GiB - 16 TiB</td>
+            <td>250 Mib IO</td>
+            <td>Through put oriented storage for data that is infrequently accessed. <br>
+              Scenarios where the lowest storage cost is important.
+            </td>
+          </tr>
+        </table>
+        <ul>
+          <li>gp2: IO increases if the disk size increases <br>
+              io1: can increase IO independelty.
+          </li>
+        </ul>
+
+
+      <h4>EBS Multi-Attach (io1/io2 family)</h4>
+      <ul>
+        <li>Attach Same EBS volume to multiple EC2 instances in the same AZ.</li>
+        <li>Each instance has full read & write permissions to the high-performance volume.</li>
+        <li>Use case: <br>
+          - Achieve higher application availability in clustered linux environment. <br>
+          - Applications must manage concurrent write operations.
+        </li>
+        <li>Up to 16 EC2 Instances at a time.</li>
+      </ul>
+
+      <h4>EBS Encryption</h4>
+      <ul>
+        <li>When you create an encrypted EBS volume, you get
+          <ul>
+            <li>Data at rest is encrypted inside the volume.</li>
+            <li>Data in-flight between instance and volume is encrypted.</li>
+            <li>All shopshots are encrypted.</li>
+            <li>All volumes created from the snapshot are encrypted.</li>
+          </ul>
+        </li>
+        <li>Encryption has minimal impact on latency.</li>
+        <li>EBS encryption leverages keys from KMS (AES-256)</li>
+        <li>Copying an unencrypted snapshot allows encryption.</li>
+        <li>Snapshots of encrypted volumes are encrypted.</li>
+        <li>Encrypting an unencrypted EBS volume:
+            <ul>
+              <li>Craete an EBS snapshot of the volume.</li>
+              <li>Encrypt the EBS snapshot.</li>
+              <li>Create EBS volume from the snapshot. (Volume will also be encrypted)</li>
+            </ul>
+        </li>
+      </ul>
+    </div>
+    <h2 id="efs">Elastic File Storage (EFS)</h2>
+    <div>
+      <ul id="efsdetails">
+        <li>Managed NFS (Network File System) that can be mounted on many EC2.</li>
+        <li>Works with Instances in Multi-AZ.</li>
+        <li>Highly available, scalable, expensive (3x gp2), pay per use.</li>
+        <li>EFS use cases: content management, webs serving, data sharing, Wordpress.</li>
+        <li>Use NFSv4.1 protocol.</li>
+        <li>Use security group to control access to EFS.</li>
+        <li>Compatibile with Linux based AMI (Not Windows)</li>
+        <li>Encryption at rest using KMS.</li>
+        <li>POSIX file system (~linx) that has standard file API.</li>
+        <li>File System scales automatically, pay-per-use, no capacity planning.</li>
+      </ul>
+      <h4>EFS Peformance and Storage classes:</h4>
+      <ul>
+        <li>EFS Scale
+          <ul>
+            <li>1000s of concurrent NFS clients, 10GB+/s throghput. </li>
+            <li>Grow Petabyte-scale network file system, automatically.</li>
+          </ul>
+        </li>
+        <li>
+          Performance Mode (Set at EFS creation time)
+          <ul>
+            <li>General Purpose (default) - latency sensitive use cases (Webservers, CMS etc). </li>
+            <li>Max I/O - higher latency, throughput, highly parallel (Big Data, media processing)</li>
+          </ul>
+        </li>
+        <li>Throughput Mode
+          <ul>
+            <li>Bursting - 1 TB = 50MiB/s + burst of up to 100MiB/s.</li>
+            <li>Provisioned - set your throughput regardless of storage size. ex: 1GiB/s or 1 TB storage.</li>
+            <li>Elastic - automatically scales throughput up and down based on your workloads. <br>
+              - Up to 3GiB/s of reads and to 1 GiB/s writes. <br>
+              - Used for Unpredictable workloads.
+            </li>
+            <li>Storage tier (Life cycle management feature - Move file after N days)
+              <ul>
+                <li>Standard: for frequency accessed files.</li>
+                <li>Infrequent access (EFS-IA): cost to retrieve files, lower price to store. Enable EFS-IA with a lifecycle policy.</li>
+              </ul>
+            </li>
+            <li>Availability and Durability:
+              <ul>
+                <li>Standard: Multi-AZ, great for prod.</li>
+                <li>One Zone: One AZ, great for dev, backup enabled by default, compatible with IA (EFS One Zone-IA) <br>
+                  Over 90% cost saving.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    
+    <h2 id="backup">AWS Backup</h2>
+    <div>
+      <ul>
+        <li>Fully managed service</li>
+        <li>Centrally manage and automated backups across AWS services.</li>
+        <li>No need to create custom scripts and manual processes.</li>
+        <li>Supported servcies: <br>
+            Amazon EC2/ Amazon EBS <br>
+            Amazon S3 <br>
+            Amazon RDS (all DBs engines) / Amazon Aurora / Amazon DynamoDB. <br>
+            Amazon DocumentDB / Amazon Neptune. <br>
+            Amazon EFS / Amazon FSx (Lustre & Windows File Server) <br>
+            AWS Storage Gateway (Volume Gateway)
+        </li>
+        <li>Supports cross-region backups</li>
+        <li>Supports cross-account bakcups</li>
+        <li>Supports PITR for supported services</li>
+        <li>On-Demand and Scheduled backups.</li>
+        <li>Tag-based backup policies.</li>
+        <li>You create backup policis known as Backup Plans. <br>
+          - Backup frequency (every 12 hours, daily, weekly, monthly, cron expression) <br>
+          - Backup window <br>
+          - Transition to Cloud Storage (Never, Days, Weeks, Months, Years) <br>
+          - Retention Period (Always, Days, Weeks, Months and Years)
+        </li>
+        <li>AWS Backup Vault Lock: <br>
+          - Enforce WORM (Write Once and Read Many) state for all the backups. <br>
+          - Additional layer of defence to protect agains inadvertent or malicious delete operations / shorten (or) alter retntion periods. <br>
+          - Even root user can not delete backups when enabled.
+        </li>
+      </ul>
+    </div>
+
+  </body>
+</html>

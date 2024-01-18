@@ -1,0 +1,194 @@
+<html lang="en" dir="ltr">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../styles.css">
+    </style>
+  </head>
+  <body>
+    <h1>Serverless</h1>
+
+    <h2 id="lambda">AWS Rekogniton</h2>
+    <div>
+        <ul>Find objects, people, text, scense in images and vedios uisng ML.</ul>
+        <li>Facial analysis and facial search to do user verification, people counting.</li>
+        <li>Create a database of "familiar faces" or compare against celebrities.</li>
+        <li>Use cases: Labelling, Content Moderation, Text Detection, Face Detection and Analysis (gender, age range, emotions...), Face Search and Verificaiton, Celebrity Recognition, Pathing (ex: for sports game analysis)</li>
+        <li>Detect the content that is inappropriate, unwanted or offensive (image and vedios)</li>
+        <li>Used in social media, broadcast media, advertising, and e-commerce situations to create a safer user experience.</li>
+        <li>Set a Minimum Confidence Threshold for items that will be flagged.</li>
+        <li>Flag sensistive content from manual review in Amazon Augmented AI (A2I)</li>
+        <li>Help comply with regulations.</li>
+    </div>
+
+    <h2 id="">Amazon Transcibe</h2>
+    <div>
+        <li>Automatically converts speech to text.</li>
+        <li>Uses a deep learning process called  Automatic Speach Recognition (ASR) to convert speech to text quickly and accurately.</li>
+        <li>Automatically remove Personally Identifiable Information (PII) using Radaction.</li>
+        <li>Supports Automatic Language Identification for multi-lingual audio.</li>
+        <li>Use cases: <br>
+            - Transcibe customer service calls <br>
+            - automated closed captioning and subtitling. <br>
+            - generate metadata for media assets to create a fully searchable archive.
+        </li>
+    </div>
+
+    <h2 id="">Amazon Polly</h2>
+    <div>
+        <ul>
+            <li>Turn text in to lifelike speech using deep learning.</li>
+            <li>Allowing you to create applications that talk.</li>
+            <li>Customize the pronuciation of words with Pronunciation lexicons. <br>
+                - Stylized words: St3ph4ne => Stephane. <br>
+                - Acronyms: AWS => Amazon Web Services.
+            </li>
+            <li>Upload the lexicons and use them in SynthesizeSpeech operation.</li>
+            <li>Generate speech from plain text or from documents marked up with Speech Synthesis Markup Language (SSML) - enables more customization. <br>
+                - emphasizing specific words or phrases. <br>
+                - using phonetic pronounciation. <br>
+                - including breathing sounds, whispering. <br>
+                - using the Newscater speacking style.
+            </li>
+        </ul>
+    </div>
+
+    <h2 id="">Amazon Translate</h2>
+    <div>
+        <ul>
+            <li>Natural and accurate language translation.</li>
+            <li>Amazon Translate allow you to localize content - such as websites and applications - for international users, and to easily translate large volumes of text efficiently.</li>
+        </ul>
+    </div>
+
+    <h2 id="">Amazon Lex</h2>
+    <div>
+        <ul>
+            <li>Same technology that powers Alexa.</li>
+            <li>Automatic Speeach Recognition (ASR) to convert speech to text.</li>
+            <li>Natural Language Understanding to recognize the intent of text, callers.</li>
+            <li>Helps to build chatbots, call centre bots.</li>
+        </ul>
+    </div>
+
+    <h2 id="">Amazon Connect</h2>
+    <div>
+        <ul>
+            <li>Recieves calls, create contact flows, cloud-based virtual contact center.</li>
+            <li>Can integrate with other CRM systems or AWS.</li>
+            <li>No upfront payments, 80% cheaper than traditional contact centre solution.</li>
+        </ul>
+    </div>
+
+    <h2 id="">Amazon Comprehend</h2>
+    <div>
+        <ul>
+            <li>For Natural Language Processing (NLP)</li>
+            <li>Fully managed and serverless service.</li>
+            <li>Uses maching learning to find insights and relationships in text.
+                - Language of the text. <br>
+                - Extrancts key phrases, places, people, brands or events. <br>
+                - Understand how positive or negative the text is. <br>
+                - Analyze text using tokenization and parts of speach. <br>
+                - Automatically organizes a collection of text files by topic.
+            </li>
+            <li>Sample Use cases: <br>
+                - analyze customer interactions (emails) to find what lead to a positive or experience. <br>
+                - Create and group articles by topics that Comprehend will uncover.
+            </li>
+        </ul>
+        <h5>Amazon Comprehend Medical</h5>
+        <ul>
+            <li>Detects and return useful information in unstructured clinical text: <br>
+                - physician's notes. <br>
+                - Discharge summaries <br>
+                - Test results. <br>
+                - Case notes.
+            </li>
+            <li>Uses NLP to detect protected Health Information (PHI) - DetectPHI API</li>
+            <li>Store your documents in Amazon S3, analyse realtime data with Kinesis Data Firehouse, or use Amazon Transcribe to translate patient narratives into text that can be analyzed by Amazon Comprehend Medical.</li>
+        </ul>
+    </div>
+    <h2 id="">Amazon Comprehend</h2>
+    <div>
+        <ul>
+            <li>Fully managed serivce for developers / data scientists to build ML models.</li>
+            <li>Tipically, difficult to do all the processs in one place + provision servers.</li>
+            <li>Machine learning process (simplified): predicting your exam score.</li>
+        </ul>
+    </div>
+
+
+    <h2 id="">Amazon Forcast</h2>
+    <div>
+        <ul>
+            <li>Fully managed service that uses ML to deliver highly accurate forcasts.</li>
+            <li>Ex: Predict the future sales of raincoat.</li>
+            <li>50% more accurate than looking at the data itself.</li>
+            <li>Reduce the forcating time from months to hours.</li>
+            <li>Use cases: Product Demand Planning, Financial Planning, Resource Planning...</li>
+        </ul>
+    </div>
+
+    <h2 id="">Amazon Kedra</h2>
+    <div>
+        <ul>
+            <li>Full managed documnet search service powered by Machine Learning.</li>
+            <li>Extract answers from within a document (text, pdf, HTML, PowerPoint, MS Word, FAQs..) </li>
+            <li>Natural language search capability.</li>
+            <li>Learn from user interactions/feedback to promote preferred results (Incremental Learning)</li>
+            <li>Ability to manaully fine-tune search results (importance of data, freshness, custom, ..)</li>
+        </ul>
+    </div>
+
+    <h2 id="">Amazon Personalize</h2>
+    <div>
+        <ul>
+            <li>Fully managed ML-service to build apps with real-time personalized recommendations.</li>
+            <li>Example: personalized product recommendations / re-ranking , customized direct marketing. <br>
+                - User bought gardening tools, provide recommendations for the next one to buy.
+            </li>
+            <li>Same technology used by Amazon.com</li>
+            <li>Integrates into existing websites, applications, SMS, email marketing systems,...</li>
+            <li>Implement in days, not months (you don't need to build, train, and deploy ML solutions)</li>
+            <ul>Use cases: retail stores, media and entertainment...</ul>
+        </ul>
+    </div>
+
+    <h2 id="">Amazon Textract</h2>
+    <div>
+        <ul>
+            <li>Automatically extracts text, handwriting and data from any scanned document using AI and ML.</li>
+            <li>Extract data from forms and tables.</li>
+            <li>Read and process any type of documents (PDFs, images,...)</li>
+            <li>Use cases: <br>
+                - Financial Services (eg: invoices, financial reports). <br>
+                - Health care (eg:medical reports, insurance cliams) <br>
+                - Public Sector (eg: text forms, ID documents,  passports)
+            </li>
+        </ul>
+    </div>
+
+
+    <h2 id="">AWS Machine Learning Summary</h2>
+    <div>
+        <ul>
+            <li>Reckognitions: face detection, labelling, celebrity recognition.</li>
+            <li>Transcribe: audio to text (ex: subtitle)</li>
+            <li>Polly: text to audio</li>
+            <li>Translate: translations</li>
+            <li>Lex: build conversational bots - chatboat</li>
+            <li>Connect: cloud contact centre.</li>
+            <li>Comprehend: natural language processing.</li>
+            <li>SageMaker: machine learning for every developer and data scientist</li>
+            <li>Forecast: build higly accurate forecasts.</li>
+            <li>Kendra: ML-powered search engine.</li>
+            <li>Personalize: real-time personalized recommendations.</li>
+            <li>Textract: detect text and data in documents.</li>
+        </ul>
+    </div>
+
+</body>
+</html>

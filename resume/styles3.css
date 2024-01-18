@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+}
+
+
+h4,h5,table{
+    padding-left: 10px;
+}
+
+table{
+    margin-left: 20px;
+}
+
+ul{
+    padding-left: 40px;
+}
+
+.header{
+    background: #003147;
+    color: white;
+}
+
+
+.name{
+    font-size: xx-large;
+}
+
+.desg{
+    font-size: large;
+}
+
+.imgBox{
+    margin: 10px;
+    display: inline-block;
+    width: 20%;
+    height: 150px;
+    
+}
+img{
+    vertical-align:bottom;
+}
+
+.title{
+    display: inline-block;
+}
+
+.photo{
+    position: relative;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+
+
+}
+
+.certlogo{
+    display: inline-block;
+}
+
+.contactInfo{
+    display: inline-block;
+}
+
+
+
+
+.sechead{
+    background: #558257;
+    padding: 2px 0px 2px 10px ;
+    margin:0px;
+    color: white;
+}
+
+.exphead{
+   background: lightgray; 
+   padding: 4px 0px 4px 10px ;
+}
+
+.sechead{
+    text-transform: uppercase;
+}

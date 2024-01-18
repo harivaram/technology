@@ -1,0 +1,837 @@
+<html lang="en" dir="ltr">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../styles.css">
+    </style>
+  </head>
+  <body>
+    <h1>Networking and Content Delivery</h1>
+
+
+    <h2 id="route53">Amazon Route 53</h2>
+    <div id="r53details">
+      <ul>
+        <li>Domain Name System which translate them humun friendly hostnames into the machine IP addresses.</li>
+        <li>DNS is backbone of the Internet.</li>
+        <li>DNS uses hierarchical naming structure. .com -> example.com -> www.example.com</li>
+      </ul>
+      <h5>DNS Terminology:</h5>
+      <ul>
+        <li>Domain Registrar: Amazon Route 53, GoDaddy....</li>
+        <li>DNS Records: A, AAAA, CNAME, NS, ..</li>
+        <li>Zone File: contains DNS records</li>
+        <li>Name Server: resolves DNS queries (Authoritative or Non-Authoritative)</li>
+        <li>Top Level Domain (TLD): .com, .us, .in, .gov, .org ...</li>
+        <li>Second Level Domain (SLD): amazon.com, google.com,....</li>
+        <li>Note: Domain Registarts usually provide DNS service to manage your DNS records, You can even chose different DNS service if needed.</li>
+      </ul>
+
+      <h5>Amazon Route 53</h5>
+      <ul>
+        <li>A highly available, scalable, fully managed and Authoritative DNS.</li>
+        <li>Route 53 is also a Domain Registrar.</li>
+        <li>Ability to check the health of your resources.</li>
+        <li>The only AWS service which provides 100% availability SLA.</li>
+      </ul>
+
+      <h5>Route 53 - Records</h5>
+      <ul>
+        <li>How you want to route traffic for a domain.</li>
+        <li>Each Record contains: 
+          <ul>
+            <li>Domain/subdomain Name - eg: example.com</li>
+            <li>Record Type - eg: A or AAAA</li>
+            <li>Value - eg: 12.35.67.56</li>
+            <li>Routing Policy - how Route 53 responds to queries.</li>
+            <li>TTL - Amount of time record cached at DNS Resolver.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h5>Route 53 - Record Types:</h5>
+      <ul>
+        <li>A - maps a hostname to IPv4</li>
+        <li>AAAA - maps hostname to IPv6 </li>
+        <li>CNAME - maps a hostname to another hostname. <br>
+          - The target is a domain name which must have A or AAAA record. <br>
+          - Can't create a CNAME record for the top node of a DNS namespace (Zone Apex). <br>
+            Ex: Can't create for example.com, but you can create for www.example.com
+        </li>
+        <li>NS - Name Servers for the Hosted Zone. Controls how traffic is routed for a domain.</li>
+      </ul>
+
+      <h5>Hosted Zones</h5>
+      <ul>
+        <li>A container for records that define how to route traffic to a domain and its subdomain.</li>
+        <li>Public Hosted Zones - conatins records that specify how to route traffic on the Internet (public domain names). Ex:app.company.com</li>
+        <li>Private Hosted Zones - Contain records that specify how you route traffic within one or more VPCs (private domain names). Ex:app.company.internal</li>
+        <li>$0.5 per month per hosted zone.</li>
+      </ul>
+
+      <h5>Records TTL (Time to Live)</h5>
+      <ul>
+        <li>High TTL - eg:24 hr - Less traffic on Route 53, Possibly outdated records.</li>
+        <li>Low TTL - eg:60sec - More traffic to Route 53, Records are outdated for less time, Easy to change reords.</li>
+        <li>Except for Alias records, TTL is mandatory for each DNS record.</li>
+      </ul>
+      
+      <h5>CNAME Vs Alias</h5>
+      <ul>
+        <li>AWS Resources (Load Balancer, CloudFront...) exposes AWS host name (xxx.(region).amazonaws.com)</li>
+        <li>CNAME: Points a host name to any other host name (Only for non root domains) Ex: aaa.xdom.com -> bbb.ydom.com . </li> 
+        <li>Alias: Points a hostname to an AWS Resource (aaa.xdom.com -> bbb.amazoneaws.com) <br>
+          - Works for root domain and non-root domain  (ex: xdom.com or app.xdom.com) <br>
+          - Free of Charge. <br>
+          - Native Health Check <br>
+          - Automatically recognizes changes in the resource's IP addresses. <br>
+          - An extenstion to DNS functionality. <br>
+          - aloways A/AAAA type for AWS resouces (IPv4/IPv6).
+          - Alias Records Targets: ELB, CloudFront, API Gateway, Elastic Beanstalk environement, S3 Websites, VPC Interface Endpoints, Global Accelarator, Route 53 record in the same hosted zone. <br>
+          - You can't set an Alias record for an EC2 DNS name. 
+        </li>
+      </ul>
+
+      <h5>Route 53 - Routing Policies</h5>
+      <table>
+        <tr><th>Simple</th><td><ul>
+          <li>Route traffic to single resource.</li>
+          <li>Can specify multiple values in the same record. When multiple values returned a random one is choosen by the client.</li>
+          <li>When Alias enabled, specify only one AWS resource.</li>
+          <li>Can't associated with Health Checks.</li>
+        </ul></td></tr>
+        <tr><th>Weighted</th><td><ul>
+          <li>Controls the % of the requests that go to each specific resource. </li>
+          <li>Weight don't need to sum up to 100.</li>
+          <li>DNS records must have the same name and type.</li>
+          <li>Can be associated with Health Checks.</li>
+          <li>Use Cases: Load balancing between regions, testing new application versions ...</li>
+          <li>Assign a weight of 0 to a record to stop sending traffic to a resource.</li>
+          <li>if all records have weight of 0, then all records will be returned equally.</li>
+        </ul></td></tr>
+        <tr><th>Latency-based</th><td><ul>
+          <li>Redirects to the resources that has the least latency (close to client) </li>
+          <li>Latency is based on traffic between users and AWS regions. (Ex: Germany users may be directed to US, if that's the lowest latency)</li>
+          <li>Can be associated with health checks has failover capability.</li>
+          <li></li>
+        </ul></td></tr>
+        <tr><th>Failover</th><td><ul>
+          <li>Active-Passive, if the health checks to Active resouce fails, it routes the requests to Passive resource.</li>
+        </ul></td></tr>
+        <tr><th>Geolocation</th><td><ul>
+          <li>Routing based on the use location. (Continent, Country or by US State if they are overlapping, most precise location selected)</li>
+          <li>Should craete a "default" record (in case there is no match on location)</li>
+          <li>Use cases: website localizations, restrict content distribution, load balancing...</li>
+          <li>Can be associated with Health checks.</li>
+        </ul></td></tr>
+        <tr><th>Geoproximity</th><td><ul>
+          <li>Route traffic to your resources based on the geographic location of users and resources.</li>
+          <li>Ability to shift more traffic to resource based on the defined bias.</li>
+          <li>To chanage the size of geographic region, specify bias value</li>
+          <li>Resources can be AWS resources (regions) or Non-AWS resources (GPS)</li>
+          <li>You must use Route 53 Traffic Flow to use this ferature.</li>
+        </ul></td></tr>
+        <tr><th>IP based Routing</th><td><ul>
+          <li>based on Client's IP Address.</li>
+          <li>You provide a list of CIDRs for your clients and corresponding endpoints/locations (use IP to endpoint mapping)</li>
+          <li>Use cases: Optimizing performance, reduce network costs.</li>
+          <li>Ex: route end users from particular ISP to specific endpoint.</li>
+        </ul></td></tr>
+        <tr><th>Multi-Value</th><td><ul>
+          <li>Use when routing traffic to multiple resources.</li>
+          <li>Route 53 returns multiple values/resources.</li>
+          <li>Can be associated with Health Checks (return only values for healthy resources)</li>
+          <li>Up to 8 healthy records are returned for each Multi-value query.</li>
+          <li>Multi-Value is not a substitute for having an ELB.</li>
+        </ul></td></tr>
+      </table>
+
+      <h5>Route 53 - Health Checks</h5>
+      <ul>
+        <li>HTTP Health Checks are only for public resources.</li>
+        <li>Health Check -> Automated DNS failover. <br>
+          - Monitor an Endpoint (application, server, other AWS resources). <br>
+          - Monitor other health checks (Calculated Health checks).
+          - Monitor CloudWatch Alarms (full control). ex: throttles of DynamoDB, alams of RDS, custom metrics. (helpful for private resources).
+        </li>
+        <li>Health Chekcks are integrated with CloudWatch metrics.</li>
+        <li>About 15 global health checks will check the endpoint health. <br>
+            - Healthy/Unhealthy Threashold - 3 (default) <br>
+            - Interval - 30 sec (Can setup 10 sec - high cost) <br>
+            - Supported protocol : HTTP, HTTPS and TCP <br>
+            - if >18% of health checkers report the endpoint is healthy, Route 53 considers it as Healthy. Otherwise it's Unhealthy. <br>
+            - Ability to choose which locations you want Route53 to use.
+        </li>
+        <li>Health checks pass only when the endpoint reponds with the 2XX and 3XX status.</li>
+        <li>Health checks can be setup to pass/fail based on the text in the first 5120 bytes of the response.</li>
+        <li>Configure your router/firewall to allow incoming requests from S3 Health Chckers.</li>
+        <li>Calculated Heath Checks: Combines the results of multiple Health Checks into a single Health Check. <br>
+          - You can use OR, AND or NOT. <br>
+          - Can monitor up to 256 Child Health Checks. <br>
+          - Specify how many of the health checks need to pass to make parent pass. <br>
+          - Usage: perform maintenance to your website without causing all health checks to fail.
+        </li>
+        <li>Route 53 Health checks are outside VPC. It can't access private endpoints. So you can create a CloudWatch Metric and associcate it with a CloudWatchAlarm, then create a Health Chcek the checks the alarm it self.</li>
+      </ul>
+    </div>
+
+ 
+    <h2 id="elb">Elastic Load Balancer (ELB)</h2>
+    <div id="elbdetails">
+      <ul>
+        <li>Load Balancers are servers that forward traffic to multiple servers (eg: EC2 instances) downstream.</li>
+        <li>Why Load Balancer?
+          <ul>
+            <li>Spread load across multiple downstream interfaces.</li>
+            <li>Expose single point of access (DNS) to your applicaiton.</li>
+            <li>Seamlessly handle failures of downstream instances.</li>
+            <li>Do regular health checks to your instances.</li>
+            <li>Provide SSL termination (HTTS) for your website.</li>
+            <li>Enforce stickiness with cookies.</li>
+            <li>High availability across zones.</li>
+            <li>Seperate public traffic from private traffic.</li>
+          </ul>
+        </li>
+        <li>Why Elastic Load balancer?
+          <ul>
+            <li>A Managed Load Balancer (upgrades, maitanance, high availability) </li>
+            <li>Reduced cost and effort</li>
+            <li>Integrated with many AWS offerings/services 
+              <ul>
+                <li>EC2, EC2 Auto-scalling Group, Amazon ECS</li>
+                <li>AWS Certificate Manager(ECM), CloudWatch.</li>
+                <li>Route 53, AWS WAF, AWS Global Accelarator</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>Health checks are done on a port and a route (/health is common).</li>
+      </ul>
+      <h4>Types of Load Balencer on AWS</h4>
+      <table>
+        <tr><th>Classic Load Balancers</th>
+          <td>
+          <ul>
+            <li>V1- old generation - 2009 - CLB</li>
+            <li>Supports HTTP, HTTPS (Layer 4), TCP, Secure TCPL(Layer 7) </li>
+            <li>Health checks are TCP or HTTP based.</li>
+            <li>Fixed host name XXX.region.elb.amazonaws.com</li>
+          </ul>
+        </td></tr>
+        <tr>
+          <th>Application Load Balancers</th>
+          <td>
+            <ul>
+              <li>V2- new generation - 2016, ALB</li>
+              <li>HTTP, HTTPS, WebSocket (Layer 7)</li>
+              <li>Load balancing to multiple HTTP applicaitons across multiple machiens (target groups)</li>
+              <li>Load balancing to multiple applications on the same maching (ex:containers). </li>
+              <li>Supports redirects (From HTTP to HTTS for example)</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th>Application Load Balancers V2</th>
+          <td>
+            <ul>
+              <li>Routing table to different target groups: (on path (OR) hostname URL (OR) Query String) </li>
+              <li>ALB are great fit for micro services & container-based application (example: Docker & Amazon ECS)</li>
+              <li>Has port mapping feature to redirect to a dynamic port in ECS.</li>
+              <li>In comparision, we would need multiple Classic load balancers</li>
+              <li>Traget Groups are: EC2 Instances, ECS tasks, Lamda Functions, IP Addresses(Must be private)</li>
+              <li>ALB can route to multiple target groups.</li>
+              <li>Health checks are at the target group level.</li>
+              <li>Fixed host name (XXX.region.elb.amazonaws.com)</li>
+              <li>The true IP of client in inserted in the header X-Frowarded-For</li>
+              <li>We can also get Port (X-Frowarded-Port) and proto (X-Frowarded-Proto)</li>
+              <li>Application Load Balancer can be used to securely authenticate users for accessing your applications. This enables you to offload the work of authenticating users to your load balancer so that your applications can focus on their business logic. You can use Cognito User Pools to authenticate users through well-known social IdPs, such as Amazon, Facebook, or Google, through the user pools supported by Amazon Cognito or through corporate identities, using SAML, LDAP, or Microsoft AD, through the user pools supported by Amazon Cognito. You configure user authentication by creating an authenticate action for one or more listener rules.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th>Network Load Balancer (V2)</th>
+          <td>
+            <ul>
+              <li>V2 - New generation - 2017 - NLB</li>
+              <li>TCP, TLS (Secure TCP), UDP (Layer 4)</li>
+              <li>Handles millinons of requests per second.</li>
+              <li>Less latency ~100ms (Vs 400 ms for ALB)</li>
+              <li>NLB has one static IP per AZ, and supports assigning Elasitc IP (helpful for whitelisting specific IP)</li>
+              <li>NLBs are used for extreme performance, TCP or UDP traffic.</li>
+              <li>Not included in the AWS free tier.</li>
+              <li>Target Groups are EC2 Instances, IP Addreses, Application Load Balancer, Health Check Support (TCP,HTTP and HTTPS)</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th>Gateway Load Balancer</th>
+          <td>
+            <ul>
+              <li>2020 - GWLB</li>
+              <li>Operates at Layer 3 (Network layer) - IP Protocol.</li>
+              <li>Deploy, scale, and manage a fleet of 3rd party network virtual appliances in AWS. <br>
+                Ex: Firewalls, Intrusion Detection and Prevention Systems, Deep Packet Inspection System, Payload manipuration....
+              </li>
+              <li>Operates at Layer 3 (Network Layer) - IP Packets.</li>
+              <li>Combiles the folowing functions: <br>
+                - Transparent Network Gateway - Singel entry/exit for all traffics. <br>
+                - Load Balancer - Distribute traffic to your virtual appliances.
+              </li>
+              <li>Use the GENEVE protocol on port 6081.</li>
+              <li>Target Groups are EC2 Instances, IP Addresses (Must be private IP's)</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+      <ul>
+        <li>Overall, it is recommended to use the newer generation load balancers as they provide more features.</li>
+        <li>Some load balancers can be setup as internal(private) or external (public) ELBs</li>
+        <li>Secirity groups for load balancer allows HTTP and HTTP traffic from anywahre. The downstreams security groups allow traffic from Loadbalancer. </li>
+      </ul>
+      <h4>Sicky Session (Session Affinity)</h4>
+      <ul>
+        <li>This works with CLB, ALB and NLB</li>
+        <li>For both CLB & ALB, the coockie is used for stickiness has an expireation data you control.</li>
+        <li>Enabling stickiness may bring imbalance to the load over the backend EC2 instances.</li>
+        <li>Application-based Coockies:
+          <ul>
+            <li>Custom Cookie: Generated by Target - can include custom attributes required by the application - coockie name must be specfied individually for each target group.</li>
+            <li>Application Coockie : Generated by the load balancer - Cookie name AWSALBAPP</li>
+          </ul>
+        </li>
+        <li>Duration-based Cookies: Generated by the load balancer - names AWSALB, AWSELB.</li>
+      </ul>
+      <h4>Cross-Zone Load Balancing</h4>
+      <ul>
+        <li>With Cross-Zone Laad Balancing, each load balancer instance distributes evenly across all registered instances in all AZ. </li>
+        <li>Enabled by Default for ALB (can be disabled at the Target group level) and Disabled by default for others.</li>
+        <li>No chages for ALB, No charges for inter AZ for CLB, Charges for inter AZ data for NLB and GWLB. </li>
+      </ul>
+
+      <h4>Load Balancer - SSL Certificates</h4>
+      <ul>
+        <li>The Load balancer uses an X.509 certificate (SSL/TLS server certificate)</li>
+        <li>You can manage certificate using ACM (AWS Certificate Manager)</li>
+        <li>You can create and upload your own certificates alternatively.</li>
+        <li>HTTPS
+          <ul>
+            <li>You must specify a default certificate.</li>
+            <li>You can add an optional list of certs to support multiple domain.</li>
+            <li>Clients can use SNI (Server Name Indication) to specify the hostname they reach.</li>
+            <li>Ability to specify security policy to support oder verison of SSL/TLS (Legacy clients)</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h4>SSL - Server Name Indication (SNI)</h4>
+      <ul>
+        <li>SNI solves the problem of loading mutliple SSL certificates onto one webserver (to multiple webservers)</li>
+        <li>It is a newer protocol, and requires the client to indicate the hostname of the target server in the initial SSL handshake.</li>
+        <li>The server will then find the correct certificate, or return the default one.</li>
+        <li>It only works for ALB & NLB (newer generation), CloudFront.</li>
+        <li>Does not work for CLB.</li>
+        <li>One CLB V1 supports only one SSL certificate (use multiple CLBs for to support multiple certs). ALB and NLB support multiple certificates with help of SNI.</li>
+      </ul>
+      <h4>Connection Draining</h4>
+      <ul>
+        <li>called as "Deregistration Delay" for ALB and NLB</li>
+        <li>Time to complete "In-flight requests" while the instance is de-registering or unhealthy. Between (1 to 3600 sec, default is 300sec)</li>
+        <li>Stops sending new requests to EC2 instance which is de-registering.</li>
+      </ul>
+
+    </div>
+
+
+
+
+    <h2 id="cloudfront">CloudFront</h2>
+    <div id="cfdetails">
+      <ul>
+        <li>Improves read performance, content is cachable content (images and vedios) at the edge.</li>
+        <li>Used for Dynamic content (Such as API accelaration and dynamic site delivery)</li>
+        <li>Provides DDoS protection (because worldwide), integration with Shield, AWS Web Application Firewall.</li>
+        <li>Cloud Front Origins: <br>
+          - S3 Bucket: Caching files at edge, Enhanced security with Origin Access Control (OAC), ingress to S3 for file uploads. <br>
+          - Custom Origin: Application Load Balancer, EC2 Instance, S3 Website, Any HTTP Backend. <br> 
+        </li>
+        <li>S3 Cross Region Replication updates the files in realtime. It is great for dynamic content that needs to be available at low-latency in few regions.</li>
+        <li>To allow Clound front to access EC2 or Appliction Load Balancer, They should allow public IPs of Edge Locations.</li>
+        <li>CloudFront Geo Restriction: controls access to the coutries. County is determined using third party Geo-IP database.</li>
+        <li>Cost varies per edge location. The Price classes 1. Price Class All, 2. Price Class 200, 3. Price Class 100.</li>
+        <li>Use Cloud Front Cache Invalidation to refresh the cache partially or completely.</li>
+      </ul>
+
+      <h5>Customization At Edge</h5>
+      <ul>
+        <li>Use case: customize the CDN content, Website Security and Privacy, Dynamic Webapplication at the Edge, Search Engine Optimization (SEO), Intelligently Route Across Origins and Data centers, Bot Migration at the Edge, Real-time Image transformation, A/B Testing, User Authentication and Authorization, User Prioritization, User Tracking and Analytics.</li>
+        <li>Pay only of what you use</li>
+        <li>Fully Serverless</li>
+        <li>CloudFront Fuctions & Lamda@Edege</li>
+      </ul>
+    </div>
+
+    <h5>CloudFront Funciton and Lamda@Edge</h5>
+    <table>
+      <thead><th>CloudFront Functions</th><th>Lamda@Edge</th></thead>
+      <tr>
+        <td><ul>
+          <li>Light weight function written in Javascript</li>
+          <li>For high-scale, latency sensitive CDN customizations</li>
+          <li>Sub-ms startup times, millions of requrests/second.</li>
+          <li>Used to change Viewer requests and responses (ViewrRequest, ViewerResponse)</li>
+          <li>Native feature of CloudFront (manage code entirely within CloudFront)</li>
+          <li>Use cases: <br>
+            - Cache Key normalization <br>
+            - Header manipulation <br>
+            - URL rewrites or redirects <br>
+            - request authentication & authorization.
+          </li>
+        </ul></td>
+        <td><ul>
+          <li>Lamdat funciton writeen in NodeJS or Phython</li>
+          <li>Scales to 1000s of requests/second</li>
+          <li>Used to change CloudFront requests and responses (ViewerRequest, OriginRequest, OriginResponse, ViewerResponse) </li>
+          <li>Author you function in on AWS Region, then CloudFront replicates to its locations.</li>
+          <li>Use cases: <br>
+            - Longer execution time (several ms) <br>
+            - Adjustable CPU or memory <br>
+            - Your code depends on 3rd party libraries (Ex: AWS SDK to access other AWS services.) <br>
+            - Network access to use external services for processing.
+            - File system access or access to the body of HTTP request.
+          </li>
+        </ul></td>
+      </tr>
+    </table>
+
+
+
+    <h2 id="globalacc">Global Accelarator</h2>
+    <div id="gadetails">
+      <ul>
+        <li>Unicast IP: One server holds on IP address, Anycast IP: All servers holds same IP and the client is routed to the nearest one.</li>
+        <li>AWS Global Accelarator leverages the AWS internal network to route to your application.</li>
+        <li>It works with Elastic IP, EC2 instances, ALB, NLB, public and private.</li>
+        <li>Intelligent routing to lowest latency and fast regional failover.</li>
+        <li>Performs health checks for applications.</li>
+        <li>Make your application global.</li>
+        <li>Great for Disaster Recovery.</li>
+        <li>DDos Protection with help of AWS Shield.</li>
+        <li>Only 2 external IP to be white listed.</li>
+        <li>Improves performance for wide range of applicaitons over TCP and UDP.</li>
+        <li>Proxying packets at the edge to applications running in one or more AWS Regions.</li>
+        <li>Good fit for non-HTTP use cases, such as gaming (UDP), IoT (MQTT), or Voice over IP.</li>
+        <li>Good for HTTP use cases that requires static IP addresses.</li>
+        <li>Good for HTTP use cases that requires deterministic, fast regional failover.</li>
+        <li>AWS Global Accelerator uses endpoint weights to determine the proportion of traffic that is directed to endpoints in an endpoint group, and traffic dials to control the percentage of traffic that is directed to an endpoint group (an AWS region where your application is deployed).</li>
+      </ul>
+    </div>
+
+
+    <h2 id="VPC">Amazon VPC</h2>
+    <div id="vpcdetails">
+      <h5>Cashless Inter-Domain Routing (CIDR)</h5>
+      <ul>
+        <li>A method of allocating IP addresses.</li>
+        <li>Used in Security Groups rules and AWS netwroking in general.</li>
+        <li>They help to define an IP adress range</li>
+        <li>0.0.0.0/32 -> All IPs</li>
+        <li>192.168.0.0/26 -> 192.168.0.0 - 192.168.0.63 (64 IP addresses)</li>
+        <li>CIDR coantains <br>
+          Base IP : Represents an IP contained in the range. (Ex:20.0.0.0) <br>
+          Subnet Mask: Define how many bits can change in the IP. (Ex: /0 (All IP), /16 (65,536 IPs), /24 (256 IPs), /32 (1 IP)) <br>
+        </li>
+        <li>Formula for subnet mask : XX.XX.XX.XX/n, No of IPs in range is 2<sup>32-n</sup></li>
+        <li>The Inetenet Assigned Number Authority (IANA) established certain blocks of IPv4 addresses for the use of private (LAN) and public (Internet) addresses.</li>
+        <li>Private IP can only allow certain values: <br>
+          - 10.0.0.0 - 10.255.255.255 (10.0.0.0/8) => in big network. <br>
+          - 172.16.0.0 - 172.31.255.255 (172.16.0.0/12) => AWS default VPC in that range. <br>
+          - 192.168.0.0 - 192.168.255.255 (192.168.0.0/16) => eg: home networks.
+        </li>
+        <li>All the rest of the IP addresses on the Internet are Public.</li>
+      </ul>
+      <h5>VPC Basics</h5>
+      <ul>
+        <li>All new AWS accounts have a default VPC.</li>
+        <li>New EC2 instances are launched into the default VPC if no subnet is specified.</li>
+        <li>Default VPC has Internet connectivity and all EC2 instances inside it have public IPv4 addresses.</li>
+        <li>We also get a public and a private IPv4 DNS names.</li>
+        <li>You can have multiple VPCs in an AWS region (max 5 per region - soft limit)</li>
+        <li>Max CIDS per VPC is 5, for each CIDR:
+          - Min size is /28 (16 IP addresses) <br>
+          - Max size is /16 (65536 IP addresses)
+        </li>
+        <li>Because VPC is private, only the Private IPv4 ranges are allowed: <br>
+          - 10.0.0.0 - 10.255.255.255 (10.0.0.0/8) <br>
+          - 172.16.0.0 - 172.16.255.255 (172.16.0.0/12) <br>
+          - 192.168.0.0 - 192.168.255.255 (192.168.0.0/16)
+        </li>
+        <li>AWS reserves 5 IP adderesses (first 4 and Last 1) in each subnet. <br>
+          Example: if CIDR block 10.0.0.0/24, then reserved IP addresses are: <br>
+          <br> - 10.0.0.0 - Network Address <br>
+          <br>- 10.0.0.1 - reserved by AWS for the VPC router <br>
+          <br>- 10.0.0.2 - reserved by AWS for mapping to Amazon-provided DNS. <br>
+          <br>- 10.0.0.3 - reserved by AWS for future use. <br>
+          <br>- 10.0.0.255 - Network Broadcast Address. AWS does not support broadcast in a VPC, therefore the address is reserved.
+        </li>
+        <li>If you need N ip addresses in subnet the CIDR range should support N+5 IPs.</li>
+      </ul>
+
+      <h5>Internet Gateway (IGW)</h5>
+      <ul>
+        <li>Allows resources (e.g., EC2 instances) in a VPC connect to the Internet.</li>
+        <li>It scales horizantally and is highly available and redundant.</li>
+        <li>Must be created seperately from a VPC</li>
+        <li>One VPC can only be attached to one IGW and vice versa.</li>
+        <li>Internet Gateways on their own do not allow Internet access, Route tables must also be edited. </li>
+      </ul>
+
+      <h5>Bastion Hosts</h5>
+      <ul>
+        <li>We can use a Bastion Host to SSH into our private EC2 instances.</li>
+        <li>The bastion is in the public subnet which is then connected to all other private subnets.</li>
+        <li>Bastion Host security group must allow inbound from the internet on port 22 from restricted CIDR, for example the public CIDR of your corporation.</li>
+        <li>Security group of the EC2 instances must allow the Security Group of Bastion Host or the private IP of Bastion Host.</li>
+      </ul>
+
+      <h5>NAT Instance</h5>
+      <ul>
+        <li>NAT = Network Address Translation.</li>
+        <li>Allows EC2 instances in private subnet to connect to the Internet.</li>
+        <li>Must be launched in a public subnet.</li>
+        <li>Must disable EC2 setting: Source/destination check. </li>
+        <li>Must have Elastic IP attached to it.</li>
+        <li>Route Tables must be configured to route traffic from private subnets to the NAT instance.</li>
+        <li>Pre-configured Amazon Linux AMI is available.</li>
+        <li>Not highly avaialable / resilient setup out of the box.</li>
+        <li>Intenet traffic bandwidth depends on EC2 instance type.</li>
+        <li>You must manage Security Groups & Rules <br>
+          - Inboud: Allow HTTP/HTTPS traffic coming from Private Subnets. Allow SSH from your home network (access is provided through Internet Gateway). <br>
+          - Outbound: Allow HTTP/HTTPS traffic to the Internet.
+        </li>
+      </ul>
+
+      <h5>NAT Gateway</h5>
+      <ul>
+        <li>AWS-managed NAT, higher bandwidth, high availability, no administration.</li>
+        <li>Pay per hour for usage and bandwidth</li>
+        <li>NATGW is created in specific AZ, uses an Elastic IP.</li>
+        <li>Can't be used by EC2 instance in the same subnet (only from other subnets)</li>
+        <li>Requires an IGW (Private Subnet -> NATGW -> IGW)</li>
+        <li>5 Gbps of bandwidth with automatic scaling up to 100 Gbps.</li>
+        <li>No Security Groups to manage / required.</li>
+        <li>NAT Gateway is resilient within single AZ.</li>
+        <li>Must create multiple NAT Gateways in multiple AZs for fault-tolerance.</li>
+        <li>There is no cross-AZ failover needed because if an AZ goes down it doesn't need NAT.</li>
+        <li>There is no cross-AZ failover needed because if an AZ goes down it doesn't need NAT.</li>
+      </ul>
+
+      <h6>Network Access Control List (NACL)</h6>
+      <ul>
+        <li>NACL are like firewall which control traffic from and to Subnets.</li>
+        <li>One NACL for subnet, new subnets are assigned the Default NACL</li>
+        <li>You define NACL Rules: <br>
+          - Rules have a number (1-32766), the higher precedence with a lower number. <br>
+          - First rule match will drive the decision. <br>
+          - The last rule is an astric (*) and denies a requiest in case of no rule match. <br>
+          - AWS recommends adding rules by increment of 100.
+        </li>
+        <li>Newly created NACLs will deny everything.</li>
+        <li>NACL are a great way of blocking a specific IP address at the subnet level.</li>
+        <li>Default NACL  accept everything inbout/outbound with the subnet it's associated with.</li>
+        <li>Do NOT modify the default NACL, instead create custom NACL.</li>
+      </ul>
+
+      <h5>Ephermal Ports</h5>
+      <ul>
+        <li>Client connects to a defined port, and except a response on an ephermal port.</li>
+        <li>Defferent Operating Systems use different port ranges. Example <br>
+          IANA & MS Windows 10 -> 49152 - 65535 <br>
+          Many Linux Kernels -> 32768 - 60999
+        </li>
+      </ul>
+
+      <h5>Security Groups Vs NACL</h5>
+      <table>
+        <tr><th>Security Groups</th><th>NACL</th></tr>
+        <tr>
+          <td><ul>
+            <li>Operates at the instance level</li>
+            <li>Supports allow rules only</li>
+            <li>Stateful: return traffic is automatically allowed, regardless of any rules.</li>
+            <li>All rules are evaluated before deciding whether to allow traffic</li>
+            <li>Applies to EC2 instance when specified by someone.</li>
+          </ul></td>
+          <td><ul>
+            <li>Operates at the subnet level</li>
+            <li>Supports allow rules and deny rules</li>
+            <li>Stateless: return traffic must be explicitly allowed by rules (think of ephermal ports)</li>
+            <li>Rules are evaluated in order (lowest to highest) when deciding whether to allow traffic, first match wins</li>
+            <li>Automatically applies to all EC2 instances in the subnet that it's associated with.</li>
+          </ul></td>
+        </tr>
+      </table>
+
+      <h5>VPC Peering</h5> 
+      <ul>
+        <li>Privately connect two VPC using AWS network.</li>
+        <li>Make them behave as if they were in the same network.</li>
+        <li>Must not have overlapping CIDRs</li>
+        <li>VPC Peering connection is NOT transitive (must be established for each VPC that need to communicate with one another)</li>
+        <li>You must update route tables in each VPC's subnet to ensure EC2 instances can communicate with each other.</li>
+        <li>you must create VPC Peering connection between VPCs in different AWS accounts/regions.</li>
+        <li>you can reference a security group in a peered VPC (works across accounts - same region)</li>
+      </ul>
+
+      <h5>VPC Endpoints</h5>
+      <ul>
+        <li>Every AWS service is publicly exposed (public URL)</li>
+        <li>VPC endpoints (powered by AWS PrivateLink) allows you to connect to AWS services using a private network instead of using public network.</li>
+        <li>They are redundant and scale horizantally.</li>
+        <li>They remove the need of IGW, NATGW, .. to access AWS services.</li>
+        <li>In case of issues: <br>
+          - Check DNS Setting Resolution in your VPC. <br>
+          - Check Route Tables.
+        </li>
+        <li>Types of Endpoints:
+          <ul>
+            <li>Interface Endpoints (powered by PrivateLink) <br>
+              - Provisions an ENI (private IP adress) as an entry point (must atttach a Security Group). <br>
+              - Supports most AWS services. <br>
+              - $ per hour + $ per GB of data processed.
+            </li>
+            <li>Gateway Endpoints <br>
+              - Provisions a gateway and must be used as a target in a route table (does not use security groups). <br>
+              - Supports both S3 and DynamoDB <br>
+              - Free
+            </li>
+          </ul>
+        </li>
+        <li>Gateway is most likely going to be preffered all the time at the exam. (free of cost)</li>
+        <li>Interface endpoint is preferred access is required from on-promises (Site-to-Site VPN or Direct Connect), a different VPC or a different account.</li>
+      </ul>
+
+      <h5>VPC Flow logs</h5>
+      <ul>
+        <li>Capture information about IP traffic going into your interfaces: <br>
+          - VPC Flow logs <br>
+          - Subnet Flow logs <br>
+          - Elastic Network Interface (ENI) flow logs.
+        </li>
+        <li>Helps to monitor & troubleshoot connectivity issues.</li>
+        <li>Flow logs data can go to S3, CloudWatch logs and Kinesis Data Firehouse.</li>
+        <li>Captures network information from AWS managed interfaces too: ELB, RDS, ElastiCache, Redshift, WorkSpaces, NATGW, Transit Gateway...</li>
+      </ul>
+
+      <h5>troubleshooting SG & LACL issues</h5>
+      <li>You can use VPC Flow logs and refer to "ACTION" field.</li>
+      <li>If Inbound Reject -> SG/NACL issue</li>
+      <li>If Inbound Accept and Outbout Reject -> NACL issue</li>
+      <li>If Outbout Reject -> SG/NACL issue</li>
+      <li>If Outbound Accept and Outbout Reject -> NACL issue</li>
+    </div>
+
+    <h5>AWS Site-to-Site VPN</h5>
+    <ul>
+      <li>Virtual Private Gateway (VGW) <br>
+        - VPN Connector on the AWS side of the VPN Connection. <br>
+        - VGW is creaed and attched to the VPC from which you want to create the Site-to-Site VPN Connection. <br>
+        - Possibility to customize the ASN (Autonomous System Number)
+      </li>
+      <li>Customer Gateway (CGW):  <br>
+        - Software application or physical Device on customer side of the VPN Connection. <br>
+        - Use public Internet-routeable IP address for your Customer Gateway device. <br>
+        - If it is behind a NAT device that's enabled for NAT traversal (NAT-T), use public IP address of NAT device.
+      </li>
+      <li>Enable Route Propogation for the Virtual Private Gateway in the route table that is associated with your subnets.</li>
+      <li>If you need to ping your EC2 instance from On-promise, make sure you add the ICMP protocol on the inbound of your security groups.</li>
+    </ul>
+
+    <h5>AWS VPN CloudHub</h5>
+    <ul>
+      <li>Provide Secure communication between multiple sites, if you have multiple VPN Connections.</li>
+      <li>Low-cost hub-and-spoke model for primary and secondary network connectivity between different locations (VPC only)</li>
+      <li>It's VPN connection so it goes over public Internet.</li>
+      <li>To set it up, connect multiple VPN connections on the same VGW, setup dynamic routing and configure route tables.</li>
+    </ul>
+
+    <h5>Direct Connect (DX)</h5>
+    <ul>
+      <li>Provide dedicated private connection from a remote network to your VPC.</li>
+      <li>Dedicated connection must be setup between your Data Center and AWS Direct Connect locations.</li>
+      <li>You need to setup a Virtual Private Gateway on your VPC.</li>
+      <li>Access public resources (S3) and private (EC3) on the same connection.</li>
+      <li>Use cases: <br>
+        - Increase bandwidth throughput - working with large datasets - lower cost. <br>
+        - More consistent network experience - applications using real-time data feeds. <br>
+        - Hibrid Environments (on prem + cloud)
+        - supports both IPv4 and IPv6
+      </li>
+      <li>If you want to setup a Direct Connect to one or more VPC in many different regions (same account), you must use Direct Connect Gateway.</li>
+      <li>Data in transit is not encrypted but private.</li>
+      <li>AWS Direct Connect + VPN provides an IPSec-encrypted private connection. Good for extra level of security, but slightly more complex to put in place.</li>
+      <li>Maximu Resilency for Critical workloads can be acheived by seperate connections terminating on seperate devices in more than one location.</li>
+      <li>In case Direct Connect fails, you can setup a backup Direct Connect connection (expensive), or Site-to-Site VPN Connection.</li>      
+    </ul>
+    
+    <h5>Direct Connect Types</h5>
+    <ul>
+      <li>Dedicated Connections: 1 Gbps, 10 Gbps and 100 Gbps capcity <br>
+        - Physical ethernet port dedicated to a customer. <br>
+        - Request made to AWS first, then complted by AWS Direct Connect Partners.
+      </li>
+      <li>Hosted Connections: 50Mbps, 500Mbps, to 10Gbps <br>
+        - Connection requests are made via AWS Direct Connect Partners. <br>
+        - Capacity  can be added or removed on demand. <br>
+        - 1,2,3,10 Gbps available at select AWS Direct Connect Partners.
+      </li>
+      <li>Lead times are often longer than 1 month to establish a new connection.</li>
+    </ul>
+
+
+    <h5>Transit Gateway</h5>
+    <ul>
+      <li>For having transitive peering between thousands of VPC and on-promises, hub-and-spoke (star) connection.</li>
+      <li>Regional resource, can work cross-region.</li>
+      <li>Share cross-account using Resource Access Manager (RAM)</li>
+      <li>You can peer Transit Gateway across region.</li>
+      <li>Route Tables: limit which VPC can talk to other VPC</li>
+      <li>Works with Direct Connect Gateway, VPN connections.</li>
+      <li>Supports IP multicast (not supported by any other AWS service)</li>
+      <li>Site-to-Site VPN ECMP (Equal Cost Multi Path) allows to forward a packet over multiple best path. <br>
+        Use case: create multiple Site-to-Site VPN connections to increase the bandwidth of you connection to AWS. 
+      </li>
+    </ul>
+
+    <h5>VPC Traffic Mirroring</h5>
+    <ul>
+      <li>Allows you to capture and inspect network traffic in your VPC.</li>
+      <li>Route the traffic to security appliances that you manage.</li>
+      <li>Capture the traffic <br>
+        From (Source) - ENIs <br>
+        To (Targets) - an ENI or a Network Load Balancer
+      </li>
+      <li>Capture all the packets or capture the packets of your interest (optionally, truncate packets)</li>
+      <li>Source and Target can be in the same VPC or different VPCs (VPC Peering)</li>
+      <li>Use cases: concent inspection, threat monitoring, troubleshooting,...</li>
+    </ul>
+
+    <h5>IPV6</h5>
+    <ul>
+      <li>IPv4 assigned to provide 4.3 billion addresses (They'll be exhausted soon)</li>
+      <li>IPv6 is the successor of IPv4, designed to provde 3.4 X 10 <sup>38</sup> unique IP addresses.</li>
+      <li>Every IPv6 address is public and Internet-routable (no private range)</li>
+      <li>Format -> X.X.X.X.X.X.X.X (X is hexa decimal, range from 0000 to ffff)</li>
+      <li>Example: <br>
+        - 2001:db3:3333:4444:2222:7777:5555:8888 <br>
+        - :: -> All 8 segments are zero <br>
+        - 2001:db8::-> last 6 segments are zero <br>
+        - ::1234:5678 -> first 6 segments are zero <br>
+        - 2001:db8::1234:5678 -> the middle 4 segments are zero.
+      </li>
+      <li>IPv4 cannot be disabled for your VPC and Subnets.</li>
+      <li>You can enable IPv6 (they are public IP addresses) to operate dual-stack mode.</li>
+      <li>Your EC2 instances will get atleast a private IPv4 and a public IPv6.</li>
+      <li>They can communicate using either IPv4 or IPv6 to the internet through an Internet Gateway.</li>
+      <li>If you cannot lauch an EC2 instance in your subnet it's because there are no available IPv4 in your subnet. The solution is to create new IPv4 CIDR in your subnet.</li>
+    </ul>
+
+    <h5>Egress-Only Internet Gateway</h5>
+    <ul>
+      <li>Used for IPv6 only. (Similar to a NAT Gateway but IPv6)</li>
+      <li>Allows instances in your VPC outbound connections over IPv6 while preventing the intenet to initiate an IPv6 connection to your instances.</li>
+      <li>you must update the Route table.</li>
+    </ul>
+
+    <h5>Summary</h5>
+    <ul>
+      <li>CIDR - IP Range</li>
+      <li>VPC - Virtual Private Cloud => We define a list of IPv4 & IPv6 CIDR</li>
+      <li>Subnets - tried to an AZ, we define a CIDR.</li>
+      <li>Internet Gateway - at VPC level, provide IPv4, IPv6 Internet Access.</li>
+      <li>Route Tables - must be edited to add routes from subnets to the IGW, VPC peering Connections, VPC Endpoints,...</li>
+      <li>Bastion Host - public EC2 instance to SSH into, that has SSH connectivity to EC2 instance in private subnet.</li>
+      <li>NAT Instances - gives Internet access to EC2 instances in private subnets. Old, must be setup in public subnet, disable Source / Destination check flag.</li>
+      <li>NAT Gateway - managed by AWS, provides scalable Intenet access to private EC2 instances, IPv4 only.</li>
+      <li>NACL - stateless, subnet rules for inbound and outbound, don't forget Ephermal Ports.</li>
+      <li>VPC peering - connect two VPCs with non overlapping CIDR, non-transitive.</li>
+      <li>VPC Endpoints - provide access to AWS services (S3, CloudFront, CloudFormation, SSM) within a VPC.</li>
+      <li>VPC Flow Logs - can be setup at VPC / Subnet / ENI Level, for ACCEPT and REJECT traffic, helps identifying attacks, analyze using Athena or CloudWatch logs Insights.</li>
+      <li>Site-to-Site VPN - setup to Customer Gateway on DC, a Virtual Private Gateway on VPC and site-to-site VPN over public Internet.</li>
+      <li>AWS VPN CloudHub - hub-and-spoke VPN model to connect your sites.</li>
+      <li>Direct Connect - setup a Virtual Private Gateway on VPC, and establish a direct private connection to an AWS Direct Connect Location.</li>
+      <li>Direct Connect Gateway - setup a Direct Connect to many VPCs in different AWS regions.</li>
+      <li>AWS Private Link / VPC Endpoint Services: <br>
+        - Connect services privately from your service VPC to customer VPC. <br>
+        - Doesn't need VPC Peering, public Internet, NAT Gateway, Route Tables <br>
+        - Must be used with Network Load Balancer & ENI.
+      </li>
+      <li>Classic Link - Connect EC2-Classic EC2 instances privately to your VPC.</li>
+      <li>Transit Gateway - transitive peering connections from VPC, VPN and DX.</li>
+      <li>Traffic Mirroring - copy network traffic from ENIs for further analysis.</li>
+      <li>Egress-only Internet Gateway - like a NAT Gateway, but for IPv6. </li>
+    </ul>
+
+    <h5>Networking Cost in AWS per GB</h5>
+    <ul>
+      <li>Use Private IP instead of Public IP for good savings and better network performance.</li>
+      <li>Use same AZ for maximu savings (at cost of high availability).</li>
+      <li>Minimize egress traffic network cost <br>
+        - Egress traffic: outbound traffic (from AWS to outside) <br>
+        - Ingress traffic: inbound traffic - from outside to AWS (typically free) <br>
+        - Try to keep as much internet traffic within AWS to minimize costs. <br>
+        - Direct Connect location that are co-located in the same AWS Region result in lower cost for egress traffic. 
+      </li>
+      <li>S3 Data Tranfer Pricing - Analysis for USA <br>
+        - S3 ingress: free <br>
+        - S3 to Internet: $0.09 per GB <br>
+        - S3 Transfer Accelation: Faster Transfer times (50 to 500% better), Additional cost on top of Data Transfer Pricing + $0.04 to $0.08 per GB. <br>
+        - S3 to CloudFront: $0.00 per GB <br>
+        - CloudFront to Internet: 0.085% per GB (slightly cheaper than S3) - Caching capability (lower latency), Reduce cost associated with S3 Requests Pricing (7X cheaper with CloudFront) <br>
+        - S3 Cross Region Replication: $0.02 per GB.        
+      </li>
+      <li>NAT Gateway & Gateway VPC Endpoint <br>
+        - $0.045 NAT Gateway / hour <br>
+        - $0.045 NAT Gateway  data processed / GB <br>
+        - $0.09 Data transfer out to S3 (cross-region) <br>
+        - $0.00 Data transfer out to S3 (same -region) <br>
+        - No cost for using Gateway Endpoint. <br>
+        - $0.01 Data transfer in/out (same-region) 
+      </li>
+    </ul>
+
+    <h5>Network Protection on AWS</h5>
+    <ul>
+      <li>Network Access Control Lists (NACLs)</li>
+      <li>Amazon VPC Security Groups</li>
+      <li>AWS WAF (protect against malicious requests)</li>
+      <li>AWS Sheld & AWS Sheild Advanced</li>
+      <li>AWS Firewall Manager (to manage them across accounts)</li>
+      <li>AWS Network Firewall to protect entire Amazon VPC</li>
+    </ul>
+
+    <h5>AWS Network Firewall</h5>
+    <ul>
+      <li>Protects your entire Amazon VPC</li>
+      <li>From Layer 3 to Layer 7 protection</li>
+      <li>Any direction, you can inspect <br>
+        - VPC to VPC traffic <br>
+        - Outbound to internet <br>
+        - Inbound to internet <br>
+        - To/From Direct Connect & Site-to-Site VPN
+      </li>
+      <li>Internally, the AWS Network Firewall Uses the AWS Gateway Load Balancers</li>
+      <li>Rules can be centrally managed across account by AWS Firewall Manager to apply to many VPCs.</li>
+      <li>Supports 1000s of rules <br>
+        - IP & port - example:10,000 of IPs filtering. <br>
+        - Protocol - example: block the SMB protocol for outbound communications. <br>
+        - Stateful domain list rule group: only allow out bound traffic to *.xxx.com or third-party software repo.
+        - General pattern matching using regex.
+      </li>
+      <li>Traffic filtering: Allow, drop or alert for the traffic that matches the rules. </li>
+      <li>Active flow inspection: to protect against network threats with intrusion-prevention capabilities (like Gateway Load Balancer, But all managed by AWS)</li>
+      <li>Send logs of rule matches to Amazon S3, CloudWatch logs, Kenesis Data Firehouse.</li>
+    </ul>
+  </body>
+</html>

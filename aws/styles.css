@@ -1,0 +1,103 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css');
+
+body{
+  margin-left: 10px;
+}
+
+h1{
+  text-align: center;
+  padding-top: 20px;
+}
+
+h3{
+  padding-top: 10px;
+}
+
+ul{
+  list-style-type:square;
+}
+
+h5{
+  padding-left: 25px;
+}
+
+/*
+ul{  
+  list-style-type: none;
+  padding-left: 20px;
+}
+*/
+
+.bulletlist{
+  list-style:disc;
+  padding-left: 40px;
+}
+
+ol,ul,table{
+  padding-left: 40px;
+}
+
+table,th,td{
+  border: 1px solid black;
+}
+
+li{
+  padding-top: 5px;
+}
+
+a{
+  text-decoration: none;
+}
+
+th{
+  text-align: center;
+  padding-right: 40px;
+}
+td{
+  padding-right: 40px;
+}
+
+p{
+  padding-left: 40px;
+}
+
+.tabspace{
+  margin-left: 40px;
+}
+
+.tabspace2{
+  margin-left: 80px;
+}
+
+.btn_back{
+  position: absolute;
+  left:20px;
+  font-size: 1em;
+}
+
+.btn_home{
+  position: absolute;
+  font-size: 1em;
+  right:20px;
+}
+
+/* index page */
+.indexsection{
+  width: 33%;
+  float: left;
+}
+
+.heading{
+  text-align:center;
+}
+
+.command{
+  padding-left: 50px;
+}
+
+.dotlist{
+  list-style-type: disc;
+  padding-left: 40px;
+}
+
+

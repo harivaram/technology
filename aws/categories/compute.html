@@ -1,0 +1,362 @@
+<html lang="en" dir="ltr">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body>
+    <h1>Compute</h1>
+    <h2 id="ec2">Elastic Compute Cloud (EC2)</h2>
+    <div id="ec2details">
+      <ul >
+        <li>Infrastructure as a Service</li>
+        <li>It mainly consists in the capabily of: <br>
+          - Renting Virtual machines (EC2) <br>
+          - Storing data on Virtual Drives (EBS) <br>
+          - Distributing load across machines (ELB) <br>
+          - Scaling Service using Auto-scalling group (ASG) 
+        </li>
+        <li>EC2 Sizing & Configuration Options
+          - Operating System : Linux, Windows or Mac OS <br>
+          - How much complure power & cores (CPU) <br>
+          - How much ramdom-access memory (RAM) <br>
+          - How much storage space: Network-attached (EBS & EFS), hardware (EC2 Instance Store) <br>
+          - Network card: speed of the card, Public IP address. <br>
+          - Firewall rules: Security group. <br>
+          - Bootstrap script (configuration at launch): EC2 User Data. 
+        </li>
+        <li>EC2 User Data scripts only run once at the instance first start. It is used to automate boot tasks such as <br>
+          - Installing software updates. <br>
+          - Installing software. <br>
+          - Downloading common files from internet. ... <br>
+        </li>
+        <li>EC2 user data scripts runs with the root user.</li>
+        <li>EC2 Instance types naming convention ex: m5.2xlarge <br>
+          - m: instance class <br>
+          - 5: generation 
+          - 2xlarge: size within the instance class.
+        </li>
+        <li>Storage classes:
+          <ul>
+            <li>General Purpose</li>
+            <li>Compute Optimized</li>
+            <li>Memory Optimized</li>
+            <li>Accelarated Computing</li>
+            <li>Storage Optimized</li>
+            <li>Instance Features</li>
+            <li>Measuring Instance Performance</li>
+          </ul>
+
+        </li>
+      </ul>
+      
+      <table>
+        <tr><th>Instance Type</th><th>Description</th><th>Use cases</th></tr>
+        <tr>
+          <th>General Purpose</th>
+          <td>Balance between Compute, Memory, Networking.</td>
+          <td>Great for a diversity of workloads such as webservers or code repositories.</td></tr>
+        <tr>
+          <th>Compute Optimized</th>
+          <td>Great for Compute Incentive tasks the requires high performace processes</td>
+          <td>
+            <ul>
+              <li>Batch processing workloads</li>
+              <li>Media transcoding</li>
+              <li>High Performance web servers </li>
+              <li>High performance computing (HPC) </li>
+              <li>Scientific modeling & Machine Learning </li>
+              <li>Dedicated Gaming servers.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr><th>Memory Optimized</th>
+          <td>Fast performance for workloads that processes large data sets in memory.</td>
+          <td>
+            <ul>
+              <li>High performance, relational/non-relational databases. </li>
+              <li>Distributed web scale cache stores. </li>
+              <li>In-memory databases optimized for BI (Business Intelligence). </li>
+              <li>Applications performing real-time processing of big unstructured data. </li>
+            </ul>
+          </td>
+         
+        <tr>
+          <th>Storage Optimized</th>
+          <td>Great for storage intensive tasks the requires high, sequntial  reads and write access to large data sets on loacal storage.</td>
+          <td>
+            <ul>
+              <li>High frequently online transaction processing (OLTP) systems.</li>
+              <li>Relational & NoSQL databases.</li>
+              <li>Cache for in-memory databases (for example, Redis)</li>
+              <li>Data warehousing applications.</li>
+              <li>Distributed file systems.</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+      <ul>
+        <li>Security Groups are fundamental of network security in AWS.</li>
+        <li>Security groups only contains Allow rules.</li>
+        <li>Security gropps can reference by IP address or by other security group.</li>
+        <li>They regurate:
+          - Access ports <br>
+          - Authorised IP ranges - IPv4 and IPv6 <br>
+          - Control of inbound network (from other to the instance) br]
+          - Control of outbound network (from the instance to other)
+        </li>
+        <li>Securty group can be attached to mutlitple instances.</li>
+        <li>Locked down to a region/VPC combination.</li>
+        <li>Does live "outside" EC2 - if traffic is blocked the EC2 instance won't see it.</li>
+        <li>It is good to maintain on separate security group for SSH access.</li>
+        <li>If your application is not accessible (timeout), then it is security group issue. </li>
+        <li>If your applicaiton gives a "connection refused" error, then it's an applicaiton error or it's not lanched.</li>
+        <li>All inbound traffic is blocked by default.</li>
+        <li>All outbound traffic is authorised by default.</li>
+        <li>Protocol (PORT) : HTTP(80), HTTPS(443), SSH(22), FTP(21), SFTP(22), RDP(3389)</li>
+        <li>EC2 Instance Connect is used to connect your EC2 instance within your browser.</li>
+        <li>EC2 Instance Purchasing Options: 
+          <table>
+            <thead><th>Option</th><th>Usage</th><th>Pricing</th><th>Note</th></thead>
+            <tbody>
+              <tr>
+                <th>On-Demand Instances</th>
+                <td>short (uninterrupted) workloads, predictable pricing</td>
+                <td>pay by second (linux & Windows) pay by hour (other OS)</td>
+              </tr>
+              <tr>
+                <th>Reserved (1 & 3 years):</th>
+                <td> 
+                  <ul>
+                    <li>Reserved Instances - Long workloads / steady state applications (database)</li>
+                    <li>Convertible Reserved Instances - long workloads with flexible instances.</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <li>up to 72% dicount compared to On-demand.</li>
+                    <li>up to 55% dicount for Convertible Reserved Instance compared to On-demand.</li>
+                    <li>Reservation period - 1 year (+discount) or 3 years (+++discount)</li>
+                    <li>Payment Options - No Upfront (+), Partial Upfront (++), All Upfront (+++)</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <li>Reserve specific Instance attribute (Instance Type, Region, Tenancy, OS)</li>
+                    <li>Reserved Instace's Scope: Regional or Zonal</li>
+                    <li>You can buy/sell Reserved instances in Marketplace.</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <th>Savings Plan (1 & 3 years)</th>
+                <td>Commitment to an amount of usage for long workloads. (Ex: $10/hour for 1 or 3 years)</td>
+                <td>Up to 72% discount (similar to RI) on long term usage.</td>
+                <td><ul>
+                  <li>Locked to specific instance family & AWS region. (ex: M5 in us-east-1)</li>
+                  <li>Flexily across: Instance Size, OS, Tenacy (Host, Dedicated, Default)</li>
+                </ul></td>
+              </tr>
+              <tr>
+                <th>Spot Instances</th>
+                <td>Short workloads, Cheap, can lose instances (less reliable). such as Batch jobs, Data Analysis, Image processing, Any distributed workloads, Workloads with a flexible start and end time.</td>
+                <td>Up to 90% discount compared to On-demand</td>
+                <td>You can loose the instance at any point of time. (with 2 mins grace perdiod,) <br>
+                  Most cost-effecting instance. <br>
+                  Use Spot-Block to block spot instance for sepcific time (1 to 6 hours) without inturruption.
+                </td>
+
+              </tr>
+              <tr>
+                <th>Dedicated Host</th>
+                <td>book an entire physical server, control instance placement. <br>
+                  Useful for compliace requirements, complicated licencing model (BYOL - Bring Your Own license)
+                </td>
+                <td>On-Demand: pay per second for active Dedicated Host <br>
+                  Reserved: 1 or 3 years (No upfront, Partial Upfront, All upfront).
+                </td>
+                <td>Most Expensive Option <br>
+                  Dedicated Host: On-demand price <br>
+                  Dedicated host reservation : Up to 70% discount</td>
+              </tr>
+              <tr>
+                <th>Dedicated Instances</th>
+                <td>no other customers will share your hardware. <br>
+                    May share hardware with other instances in the same account <br>
+                    No control over instance placement (Can move hardware afer stop and start)
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <th>Capacity Reservation</th>
+                <td>Suitable for short term, uninterrupted workloads that needs to be in a specific AZ. <br>
+                  
+                </td>
+                <td> no billing discount. (On-demand price)</td>
+                <td>You are changed at On-demand rete whether you run instace or not. <br>
+                  reserve capacity in specific AZ for any duration. <br>
+                  No time commitment (create/cancel anytime).
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li>Spott Fleets = set of Spot Instances + (Optional) On-Demand Instances.</li>
+        <li>Spot Fleets will try to meet that target capacity with price constraints. (by having mltiple pools)</li>
+        <li>Strategies: lowestPrice (cost optimiation, short workloads), diversified (great availability, long workloads), capacityOptmization, priceCapacityOptmized (recommended).</li>
+        <li>Spot Feets allow us to automatically request Spot Instances with the lowest price.</li>
+
+        <li>Public IP means it can be idetified on the internet - unque across web - can geo located easity.</li>
+        <li>Private IP is within the private network with in the range - need NAT or Internet gateway to access Internet.</li>
+        <li>Elastic IP is a public IPv4 you own as long as you don't delete it - attache to on instance at a time.</li>
+        <li>Elastic IP can be used to mask failure of an instance of a software by mapping the address to another instance in your account.</li>
+        <li>Only 5 Elastic IPs per account (can be increased by requesting AWS)</li>
+        <li>Using Elastinc IPs is poor architectural decision, instead use random public IP and register a DNS name to it (OR) use load balancer.</li>
+        <li> Placement Groups: 
+          <table>
+            <tr><th>Cluster</th><td>low latency group in single AZ</td><td>Big Data Jobs, Apps that needs extrealy low latency and high network throughput.</td><td>If rack fails, all instances fails at the same time.</td></tr>
+            <tr><th>Spread</th><td>spread instances across underlying hardware (max 7 instances per group per AZ)</td><td>Apps that needs High availablity</td><td>Limit 7 instances/AZ</td></tr>
+            <tr><th>Partition</th>
+              <td>Spread instaces across many different partitions (which rely on different set of racks) within a AZ. <br>
+                Up to 7 partitions per AZ. <br>
+                Instances in a partition do not share racks with the instances in the other partitions. <br>
+            Scales to 100s of EC2 instances per group. 
+            </td>
+            <td>Hadoop, Cassandra, Kafka, HDFS.</td>
+          </tr>
+          </table>
+        </li>
+
+      </ul>
+      <ul>
+        <li>Dedicated Instances are Amazon EC2 instances that run in a virtual private cloud (VPC) on hardware that's dedicated to a single customer. Dedicated Instances that belong to different AWS accounts are physically isolated at a hardware level, even if those accounts are linked to a single-payer account. However, Dedicated Instances may share hardware with other instances from the same AWS account that are not Dedicated Instances.</li>
+      </ul>
+
+    
+
+    <h4>Elastic Network Interface (ENI)</h4>
+    
+    <ul>
+      <li>Logica component in a VPC that represents a virual network card.</li>
+      <li>ENI can have <br>
+        Primary private IPv4, one or more secondary IPV4. <br>
+        One Elastic IP (IPv4) per private IPv4 <br>
+        One public IPv4 <br>
+        One or more security groups. <br>
+        A mac address
+      </li>
+      <li>You can create ENI independelty and attach them on the fly (move them) on EC2 instances for failover.</li>
+      <li>Bound to a specific AZ</li>
+    </ul>
+    <h4>EC2 Hibernate</h4>
+    <ul>
+      <li>The Inmemory (RAM) state is preserved. Makes instant boot faster.</li>
+      <li>Under the hood the RAM state is written to a file in the root EBS volume.</li>
+      <li>Root EBS volume must be encrypted.</li>
+      <li>Use cases: Long running processes, Services that takes time to initialize.</li>
+      <li>Instance RAM size must be less than 150GB</li>
+      <li>Available for On-demand, Reserved and Spot Instances.</li>
+      <li>Instance can not be hibernated more than 60 days.</li>
+    </ul>
+  
+    <h4>Amazon Machine Image (AMI)</h4>
+    <ul>
+      <li>Customization of an EC2.</li>
+      <li>It fastens the boot/configuration time because all your software is pre-packaged.</li>
+      <li>AMI is built for sepcific region and can be copied across regions.</li>
+      <li>You can lanch your EC2 isntance from a Public AMI (OR) Own AMI (OR) An AWS Marketplace AMI.</li>
+      <li>While building AMI it takes EBS snapshot.</li>
+    </ul>
+
+    <h4>EC2 Instance Store</h4>
+    <ul>
+      <li>User Instance Store for High Performance Hardware Disk.</li>
+      <li>Better I/O performace.</li>
+      <li>EC2 Instance Store lose their storage if they're stopped.</li>
+      <li>Good for Buffer/Cache/Scatch Data/Temporary content</li>
+
+    </ul>
+
+    <h4>Higih availability</h4>
+    <ul>
+      <li>High Availability goes hand in hand with horizantal scalling.</li>
+      <li>High availability means running your applications / System in atleast 2 data centers (AZs)</li>
+      <li>The goal of high availability is to survive a data center loss.</li>
+      <li>The High Availability can be passive (Ex: for RDS Multi AZ )</li>
+      <li>The High Availability can be active (for Horizantal scalling).</li>
+    </ul>
+
+    <h4>Higih availability & Scalbility for EC2</h4>
+    <ul>
+      <li>Vertical scalling: Increase Instance size. (Scale Up/Down)</li>
+      <li>Horizantal scalling: Increase number of instanes (Auto Scalling group, Load Balancer)</li>
+      <li>High availability: Run Instances for the same application across multi AZ (Auto scalling Group for Multi AZ, Load Balancer multi AZ.)</li>
+    </ul>
+
+  </div>
+
+  <h2 id="beanstalk">Elastic Beanstalk</h2>
+  <div id="bsdetails">
+    <ul >
+      <li>Elastic Bean Stalk is a developer centric view of deploying an application.</li>
+      <li>Managed service that authocatically hadnles capcity provisioning, loadbalancing, scalling, application health monitoring, instance configuraiton..etc.  </li>
+      <li>Developer just needs to provide the application code.</li>
+      <li>still have control over configuration.</li>
+      <li>Beanstalk is free but you pay for underlying instances.</li>
+    </ul>
+
+    <h5>Elastic Beanstalk components</h5>
+    <ul>
+      <li>Application: Collection of Elastic Beanstalk components (environements, versions, configurations,..)</li>
+      <li>Application Version: an iteration of you application code.</li>
+      <li>Environment: <br>
+        - Collection of resources running an application version (only one application version at a time). <br>
+        - Tiers: Web Server Environment Tier & Worker Environment Tier. <br>
+        - You can create multiple environements (dev, test, prod)
+      </li>
+    </ul>
+
+    <h5>Deployment modes</h5>
+    <ul>
+      <li>Single Instance: Great for Dev</li>
+      <li>High Availability with Load Balancer: Great for Prod.</li>
+    </ul>
+  </div>
+
+  <h2 id="batch">AWS Batch</h2>
+  <div id="batchdetails">
+    <ul>
+      <li>Fully managed Batch processing at any scale.</li>
+      <li>Efficiently run 100,000s of computing batch jobs on AWS.</li>
+      <li>A "batch" job is a job with a start and an end (opposed to contineous)</li>
+      <li>Batch will dynamically lanch EC2 instances or Spot Instances</li>
+      <li>AWS Batch provisions right amount of compute/memory.</li>
+      <li>You submit or schedule batch jobs and AWS Batch does the rest.</li>
+      <li>Batch jobs are defined as Docker images and run on ECS</li>
+      <li>Helpful for cost optimizations and focusing less on infrastructure.</li>
+    </ul>
+
+    <h5>Batch Vs Lambda</h5>
+    <table>
+      <tr><th>Lambda</th><th>Batch</th></tr>
+      <tr><td><ul>
+        <li>Time Limit</li>
+        <li>Limited runtimes</li>
+        <li>Limited temporary disk space</li>
+        <li>Serverless</li>
+      </ul></td>
+      <td><ul>
+        <li>No time limit</li>
+        <li>Any runtime as long as it's packageed as a Docket image.</li>
+        <li>Rely on EBS / instance store for disk space.</li>
+        <li>Relies on EC2 (Can be managed by AWS)</li>
+      </ul></td>
+    </tr>
+    </table>
+  </div>
+
+
+ 
+  </body>

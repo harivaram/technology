@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style media="screen">
+      
+     table{
+      margin: 10px;
+     }
+     img{
+      margin-right: 5px;
+      float: left;
+     }
+
+  </style>
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>AWS Certified Architect - Associate</h1>
+
+    <h4>*****<a href="testfailurepoints.html">AWS Exam test failure points</a>****</h4>
+
+
+    <table>
+      <tr><td colspan="3"><h4><a href="categories/analytics.html">Analatics</a></h4></td></tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_Amazon-Athena_32.svg" target="_blank"><a href="#athena">Amazon Athena</a></td>
+        <td>Query Data in S3 using SQL</td>
+        <td><a href="https://aws.amazon.com/athena/?nc2=h_ql_prod_an_ath" target="_blank">Details</a> &nbsp;&nbsp;    <a href="https://aws.amazon.com/athena/faqs/?nc=sn&loc=6"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_AWS-Data-Exchange_32.svg" target="_blank"><a href="#dataex">AWS Data Exchange</a></td>
+        <td>Find, Subscribe to, and use third-party data in the cloud.</td>
+        <td><a href="https://aws.amazon.com/data-exchange/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/data-exchange/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_AWS-Data-Pipeline_32.svg" target="_blank"><a href="#pipeline">AWS Data Pipeline</a></td>
+        <td>Orchestration service for perdiodic, data-driven workflows.</td>
+        <td><a href="https://aws.amazon.com/datapipeline/" target="_blank">Details</a>  &nbsp;&nbsp; <a href="https://aws.amazon.com/datapipeline/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_Amazon-EMR_32.svg" target="_blank"><a href="#emr">Amazon EMR</a></td>
+        <td>Easily run BigData frameworks</td>
+        <td><a href="https://aws.amazon.com/emr/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/emr/faqs/" target="_blank" rel="noopener noreferrer" target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_AWS-Glue_32.svg" target="_blank"><a href="#glue">AWS Glue</a></td>
+        <td>Simple, scalable and serverles Data integration</td>
+        <td><a href="https://aws.amazon.com/glue/" target="_blank">Details</a> &nbsp; &nbsp; <a href="https://aws.amazon.com/glue/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_Amazon-Kinesis_32.svg" target="_blank"><a href="#kinesis">AWS Kinesis</a></td>
+        <td>Analyze real-time vedio and data stream</td>
+        <td><a href="https://aws.amazon.com/kinesis" target="_blank">Details</a> </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_Amazon-Kinesis-Video-Streams_32.svg" target="_blank">Apache Kenesis Vedio Streams</td>
+        <td><a href="https://aws.amazon.com/kinesis/video-streams/" target="_blank">Details</a> &nbsp; &nbsp; <a href="https://aws.amazon.com/kinesis/video-streams/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_Amazon-Kinesis-Data-Analytics_32.svg" target="_blank">Apache Kenesis Data Streams</td>
+        <td><a href="https://aws.amazon.com/kinesis/data-streams/?nc=sn&loc=2&dn=2" target="_blank">Details</a> &nbsp; &nbsp; <a href="https://aws.amazon.com/kinesis/data-streams/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_Amazon-Kinesis-Data-Firehose_32.svg" target="_blank">Apache Kenesis Firehouse</td>
+        <td><a href="https://aws.amazon.com/kinesis/data-firehose/" target="_blank">Details</a> &nbsp; &nbsp; <a href="https://aws.amazon.com/kinesis/data-firehose/faqs"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_AWS-Lake-Formation_32.svg" target="_blank"><a href="#lakeformation">AWS Lake Formation</a></td>
+        <td>Build, manage and secure your data lake.</td>
+        <td><a href="https://aws.amazon.com/lake-formation" target="_blank">Details</a> &nbsp; &nbsp; <a href="https://aws.amazon.com/lake-formation/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_Amazon-Managed-Streaming-for-Apache-Kafka_32.svg" target="_blank"><a href="#msk">Amazon Managed Streaming <br>for Apache Kafka (Amazon MSK)</a></td>
+        <td>Fully managed Apache Kafka</td>
+        <td><a href="https://aws.amazon.com/msk" target="_blank">Details</a> &nbsp; &nbsp; <a href="https://aws.amazon.com/msk/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_Amazon-OpenSearch-Service_32.svg" target="_blank"><a href="#elasticsearch">Amazon OpenSearch Searivice <br> (Amazon Elastic Search Service) </a></td>
+        <td>Search, visualize and analyze up to petabytes of text and unstructured data.</td>
+        <td><a href="https://aws.amazon.com/opensearch-service/" target="_blank">Details</a> &nbsp; &nbsp; <a href="https://aws.amazon.com/opensearch-service/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_Amazon-QuickSight_32.svg" target="_blank"><a href="#quicksight">Amazon QuickSight</a></td>
+        <td>Fast Business Analytics Service</td>
+        <td><a href="https://aws.amazon.com/quicksight/" target="_blank">Details</a> &nbsp; &nbsp; <a href="https://aws.amazon.com/quicksight/resources/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Analytics/32/Arch_Amazon-Redshift_32.svg" target="_blank"><a href="#redshift">Amazon Redshift</a></td>
+        <td>Fast, simple and cost-effective data wearhousing</td>
+        <td><a href="https://aws.amazon.com/redshift/" target="_blank">Details</a> &nbsp; &nbsp; <a href="https://aws.amazon.com/redshift/faqs"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td colspan="3"><h4><a href="categories/integration.html">Integration</a></h4></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_App-Integration/32/Arch_Amazon-API-Gateway_32.svg" target="_blank"><a href="#apigw">API Gateway</a></td>
+        <td>No code Integration for SaaS apps & AWS Services.</td>
+        <td><a href="https://aws.amazon.com/appflow/" target="_blank">Details</a> &nbsp; &nbsp; <a href="hhttps://aws.amazon.com/api-gateway/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+
+      <tr>
+        <td><img src="icons/Architecture/Arch_App-Integration/32/Arch_Amazon-AppFlow_32.svg" target="_blank"><a href="#appflow">Amazon AppFlow</a></td>
+        <td>Build, deploy manage APIs.</td>
+        <td><a href="https://aws.amazon.com/api-gateway/" target="_blank">Details</a> &nbsp; &nbsp; <a href="https://aws.amazon.com/appflow/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_App-Integration/32/Arch_AWS-AppSync_32.svg" target="_blank"><a href="">Amazon AppSync</a></td>
+        <td>Fully-managed, scalable GraphQL APIs</td>
+        <td><a href="https://aws.amazon.com/appsync/" target="_blank">Details</a> &nbsp; &nbsp; <a href="https://aws.amazon.com/appsync/faqs/"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_App-Integration/32/Arch_Amazon-EventBridge_32.svg" target="_blank"><a href="">Amazon EventBridge</a></td>
+        <td>Serverless event bus for Saas Apps and AWS Services.</td>
+        <td><a href="https://aws.amazon.com/eventbridge/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/eventbridge/faqs/" target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_App-Integration/32/Arch_Amazon-MQ_32.svg" target="_blank"><a href="">Amazon MQ</a></td>
+        <td>Managed Message broker service.</td>
+        <td><a href="https://aws.amazon.com/amazon-mq/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/amazon-mq/faqs/" target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_App-Integration/32/Arch_Amazon-Simple-Notification-Service_32.svg" target="_blank"><a href="">Amazon Simple Notification Service (Amazon SNS)</a></td>
+        <td>Pub/Sub, SMS, Email and Mobile push notification.</td>
+        <td><a href="https://aws.amazon.com/sns" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/sns"  target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_App-Integration/32/Arch_Amazon-Simple-Queue-Service_32.svg" target="_blank"><a href="">Amazon Simple Queue Service (Amazon SQS)</a></td>
+        <td>Managed Message Queues.</td>
+        <td><a href="https://aws.amazon.com/sqs/" target="_blank">Details</a> &nbsp;&nbsp;<a href="https://aws.amazon.com/sqs/faqs/" target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_App-Integration/32/Arch_AWS-Step-Functions_32.svg" target="_blank"><a href="">Amazon Step Functions</a></td>
+        <td>coordination for distributed applications.</td>
+        <td><a href="https://aws.amazon.com/step-functions/" target="_blank">Details</a> &nbsp;&nbsp;<a href="https://aws.amazon.com/step-functions/faqs/" target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td colspan="3"><h4><a href="categories/costmgmt.html">Cost Management</a></h4></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Cloud-Financial-Management/32/Arch_AWS-Budgets_32.svg" target="_blank"><a href="">AWS Budget</a></td>
+        <td>Set custom costs and Usage Budgets.</td>
+        <td><a href="https://aws.amazon.com/aws-cost-management/aws-budgets/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/aws-cost-management/aws-budgets/faqs/" target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Cloud-Financial-Management/32/Arch_AWS-Cost-Explorer_32.svg" target="_blank"><a href="">AWS Cost Explorer</a></td>
+        <td>Analyse AWS cost and usage</td>
+        <td><a href="https://aws.amazon.com/aws-cost-management/aws-cost-explorer/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/aws-cost-management/aws-cost-explorer/faqs/" target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Cloud-Financial-Management/32/Arch_AWS-Cost-and-Usage-Report_32.svg" target="_blank"><a href="">AWS Cost and Usage Report</a></td>
+        <td>Access comprehensive cost and usage information</td>
+        <td><a href="https://aws.amazon.com/aws-cost-management/aws-cost-and-usage-reporting/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/aws-cost-management/aws-cost-and-usage-reporting/faqs/" target="_blank">FAQs</a></td>
+      </tr>
+      <tr>
+        <td><img src="icons/Architecture/Arch_Cloud-Financial-Management/32/Arch_Savings-Plans_32.svg" target="_blank"><a href="">Savings Plan</a></td>
+        <td>Save up to 72% on compute usage with flexible pricing.</td>
+        <td><a href="https://aws.amazon.com/savingsplans/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/savingsplans/faq/" target="_blank">FAQs</a></td>
+      </tr>
+
+      <tr>
+        <td colspan="3"><h4><a href="categories/compute.html">Compute</a></h4></td>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_AWS-Batch_32.svg" target="_blank"><a href="">AWS Batch</a></td>
+          <td>Run Batch jobs at any scale.</td>
+          <td><a href="https://aws.amazon.com/batch/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/batch/faqs" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_Amazon-EC2_32.svg" target="_blank"><a href="">AWS EC2</a></td>
+          <td>Virtual servers in cloud.</td>
+          <td><a href="https://aws.amazon.com/ec2" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/ec2/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_Amazon-EC2-Auto-Scaling_32.svg" target="_blank"><a href="">AWS EC2 AutoScaling</a></td>
+          <td>Scale compute capacity to meet demand.</td>
+          <td><a href="https://aws.amazon.com/ec2/autoscaling" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/ec2/autoscaling/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_AWS-Elastic-Beanstalk_32.svg" target="_blank"><a href="">AWS Elastic Beanstalk</a></td>
+          <td>Run and manage webapps.</td>
+          <td><a href="https://aws.amazon.com/elasticbeanstalk/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/elasticbeanstalk/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_AWS-Outposts-family_32.svg" target="_blank"><a href="">AWS Outposts</a></td>
+          <td>Run AWS infrastructure on-promises.</td>
+          <td><a href="https://aws.amazon.com/outposts/" target="_blank">Details</a></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_AWS-Outposts-rack_32.svg" target="_blank">AWS Outposts Rack</td>
+          <td><a href="https://aws.amazon.com/outposts/rack/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/outposts/rack/faqs" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_AWS-Outposts-servers_32.svg" target="_blank">AWS Outposts Servers</td>
+          <td><a href="https://aws.amazon.com/outposts/servers/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/outposts/servers/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_AWS-Serverless-Application-Repository_32.svg" target="_blank"><a href="">AWS Serverless Application Repositoryq3456</a></td>
+          <td>Discover, deploy and publish serverless applications.</td>
+          <td><a href="https://aws.amazon.com/serverless/serverlessrepo/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/serverless/serverlessrepo/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_VMware-Cloud-on-AWS_32.svg" target="_blank"><a href="">VMware Cloud on AWS</a></td>
+          <td>Build a hibrid cloud without custom hardware.</td>
+          <td><a href="https://aws.amazon.com/vmware" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/vmware/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_AWS-Wavelength_32.svg" target="_blank"><a href="">AWS Wavelength</a></td>
+          <td>Deliver ultra-low latency applications for 5G devices.</td>
+          <td><a href="https://aws.amazon.com/wavelength" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/wavelength/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+
+        <tr>
+          <td colspan="3"><h4><a href="categories/containers.html">Containers</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Containers/32/Arch_Amazon-Elastic-Container-Registry_32.svg" target="_blank"><a href="">Amazon Eleastic Container Registry (Amazon ECR)</a></td>
+          <td>Easily store, manage and deploy container images.</td>
+          <td><a href="https://aws.amazon.com/ecr" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/ecr/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Containers/32/Arch_Amazon-Elastic-Container-Service_32.svg" target="_blank"><a href="">Amazon Elastic Container Service (Amazon ECS)</a></td>
+          <td>Highly secure, reliable, and scalable way to run containers.</td>
+          <td><a href="https://aws.amazon.com/ecs/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/ecs/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Containers/32/Arch_Amazon-ECS-Anywhere_32.svg" target="_blank"><a href="">Amazon ECS Anywhere</a></td>
+          <td>Run containers on customer-managed infrastructure.</td>
+          <td><a href="https://aws.amazon.com/ecs/anywhere/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/ecs/anywhere/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Containers/32/Arch_Amazon-Elastic-Kubernetes-Service_32.svg" target="_blank"><a href="">Amazon Eleastic Kubernetes Service (Amazon EKS)</a></td>
+          <td>The most trusted way to run Kubernates.</td>
+          <td><a href="https://aws.amazon.com/eks/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/eks/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Containers/32/Arch_Amazon-EKS-Anywhere_32.svg" target="_blank"><a href="">Amazon EKS Anywhere</a></td>
+          <td>Kubernates on your infrastructure.</td>
+          <td><a href="https://aws.amazon.com/eks/eks-anywhere/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/eks/eks-anywhere/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Containers/32/Arch_Amazon-EKS-Distro_32.svg" target="_blank"><a href="">Amazon EKS Distro</a></td>
+          <td>Run consistent Kubernates clusters.</td>
+          <td><a href="https://aws.amazon.com/eks/eks-distro/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/eks/eks-distro/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+
+
+        <tr>
+          <td colspan="3"><h4><a href="categories/databases.html">Databases</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Database/32/Arch_Amazon-Aurora_32.svg" target="_blank"><a href="">Amazon Aurora</a></td>
+          <td>High performance managed relational database with full MySQL and PostgreSQL compatibility.</td>
+          <td><a href="https://aws.amazon.com/rds/aurora" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/rds/aurora/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Database/32/Arch_Amazon-Aurora_32.svg" target="_blank"><a href="">Amazon Aurora Serverless</a></td>
+          <td>Instantly scale to > 100,000 transactions per second.</td>
+          <td><a href="https://aws.amazon.com/rds/aurora/serverless" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/rds/aurora/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Database/32/Arch_Amazon-DynamoDB_32.svg" target="_blank"><a href="">Amazon DynamoDB</a></td>
+          <td>Managed NoSQL database.</td>
+          <td><a href="https://aws.amazon.com/dynamodb/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/dynamodb/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Database/32/Arch_Amazon-ElastiCache_32.svg" target="_blank"><a href="">Amazon Eleastic Cache</a></td>
+          <td>In memory caching service.</td>
+          <td><a href="https://aws.amazon.com/elasticache/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/elasticache/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Database/32/Arch_Amazon-Keyspaces_32.svg" target="_blank"><a href="">Amazon KeySpace (for Apache Cassandra)</a></td>
+          <td>Managed Cassandra-compatible database.</td>
+          <td><a href="https://aws.amazon.com/keyspaces/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/keyspaces/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Database/32/Arch_Amazon-Neptune_32.svg" target="_blank"><a href="">Amazon Neptune</a></td>
+          <td>Fully managed Graph database service.</td>
+          <td><a href="https://aws.amazon.com/neptune/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/neptune/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+
+        <tr>
+          <td><img src="icons/Architecture/Arch_Database/32/Arch_Amazon-RDS-on-VMware_32.svg" target="_blank"><a href="">Amazon RDS</a></td>
+          <td>Managed Relational database service for MySQL, PostgreSQL, Oracle, SQL Server and MariaDB</td>
+          <td><a href="https://aws.amazon.com/rds" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/rds/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Analytics/32/Arch_Amazon-Redshift_32.svg" target="_blank"><a href="">Amazon Redshift</a></td>
+          <td>Fast, Simple, cost-effective data wearhousing.</td>
+          <td><a href="https://aws.amazon.com/redshift/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/redshift/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Database/32/Arch_Amazon-Timestream_32.svg" target="_blank"><a href="">Amazon Timestream</a></td>
+          <td>Fully managed Time series database.</td>
+          <td><a href="https://aws.amazon.com/timestream/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/timestream/faq/" target="_blank">FAQs</a></td>
+        </tr>
+
+        <tr>
+          <td colspan="3"><h4>Developer Tools</h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Developer-Tools/32/Arch_AWS-X-Ray_32.svg" target="_blank"><a href="">Amazon X-Ray</a></td>
+          <td>Analyze and debug your applications.</td>
+          <td><a href="https://aws.amazon.com/xray/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/xray/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+
+        <tr>
+          <td colspan="3"><h4><a href="categories/machinelearn.html">Machine Learning</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Machine-Learning/32/Arch_Amazon-Comprehend_32.svg" target="_blank"><a href="">Amazon Comprehend</a></td>
+          <td>Discover insights and relationships in text.</td>
+          <td><a href="https://aws.amazon.com/comprehend/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/comprehend/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Machine-Learning/32/Arch_Amazon-Forecast_32.svg" target="_blank"><a href="">Amazon Forecast</a></td>
+          <td>Increase forcast accuracy using Machine Learning.</td>
+          <td><a href="https://aws.amazon.com/forecast/" target="_blank">Details</a> </td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Machine-Learning/32/Arch_Amazon-Comprehend_32.svg" target="_blank"><a href="">Amazon Fraud Detector</a></td>
+          <td>Detect Online Fraud faster with Machine learning.</td>
+          <td><a href="https://aws.amazon.com/fraud-detector/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/fraud-detector/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Machine-Learning/32/Arch_Amazon-Kendra_32.svg" target="_blank"><a href="">Amazon Kendra</a></td>
+          <td>Reinvent enterprise search with ML.</td>
+          <td><a href="https://aws.amazon.com/kendra/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/kendra/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Machine-Learning/32/Arch_Amazon-Lex_32.svg" target="_blank"><a href="">Amazon Lex</a></td>
+          <td>Build voice and text chatbots.</td>
+          <td><a href="https://aws.amazon.com/lex/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/lex/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Machine-Learning/32/Arch_Amazon-Polly_32.svg" target="_blank"><a href="">Amazon Polly</a></td>
+          <td>Turn text in to life-live speach.</td>
+          <td><a href="https://aws.amazon.com/polly/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/polly/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Machine-Learning/32/Arch_Amazon-Rekognition_32.svg" target="_blank"><a href="">Amazon Rekognition</a></td>
+          <td>Analyze image and vedio.</td>
+          <td><a href="https://aws.amazon.com/rekognition" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/rekognition/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Machine-Learning/32/Arch_Amazon-SageMaker_32.svg" target="_blank"><a href="">Amazon SageMaker</a></td>
+          <td>Build, train, deploy machine learning models at scale.</td>
+          <td><a href="https://aws.amazon.com/sagemaker/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/sagemaker/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Machine-Learning/32/Arch_Amazon-Textract_32.svg" target="_blank"><a href="">Amazon Texttract</a></td>
+          <td>Extract text and data from documents.</td>
+          <td><a href="https://aws.amazon.com/textract" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/textract/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Machine-Learning/32/Arch_Amazon-Transcribe_32.svg" target="_blank"><a href="">Amazon Transcribe</a></td>
+          <td>Automatic speech recognition.</td>
+          <td><a href="https://aws.amazon.com/transcribe/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/transcribe/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Machine-Learning/32/Arch_Amazon-Translate_32.svg" target="_blank"><a href="">Amazon Translate</a></td>
+          <td>Natural and fluent language translation.</td>
+          <td><a href="https://aws.amazon.com/translate/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/translate/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+
+        <tr>
+          <td colspan="3"><h4><a href="categories/management.html">Management and Governing</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-Auto-Scaling_32.svg" target="_blank"><a href="">AWS Auto Scaling</a></td>
+          <td>Scale multiple resources to meet demand.</td>
+          <td><a href="https://aws.amazon.com/autoscaling/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/autoscaling/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-CloudFormation_32.svg" target="_blank"><a href="">AWS CloudFormantion</a></td>
+          <td>Create and manage resources with templates.</td>
+          <td><a href="https://aws.amazon.com/cloudformation/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/cloudformation/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-CloudTrail_32.svg" target="_blank"><a href="">AWS Cloud Trail</a></td>
+          <td>Track user activity and API usage.</td>
+          <td><a href="https://aws.amazon.com/cloudtrail/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/cloudtrail/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_Amazon-CloudWatch_32.svg" target="_blank"><a href="">AWS Cloud Watch</a></td>
+          <td>Monitor resources and application.</td>
+          <td><a href="https://aws.amazon.com/cloudwatch/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/cloudwatch/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_Amazon-CloudWatch_32.svg" target="_blank"><a href="">AWS Command Line Interface (AWS CLI)</a></td>
+          <td>Unified tool to manage AWS resources.</td>
+          <td><a href="https://aws.amazon.com/cli/" target="_blank">Details</a> </td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_AWS-Compute-Optimizer_32.svg" target="_blank"><a href="">AWS Compute Optimizer</a></td>
+          <td>Identify Optimal AWS Compute resources.</td>
+          <td><a href="https://aws.amazon.com/compute-optimizer/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/compute-optimizer/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-Config_32.svg" target="_blank"><a href="">AWS Config</a></td>
+          <td>Track Resources inventory and changes.</td>
+          <td><a href="https://aws.amazon.com/config/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/config/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-Control-Tower_32.svg" target="_blank"><a href="">AWS Control Tower</a></td>
+          <td>Set up and govern a secure, compliant multi-account environment.</td>
+          <td><a href="https://aws.amazon.com/config/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/config/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-License-Manager_32.svg" target="_blank"><a href="">AWS Licence Manager</a></td>
+          <td>Track, manage, and control licences.</td>
+          <td><a href="https://aws.amazon.com/license-manager/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/license-manager/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_Amazon-Managed-Grafana_32.svg" target="_blank"><a href="">Amazon Managed Grafana</a></td>
+          <td>Powerful interactive data visualizations.</td>
+          <td><a href="https://aws.amazon.com/grafana/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/grafana/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_Amazon-Managed-Service-for-Prometheus_32.svg" target="_blank"><a href="">Amazon Managed Service for Prometheus</a></td>
+          <td>Highly available, secure monitoring for containers.</td>
+          <td><a href="https://aws.amazon.com/prometheus/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/prometheus/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-Management-Console_32.svg" target="_blank"><a href="">AWS Management Console</a></td>
+          <td>Web-based user interface.</td>
+          <td><a href="https://aws.amazon.com/console/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/console/faq-console/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-Organizations_32.svg" target="_blank"><a href="">AWS Organization</a></td>
+          <td>Central governance and management across AWS accounts.</td>
+          <td><a href="https://aws.amazon.com/organizations/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/organizations/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-Health-Dashboard_32.svg" target="_blank"><a href="">AWS Health Dashboard</a></td>
+          <td>View important events and changes effecting your AWS environment.</td>
+          <td><a href="https://aws.amazon.com/organizations/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/organizations/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-Proton_32.svg" target="_blank"><a href="">AWS Proton</a></td>
+          <td>Automated management for container and serverless deployment.</td>
+          <td><a href="https://aws.amazon.com/proton/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/proton/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-Service-Catalog_32.svg" target="_blank"><a href="">AWS Service Catalog</a></td>
+          <td>Create and standardized products.</td>
+          <td><a href="https://aws.amazon.com/servicecatalog/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/servicecatalog/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-Systems-Manager_32.svg" target="_blank"><a href="">AWS System Manager</a></td>
+          <td>Gain operationl insights and take action.</td>
+          <td><a href="https://aws.amazon.com/systems-manager/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/systems-manager/faq/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-Trusted-Advisor_32.svg" target="_blank" width="10%" height="10%"><a href="">AWS Trusted Advisor</a></td>
+          <td>Optimize performacen and security.</td>
+          <td><a href="https://aws.amazon.com/premiumsupport/technology/trusted-advisor/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/premiumsupport/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Management-Governance/32/Arch_AWS-Well-Architected-Tool_32.svg" target="_blank"><a href="">AWS Well-Architected Tool</a></td>
+          <td>Review and improve your workloads.</td>
+          <td><a href="https://aws.amazon.com/well-architected-tool/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/well-architected-tool/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+
+        <tr>
+          <td colspan="3"><h4><a href="categories/media.html">Media Services</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Media-Services/32/Arch_Amazon-Elastic-Transcoder_32.svg" target="_blank"><a href="">Amazon Elastic Transcoder</a></td>
+          <td>Easy-to-use scalable media transcoding.</td>
+          <td><a href="https://aws.amazon.com/elastictranscoder/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/elastictranscoder/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Media-Services/32/Arch_Amazon-Kinesis-Video-Streams_32.svg" target="_blank"><a href="">Amazon Kinesis Vedio Streams</a></td>
+          <td>Pricess and analyze Vedio stream.</td>
+          <td><a href="https://aws.amazon.com/kinesis/video-streams/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/kinesis/video-streams/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+
+        <tr>
+          <td colspan="3"><h4><a href="categories/migration.html">Disaster Recovery, Migration and Transfer</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Migration-Transfer/32/Arch_AWS-Application-Discovery-Service_32.svg" target="_blank"><a href="">AWS Application Discovery</a></td>
+          <td>Discover on-premises applications to streamline migration.</td>
+          <td><a href="https://aws.amazon.com/application-discovery/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/application-discovery/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Migration-Transfer/32/Arch_AWS-Application-Migration-Service_32.svg" target="_blank"><a href="">AWS Application Migration Service <br>(Cloud Endure Migration)</a></td>
+          <td>Discover on-premises applications to streamline migration.</td>
+          <td><a href="https://aws.amazon.com/application-migration-service/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/application-migration-service/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Database/32/Arch_AWS-Database-Migration-Service_32.svg" target="_blank"><a href="">AWS Database Migration Service (AWS DMS)</a></td>
+          <td>Migrate databases with minimal downtime.</td>
+          <td><a href="https://aws.amazon.com/dms/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/dms/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Migration-Transfer/32/Arch_AWS-DataSync_32.svg" target="_blank"><a href="">AWS DataSync</a></td>
+          <td>Simple, fast online data transfer service.</td>
+          <td><a href="https://aws.amazon.com/datasync/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/datasync/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Migration-Transfer/32/Arch_AWS-Migration-Evaluator_32.svg" target="_blank"><a href="">AWS Migration Hub</a></td>
+          <td>Track migration from a single place.</td>
+          <td><a href="https://aws.amazon.com/migration-hub/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/migration-hub/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        
+        <tr>
+          <td><img src="icons/Architecture/Arch_Migration-Transfer/32/Arch_AWS-Transfer-Family_32.svg" target="_blank"><a href="">AWS Transfer Family</a></td>
+          <td>Track migration from a single place.</td>
+          <td><a href="https://aws.amazon.com/aws-transfer-family/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/aws-transfer-family/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        
+        <tr>
+          <td><h4><a href="categories/networking.html">Networking and Content Delivery</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Networking-Content-Delivery/32/Arch_Amazon-CloudFront_32.svg" target="_blank"><a href="categories/networking.html#cloudfront">Amazon CloudFront</a></td>
+          <td>Global Content Delivery Network.</td>
+          <td><a href="https://aws.amazon.com/cloudfront/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/cloudfront/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Networking-Content-Delivery/32/Arch_AWS-Direct-Connect_32.svg" target="_blank"><a href="categories/networking.html#vpc">AWS Direct Connect</a></td>
+          <td>Dedicated Network connection to AWS.</td>
+          <td><a href="https://aws.amazon.com/cloudfront/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/cloudfront/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Networking-Content-Delivery/32/Arch_Elastic-Load-Balancing_32.svg" target="_blank"><a href="categories/networking.html#elb">Elastic Load Balancing (ELB)</a></td>
+          <td>Distribute incoming traffic across multiple targets.</td>
+          <td><a href="https://aws.amazon.com/elasticloadbalancing/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/elasticloadbalancing/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Networking-Content-Delivery/32/Arch_AWS-Global-Accelerator_32.svg" target="_blank"><a href="categories/networking.html#globalacc">AWS Global Accelarator</a></td>
+          <td>Improve application availability, Performance.</td>
+          <td><a href="https://aws.amazon.com/global-accelerator" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/global-accelerator/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Networking-Content-Delivery/32/Arch_AWS-PrivateLink_32.svg" target="_blank"><a href="categories/networking.html#vpc">AWS Private Link</a></td>
+          <td>Securely access services hosted on AWS.</td>
+          <td><a href="https://aws.amazon.com/privatelink/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/privatelink/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Networking-Content-Delivery/32/Arch_Amazon-Route-53_32.svg" target="_blank"><a href="categories/networking.html#route53">Amazon Route 53</a></td>
+          <td>Scalable Domain Name Service (DNS).</td>
+          <td><a href="https://aws.amazon.com/route53/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/route53/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Networking-Content-Delivery/32/Arch_AWS-Transit-Gateway_32.svg" target="_blank"><a href="categories/networking.html#vpc">AWS Transit Gateway</a></td>
+          <td>Easily scale VPC and Account connections.</td>
+          <td><a href="https://aws.amazon.com/transit-gateway/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html" target="_blank">Docs</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/transit-gateway/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Networking-Content-Delivery/32/Arch_Amazon-Virtual-Private-Cloud_32.svg" target="_blank"><a href="categories/networking.html#vpc">Amazon VPC</a></td>
+          <td>Easily scale VPC and Account connections.</td>
+          <td><a href="https://aws.amazon.com/vpc/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/vpc/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Networking-Content-Delivery/32/Arch_AWS-Client-VPN_32.svg" target="_blank"><a href="categories/networking.html#vpc">AWS VPN</a></td>
+          <td>Securely access your network resources.</td>
+          <td><a href="https://aws.amazon.com/vpn/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/vpn/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+
+        <tr>
+          <td colspan="3"><h4><a href="categories/security.html">Security, Identity and Compliance</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Artifact_32.svg" target="_blank"><a href="">AWS Artifact</a></td>
+          <td>On-demand access to AWS compliance reports.</td>
+          <td><a href="https://aws.amazon.com/artifact/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/artifact/faq/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Audit-Manager_32.svg" target="_blank"><a href="">AWS Audit Manager</a></td>
+          <td>Contineously Audit your AWS usage.</td>
+          <td><a href="https://aws.amazon.com/audit-manager/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/audit-manager/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Certificate-Manager_32.svg" target="_blank"><a href="">AWS Certificate Manager (ACM)</a></td>
+          <td>Provision, manage and deploy SSL/TLS certificates.</td>
+          <td><a href="https://aws.amazon.com/certificate-manager/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/certificate-manager/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Certificate-Manager_32.svg" target="_blank"><a href="">AWS Cloud HSM</a></td>
+          <td>Hardware based key storage for regulatory compliance.</td>
+          <td><a href="https://aws.amazon.com/cloudhsm/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/cloudhsm/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_Amazon-Cognito_32.svg" target="_blank"><a href="">AWS Cognito</a></td>
+          <td>Indentiy Management for your Apps.</td>
+          <td><a href="hhttps://aws.amazon.com/cognito/" target="_blank">Details</a> </td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_Amazon-Detective_32.svg" target="_blank"><a href="">AWS Detective</a></td>
+          <td>Investigate potential security issues.</td>
+          <td><a href="https://aws.amazon.com/detective/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/detective/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Firewall-Manager_32.svg" target="_blank"><a href="">AWS Firewall Manager</a></td>
+          <td>Central mamagement for firewall rules.</td>
+          <td><a href="https://aws.amazon.com/firewall-manager" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/firewall-manager/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_Amazon-GuardDuty_32.svg" target="_blank"><a href="">Amazon GaurdDuty</a></td>
+          <td>Managed threat detective service.</td>
+          <td><a href="https://aws.amazon.com/guardduty/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/guardduty/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Identity-and-Access-Management_32.svg" target="_blank"><a href="">AWS Identiy Access Management Service (IAM)</a></td>
+          <td>Securely manage acess to services and resources.</td>
+          <td><a href="https://aws.amazon.com/iam/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/iam/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_Amazon-Inspector_32.svg" target="_blank"><a href="">AWS Inspector</a></td>
+          <td>Automate vulnerability management.</td>
+          <td><a href="https://aws.amazon.com/inspector/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/inspector/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Key-Management-Service_32.svg" target="_blank"><a href="">AWS Key Management Service (KMS)</a></td>
+          <td>Manage creation and control of encryption keys.</td>
+          <td><a href="https://aws.amazon.com/kms/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/kms/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_Amazon-Macie_32.svg" target="_blank"><a href="">Amazon Macie</a></td>
+          <td>Discover and protect your sensitive data at scale.</td>
+          <td><a href="https://aws.amazon.com/macie/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/macie/faq/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Firewall-Manager_32.svg" target="_blank"><a href="">AWS Network Firewall</a></td>
+          <td>Network security to protect your VPCs</td>
+          <td><a href="https://aws.amazon.com/network-firewall/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/network-firewall/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Resource-Access-Manager_32.svg" target="_blank"><a href="">AWS Resource Access Manager (RAM)</a></td>
+          <td>Simple, secure service to share AWS resources. </td>
+          <td><a href="https://aws.amazon.com/network-firewall/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/network-firewall/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Secrets-Manager_32.svg" target="_blank"><a href="">AWS Secrets Manager</a></td>
+          <td>Rotate, mananage, and retrieve secrets</td>
+          <td><a href="https://aws.amazon.com/network-firewall/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/network-firewall/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Security-Hub_32.svg" target="_blank"><a href="">AWS Security Hub</a></td>
+          <td>Unified security and compliance centre.</td>
+          <td><a href="https://aws.amazon.com/security-hub/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/security-hub/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-Shield_32.svg" target="_blank"><a href="">AWS Shield</a></td>
+          <td>DDos protection.</td>
+          <td><a href="https://aws.amazon.com/shield/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/shield/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-IAM-Identity-Center_32.svg" target="_blank"><a href="">AWS IAM Identity Centre (AWS Single Sign-On)</a></td>
+          <td>Manage single sign-on access AWS accounts and apps.</td>
+          <td><a href="https://aws.amazon.com/iam/identity-center/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/iam/identity-center/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Security-Identity-Compliance/32/Arch_AWS-WAF_32.svg" target="_blank"><a href="">AWS WAF</a></td>
+          <td>Filter malicious web traffic.</td>
+          <td><a href="https://aws.amazon.com/waf/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/waf/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+
+        <tr>
+          <td colspan="3"><h4><a href="categories/serverless.html">Serverless</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Containers/32/Arch_AWS-Fargate_32.svg" target="_blank"><a href="">Amazon AppSync</a></td>
+          <td>Severless compute for container.</td>
+          <td><a href="https://aws.amazon.com/fargate/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/fargate/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Compute/32/Arch_AWS-Lambda_32.svg" target="_blank"><a href="">AWS Lambda</a></td>
+          <td>Run code without thinking about servers.</td>
+          <td><a href="https://aws.amazon.com/lambda/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/lambda/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+
+        <tr>
+          <td colspan="3"><h4><a href="categories/storage.html">Storage</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Storage/32/Arch_AWS-Backup_32.svg" target="_blank"><a href="categories/storage.html#backup">AWS Backup</a></td>
+          <td>Centralized backup across the AWS services.</td>
+          <td><a href="https://aws.amazon.com/backup/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/lambda/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Storage/32/Arch_Amazon-Elastic-Block-Store_32.svg" target="_blank"><a href="categories/storage.html#ebs">Amazon Elastic Block Storage (EBS)</a></td>
+          <td>EC2 block storage volumes.</td>
+          <td><a href="https://aws.amazon.com/ebs/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/ebs/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Storage/32/Arch_Amazon-EFS_32.svg" target="_blank"><a href="categories/storage.html#efs">Amazon Elastic File System (EFS)</a></td>
+          <td>Fully managed file system for EC2.</td>
+          <td><a href="https://aws.amazon.com/efs/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/efs/faq/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Storage/32/Arch_Amazon-FSx-for-Lustre_32.svg" target="_blank"><a href="categories/storage.html#fsx">Amazon Fsx for Lustre.</a></td>
+          <td>High performance file system integrated with EC2.</td>
+          <td><a href="https://aws.amazon.com/fsx/lustre/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/fsx/lustre/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Storage/32/Arch_Amazon-Simple-Storage-Service_32.svg" target="_blank"><a href="categories/storage.html#s3">Amazon Simple Storage Service (S3)</a></td>
+          <td>Scalabel storage in the cloud.</td>
+          <td><a href="https://aws.amazon.com/fsx/lustre/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/fsx/lustre/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Storage/32/Arch_Amazon-Simple-Storage-Service-Glacier_32.svg" target="_blank"><a href="categories/storage.html#s3">Amazon Glacier</a></td>
+          <td>Low cost archive storage in the cloud.</td>
+          <td><a href="https://aws.amazon.com/s3/storage-classes/glacier/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/s3/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Storage/32/Arch_AWS-Storage-Gateway_32.svg" target="_blank"><a href="categories/storage.html#sgw">Amazon Storage Gateway</a></td>
+          <td>Hibride storage integration.</td>
+          <td><a href="https://aws.amazon.com/storagegateway/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/storagegateway/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td><img src="" target="_blank"><a href="categories/storage.html#snowfamily">AWS Snow Family</a></td>
+          <td>Physical end computing and storage services for rugged or disconnected environments.</td>
+          <td><a href="https://aws.amazon.com/snow/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/snow/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><img src="icons/Architecture/Arch_Storage/32/Arch_AWS-Snowcone_32.svg"><a href="categories/storage.html">AWS Snowcone</a></td>
+          <td><a href="https://aws.amazon.com/snowcone/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/snowcone/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><img src="icons/Architecture/Arch_Storage/32/Arch_AWS-Snowball_32.svg"><a href="categories/storage.html">AWS Snowball</a></td>
+          <td><a href="https://aws.amazon.com/snowball/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/snowball/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><img src="icons/Architecture/Arch_Storage/32/Arch_AWS-Snowmobile_32.svg"><a href="categories/storage.html">AWS Snowmobile</a></td>
+          <td><a href="https://aws.amazon.com/snowmobile/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/snowmobile/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+
+
+        <tr>
+          <td colspan="3"><h4><a href="categories/businessapps.html">Business Applications</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Business-Applications/32/Arch_Amazon-Simple-Email-Service_32.svg"><a href="">Amazon Simple Email Service (SME)</a></td>
+          <td>High scale inbound and outbound Emails</td>
+          <td><a href="https://aws.amazon.com/ses/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/ses/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+        <tr>
+          <td colspan="3"><h4><a href="categories/costmgmt.html">AWS Financial Management</a></h4></td>
+        </tr>
+        <tr>
+          <td><img src="icons/Architecture/Arch_Cloud-Financial-Management/32/Arch_AWS-Cost-Explorer_32.svg"><a href="">AWS Cost Explorer</a></td>
+          <td>High scale inbound and outbound Emails</td>
+          <td><a href="https://aws.amazon.com/aws-cost-management/aws-cost-explorer/" target="_blank">Details</a> &nbsp;&nbsp; <a href="https://aws.amazon.com/aws-cost-management/aws-cost-explorer/faqs/" target="_blank">FAQs</a></td>
+        </tr>
+   
+      </table>
+       
+  </body>
+</html>

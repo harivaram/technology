@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>API Design</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <a class="btn_back" href="../index.html">Back</a><a class="btn_home" href="../index.html">Home</a>
+    <h1>API Design</h1>
+    <div>
+        <h2>Topics</h2>
+        <ul>
+            <li><a href="#topic1">Top 6 Architectural Styles</a></li>
+        </ul>
+    </div>
+
+    <div>
+        <h2>Top 6 Architectural Styles</h2>
+        <ul>
+            <li><i>SOAP (Simple Object Access Protocol)</i>: <br>Use SOAP when you need a strict, standardized protocol for exchanging structured information in enterprise-level applications. It's known for its strong typing and security features.</li>
+            <li><i>RESTful (Representational State Transfer)</i>: <br>
+                REST is great for webservices that prioritize simplicity and scalability. Use it when building public-facing APIs of when you want a stateless, resource-oriented design.
+            </li>
+            <li>
+                <i>GraphQL</i>: <br>
+                GraphQL is perfect when you need flexible, client-driven APIs. It allows clients to request exacly the data they need, reducing over-fetching and under-fetching.
+            </li>
+            <li>
+                <i>gRPC</i>: <br>
+                If you're aiming for high-performance, efficient APIs, gRPC is your go-to. It's designed for low-latency, high-throughput communication, often used in microservices architectures.
+            </li>
+            <li>
+                <i>WebSocket</i>: <br>
+                When real-time, bidirectional communication is essential (eg: chat applications, online gaming), WebSockets shine. They maintain a contineous connection for instant data updates.
+            </li>
+            <li>
+                <i>Webhooks</i>: <br>
+                Use webhooks for even-driven systems. They allow your application to recieve notifications or trigger actions when specific events occur, such as data updates or user actions.
+            </li>
+        </ul>
+    </div>
+  </body>
+</html>

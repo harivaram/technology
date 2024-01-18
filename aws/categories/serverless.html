@@ -1,0 +1,82 @@
+<html lang="en" dir="ltr">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../styles.css">
+    </style>
+  </head>
+  <body>
+    <h1>Serverless</h1>
+
+    <h2 id="lambda">AWS Lambda</h2>
+    <ul>
+        <li>Serverless doesn't mean that there are no servers. It means you just don't manage / provision / see them.</li>
+        <li>Serverless in AWS: Lambda, DynamoDB, AWS Congnito, API Gateway, S3, SNS, SQS, Kenisis Data Firehouse, Aurora Serverless, Step Functions, Fargate.</li>
+    </ul>
+    <div id="lambdadetails">
+        <ul>
+            <li>Viritual Functioin - Short Executions - Run on-demand - Automated scalling.</li>
+            <li>Pay per request and compute time.</li>
+            <li>Integrated with the whole AWS suite of services</li>
+            <li>Integrated with many programming languages.</li>
+            <li>Easy monitoring through AWS CloudWatch.</li>
+            <li>Easy to get more resources per function (up to 10GB of RAM)</li>
+            <li>Increasing RAM will also improve CPU and network.</li>
+            <li>Lambda Container Images: <br>
+                - The container image must implement the Lambda Runtime API. <br>
+                - ECS/Fargate is preffered for running arbitary Docket images. 
+            </li>
+            <li>Lambda Integration: API Gateway, Kenesis, DyanamoDB, S3, CloudFront, CloudWatch Events EventBridge, CloudWatch Logs, SNS, SQS, Cognito. </li>
+            <li>Bydefault, Lambda funciton is lanched outside your own VPC (in an AWS-owned VPC), so, It can't access resources in your VPC.</li>
+            <li>Lamda in VPC: You must define the VPC ID, the subnets and the Security Groups. Lambda will create an ENI for your subnet.</li>
+        </ul>
+        <h5>Limits</h5>
+        <ul>
+            <li>Execution: <br>
+                - Memory allocation: 128 MB - 10 GB (1 MB increments). <br>
+                - Maximum execution time: 900 secs (15 mins) <br>
+                - Environment variable (4GB) <br>
+                - Disk capacity in the "function container" (in /tmp): 512 MB to 10 GB. <br>
+                - Concurrency executions: 1000 (can be increased)
+            </li>
+            <li>Deployment: <br>
+                - Lambda function deployment size (compressed .zip): 50MB <br>
+                - Size of uncompressed deployments (code + dependencies): 250 MB <br>
+                - Can use /tmp directory to load other files at startup <br>
+                - Size of environment variables: 4KB.
+            </li>
+        </ul>
+
+        <h5>Lambda with RDS Proxy</h5>
+        <ul>
+            <li>RDS Proxy <br>
+                - Improves scalability by pooling and sharing DB connections. <br>
+                - Improves availability <br>
+                - Imprpoves security by enforcing IAM authenitication and storing credentials in Secrets Manager.
+            </li>
+            <li>The Lamda funciton must be deployed in your VPC, because RDS Proxy is never publicly accessible.</li>
+        </ul>
+
+        <h5>Invoking Lambda from RDS & Aurora</h5>
+        <ul>
+            <li>Invoke Lamda function from within your DB instance.</li>
+            <li>Allows you to process data events from within a database.</li>
+            <li>Supported for RDS for PostgreSQL and Auorora MySQL</li>
+            <li>Must allow outbound traffic to your lamda function from within your DB instance (Public, NAT GW, VPC, Endpoints)</li>
+            <li>DB isntance must have the required permissions to invoke the lamda function (Lamda resource-based Policy & IAM Policy)</li>
+        </ul>
+
+        <h5>RDS Event Notificaitons</h5>
+        <ul>
+            <li>Notifications that tells inforamtion about the DB instce itself (created, stopped, start...)</li>
+            <li>You don't have any information about the data itself.</li>
+            <li>Subscribers to the following event category: DB Instance, DB Snapshot, DB Parameter Group, DB Security Group, RDS Proxy, Custom Engine Version.</li>
+            <li>Near real-time events (up to 5 minutes)</li>
+            <li>Send Notificaitons to SNS or Subscribe to events using EventBridge</li>
+        </ul>
+
+    </div>
+  </body>
+</html>

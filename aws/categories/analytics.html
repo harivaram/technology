@@ -1,0 +1,282 @@
+<html lang="en" dir="ltr">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../styles.css">
+    </style>
+  </head>
+  <body>
+    <h1>Analytics</h1>
+
+
+    <h2 id="athena">Amazon Athena</h2>
+    <div id="athenadetails">
+        <ul>
+            <li>Serverless query service to analyze data stored in Amazon S3</li>
+            <li>Used standard SQL language to query the files (built on Presto)</li>
+            <li>Supports CSV, JSON, ORC, Avro and Parquet. </li>
+            <li>Pricing: $5 per TB of data scanned.</li>
+            <li>Commonly used with Amazon Quicksight for reporting/dashboards.</li>
+            <li>Use cases: Business Intelligence / Analysis / reporting, analyze & query VPC Flow Logs, ELB logs, CloudTrail trails etc.</li>
+            <li>Exam Tip: analyse data in S3 using serverless using SQL, use Athena.</li>
+        </ul>
+        <h5>Performace Improvement</h5>
+        <ul>
+            <li>Use columnar data for cost-savings (less scan) <br>
+                - Apache Paraquet or ORC is recommended. <br>
+                - Huge Performace improvement. <br>
+                - Use Glue to convert your data to Parquet or ORC
+            </li>
+            <li>Compress data for smaller retrievals (bzip2, gzip, lz4, snappy, zlip, zstd..)</li>
+            <li>Partition datasets in S3 for easy querying on virtual colums</li>
+            <li>Use large files (>128 MB) to minimize overhead.</li>
+            <li>Federated Query allows you to run SQL queries across data stored in relational, non-relational objectsand custom data sources (AWS or on-promises) <br>
+                Use Data Source Connectors that run on AWS Lambda to run Federated Queries (EG: CloudWatch logs, DynamoDB, RDS..) <br>
+                Store resutls back in Amazon S3.
+            </li>
+        </ul>
+
+    </div>
+
+    <h2 id="redshift">Amazon Redshift</h2>
+    <div id="redshdetails">
+        <ul>
+            <li>Redshift is based on PostgreSQL, but it's not used for OLTP.</li>
+            <li>It's OLAP - online analytical processing (analytics and data wearhousing)</li>
+            <li>10X better performance than other data wearhouses, scale to PBs of data.</li>
+            <li>Columnar storage of data (instead of row based) & parallel query engine.</li>
+            <li>Pay as you go based on the instances provisioned.</li>
+            <li>Has a SQL interface for performing the queries.</li>
+            <li>BI tools such as Amazon Quicksight or Tablue integrate with it.</li>
+            <li>Vs Athena: faster queries / joins / aggregations thanks to indexes.</li>
+        </ul>
+        <h5>Redshift Cluster</h5>
+        <ul>
+            <li>Leder node: for query planing, results aggregation.</li>
+            <li>Compute node: for performing queries, send results to leader.</li>
+            <li>You provision the node size in advance.</li>
+            <li>You can use Reserved Instances for cost saving.</li>
+        </ul>
+        <h5>Snapshots & DR</h5>
+        <ul>
+            <li>Redshift has Mult-AZ mode for some clusters.</li>
+            <li>Snapshots are point-in-time backups of a cluster, stored internally in S3</li>
+            <li>Snapshots are incremental (only what has changed is saved).</li>
+            <li>You can restore a snapshot into a new cluster.</li>
+            <li>You can confiugure Amazon Redshift to automatic copy snapshots(automated or manual) of a cluster to another AWS Region.</li>
+        </ul>
+        <h5>Loading data into Redshift</h5>
+        <ul>
+            <li>Amazon Kenesis Data Firehouse</li>
+            <li>S3 using COPY command</li>
+            <li>EC2 Instance JDBC driver (Better to write data in batches)</li>
+        </ul>
+        <h5>Redshift Spectrum</h5>
+        <ul>
+            <li>Query data that is already in S3 without loading it.</li>
+            <li>Must have a Redshift cluster available to start the query.</li>
+            <li>The query is then submitted to thousands of Redshift Spectrum nodes.</li>
+        </ul>
+    </div>
+
+    <h2 id="opensearch">Amazon OpenSearch</h2>
+    <div id="openserchdetails">
+        <ul>
+            <li>Successor to Amazon ElasticSearch.</li>
+            <li>Seach any field, even partial matches</li>
+            <li>It is common to use OpenSearch as complement to another database.</li>
+            <li>Two modes: managed cluster or serverless cluster.</li>
+            <li>Does not natively support SQL (can be enabled via a plugin)</li>
+            <li>Ingession from Kenesis Data Firehouse, AWS IoT, and CloudWatch Logs</li>
+            <li>Security through Cognito & IAM, KMS Encryption, TLS</li>
+            <li>Comes with OpenSearch Dashboards (visualization)</li>
+        </ul>
+    </div>
+
+    <h2 id="emr">Amazon EMR (Elastic Map Reduce)</h2>
+    <div id="emrdetails">
+        <ul>
+            <li>EMR helps to create Hadoop cluster (Big Data) to analyze and process vast amount of data.</li>
+            <li>The clusters can be made of hundreds of EC2 instances</li>
+            <li>EMR comes bundled with Apache Spark, HBase, Presto, Flink..</li>
+            <li>EMR takes care of all the provisioning and configuration.</li>
+            <li>Auto-scalling and integrated with Spot instances.</li>
+            <li>Use cases: data processing, machine learning, web indexing, big data...</li>
+        </ul>
+
+        <h5>Node types & purchasing</h5>
+        <ul>
+            <li>Master Node: Manage the cluster, cocordinate, manage health - long running</li>
+            <li>Core Node (min 1 year): Run tasks and store data - long running</li>
+            <li>Task Node (optional): Just to run tasks - usually Spot.</li>
+            <li>Purchasing optoins: <br>
+                - On-demand: reliable, predictable, won't be terminated. <br>
+                - Reserved (min 1 year): cost saving (EMR will automatically use if available) <br>
+                - Spot Instances: cheaper, can be terminated, less reliable.
+            </li>
+            <li>Can have long-running cluster, or transient (temporary) cluster.</li>
+        </ul>
+    </div>
+
+
+    <h2 id="quicksight">Amazon QuickSight</h5>
+    <div id="qsdetails">
+        <ul>
+            <li>Serverless machine learning-powered business intelligence service to create interactive dashboards.</li>
+            <li>Fast, automatically scalable, emeddable, with pre-session pricing</li>
+            <li>User cases: <br>
+                - Business analytics. <br>
+                - Buiding visualizations <br>
+                - Perform ad-hoc analysis <br>
+                - Get business insights using data
+            </li>
+            <li>Integrated with RDS, Aurora, Athena, Redshift, S3...</li>
+            <li>In-memory computation using SPICE engine if data is imported into QuickSight</li>
+            <li>Enterprise edition: Possibility to setup - Column-Level security(CLS)</li>
+        </ul>
+
+        <h5>Datashboard & Analysis</h5>
+        <ul>
+            <li>Define Users (standard versions) and Groups (enterprise version) <br>
+                There user and Groups only exists within QuickSight, not IAM.
+            </li>
+            <li>A dashboard... <br>
+                - is a read-only snapshot of an analysis that you can share <br>
+                - preserves the configuration of the analysis
+            </li>
+            <li>You can share the analysis or the dashboard with Users and Gropus</li>
+            <li>To share dashboard, you must first publish it</li>
+            <li>Users who see the dashboard can also see the underlying data.</li>
+        </ul>
+    </div>
+
+    <h2 id="glue">AWS Glue</h2>
+    <div class="gluedetails">
+        <ul>
+            <li>Managed Extranct, Transform and Load (ETL) service.</li>
+            <li>Useful to prepare and transform data for analysis.</li>
+            <li>Fully serverless service</li>
+            <li>Glue Data Catalog</li>
+            <li>Glue Job Bookmarks: prevent re-processing old data.</li>
+            <li>Glue Elastic Views: <br>
+                - Combine and replicate data across multiple  data stores using SQL <br>
+                - No custom code, Glue monitors for changes in the source data, serverless <br>
+                - Leverages a "virtual table" (materialized view)
+            </li>
+            <li>Glue DataBrew: clean and normalize data using pre-built transformation.</li>
+            <li>Glue Studio: new GUI to create, run and monitor ETL jobs in Glue.</li>
+            <li>Glue Streaming ETL (built on Apache Spark Structured Straming): compatible with Kenisis Data Streaming, Kafka, MSK (managed Kafka)</li>
+        </ul>  
+    </div>
+  
+
+    <h2 id="lake">AWS Lake Formation</h2>
+    <div class="lakedetails">
+        <ul>
+            <li>Data lake = central place to have all your data for analytic purpose.</li>
+            <li>Fully managed service that make it easy to setup a data lake in days.</li>
+            <li>Discover, cleanse, transform, and ingest data into your Data Lake.</li>
+            <li>It automates many complex manual steps (collecting, cleansing, moving, cataloging data, ...) and de-duplicate (using ML Transforms).</li>
+            <li>Combine structured and unstructured data in data lake</li>
+            <li>Out-of-the-box source blueprints: S3, RDS, Relational & NoSQL DB...</li>
+            <li>Fine-grained Access Control for your applications (row and column level)</li>
+            <li>Built on top of AWS Glue</li>
+        </ul>
+    </div>
+
+    <h2 id="kenan">Kenesis Data Analytics</h2>
+    <div class="kenandetails">
+        <ul>
+            <li>Real-time analytics on Kenesis Data Stream & Firehouse using SQL</li>
+            <li>Add reference data from Amazon S3 to enrich streaming data.</li>
+            <li>Fully managed, no servers to provision.</li>
+            <li>Automatic scaling</li>
+            <li>Pay for actual consumption rate.</li>
+            <li>Output: <br>
+                - Kenesis Data Streams: create streams out of the real-time analytics queries. <br>
+                - Keniseis Data Firehouse: send analytics query results to destinations.
+            </li>
+            <li>Use cases: <br>
+                - Time-series analytics <br>
+                - Real-time dashboards <br>
+                - Real-time metrics
+            </li>
+            <li>Use Flink (Java, Scala or SQL) to process and analyze streaming data.</li>
+            <li>Run any Apache Flink application on a managed cluster on AWS. <br>
+                - provisioning compute resources, parellel computation, automatic scaling. <br>
+                - application backups (implemented as checkpoint and snapshots) <br>
+                - Use any Apache Flink programming features. <br>
+                - Flink does not read from Firehouse (Use Kinesis Analytics for SQL instead)
+            </li>
+        </ul>
+    </div>
+
+    <h2 id="msk">Amazon Managed Streaming for Apache Kafka</h2>
+    <div class="mskdetails">
+        <ul>
+            <li>Alternative to Amazon Kinesis.</li>
+            <li>Fully Managed Apache Kafka on AWS <br>
+                - Allows you to create, update, delete clusters. <br>
+                - MSK creates & manage Kafka brokers nodes & Zookeepr nodes for you. <br>
+                - Deploy the MSK cluster in your VPC, multi-AZ (up to 3 for HA). <br>
+                - Automatic recovery from common Apache Kafka failures. <br>
+                - Data is stored on EBS volumes for as long as you want.
+            </li>
+            <li>MSK Serverless <br>
+                - Run Apache Kafka on MSK without managing the capacity. <br>
+                - MSK automatically provisions resources and scales compute and storage.
+
+            </li>
+            <li>MSK consumers: Kinesis Data Analytics for Apache Flink, AWS Glue by powerd Apache Spark Streaming, Lambda, Applications running on EC2, ECS, EKS. </li>
+        </ul>
+        <h5>Kinesis Data Streams Vs Amazon MSK</h5>
+        <table>
+            <tr><th>Kinesis Data Streams</th><th>Amazon MSK</th></tr>
+            <tr>
+                <td><ul>
+                    <li>1 MB message size limit</li>
+                    <li>Data Streams with Shards</li>
+                    <li>Shard Splitting & Merging</li>
+                    <li>TLS In-flight encription</li>
+                    <li>KMS at rest-encryption</li>
+                </ul></td>
+                <td><ul>
+                    <li>1MB default, configure for higher (ex:10MB)</li>
+                    <li>Kafka Topic with Partitions</li>
+                    <li>Can only add partitions to a topic</li>
+                    <li>PLAINTEXT or TLS In-flight Encryption</li>
+                    <li>KMS at rest encryption</li>
+                </ul></td>
+            </tr>
+        </table>
+    </div>
+
+    <h2 id="ingpipe">Big Data Ingestion Pipeline</h2>
+    <div class="ingpipedetails">
+        <h5>Requirements</h5>
+        <ul>
+            <li>The pipeline to be fully serverless.</li>
+            <li>collect data in real time</li>
+            <li>transform the data</li>
+            <li>query transformed data  using SQL</li>
+            <li>The reports created using the queries should be in S3</li>
+            <li>We want to load the data into a wearhouse and create dashboards.</li> 
+        </ul>
+        <h5>Big Data Ingestion</h5>
+        <ul>
+            <li>IoT Core allows you to harvest data from IoT devices.</li>
+            <li>Kenisis is great for real-time data collection.</li>
+            <li>Firehouse helps with data delivery to S3 in near real-time (1 minute)</li>
+            <li>Lamda can help Firehouse with data transoformations</li>
+            <li>Amazon S3 can trigger notifications to SQS</li>
+            <li>Lambda can subscribe to SQS (We could have connector S3 to Lamda)</li>
+            <li>Atherna is a Serverless SQL service and results are stored in S3</li>
+            <li>The reporting bucket contains analyzed data and can be used by reporting tool such as AWS QuickSight, Redshift etc</li>
+        </ul>
+    </div>   
+
+
+  </body>
+</html>

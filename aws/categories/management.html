@@ -1,0 +1,520 @@
+<html lang="en" dir="ltr">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>AWS Certified Architect - Associate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="../styles.css">
+    </style>
+  </head>
+  <body>
+    <h1>Management and Governing</h1>
+ 
+    <h2 id="elb">AWS Auto-scalling</h2>
+    <div id="elbdetails">
+      <ul>
+        <li>Create and get rid of the servers very quickly to match the load.</li>
+        <li>Ensure we have minimum and maximum number of EC2 instances running.</li>
+        <li>Automatically register new instances to load balancer.</li>
+        <li>Re-create an EC2 instance in case a previous one is terminated. (ex:if unhealthy)</li>
+        <li>ASG (Auto scaling Group) are free. You only pay for the underying EC2 instances.</li>
+      </ul>
+      <h5>Auto Scalling Group Attributes</h5>
+      <ul>
+        <li>A Launch Template (Older "Lauch Configuration" are deperecated)
+            <ul>
+                <li>AMI + Instance Type</li>
+                <li>EC2 User Data</li>
+                <li>EBS Volumes</li>
+                <li>Security Groups</li>
+                <li>SSH Key Pair</li>
+                <li>IAM roles for EC2 Instances</li>
+                <li>Network + Subnet Information</li>
+                <li>Load Balancer Information</li>
+            </ul>
+        </li>
+        <li>Min Size, Max Size, Initial Capacity.</li>
+        <li>Scalling Policy.</li>
+      </ul>
+      <h5>Auto Scaling - Cloud Watch Alarms & Scalling</h5>
+      <ul>
+        <li>An Alarm monitors a metric (such as Average CPU, or a custom metric)</li>
+        <li>Metrics such as Average CPU are computed for the overall ASG Instances.</li>
+      </ul>
+      <h5>Automatic Scalling Group - Dynamic Scalling Policies</h5>
+      <ul>
+        <li>Target Tracking Scalling: Most simple and easy to use. (Ex: Average ASG CPU to stay at around 40%)</li>
+        <li>Simple/Step Scalling : Conditional scalling Ex: Add 2 units when CPU > 70%, remove 1 if CPU less than 30%.</li>
+        <li>Scheduled Actions: Anticipate scalling based on known usage patterns EX: increase the min  capacity to 10 at 5pm on Fridays.</li>
+        <li>Predictive scalling: contineously forcast load and schedlue scalling ahead.</li>
+      </ul>
+      <h5>Good metrics to scale on</h5>
+      <ul>
+        <li>CPU Utilization</li>
+        <li>RequestCountPerTarget</li>
+        <li>Average Network In/Out</li>
+        <li>Any custom metric</li>
+      </ul>
+      <h5>Scalling Cooldowns</h5>
+      <ul>
+        <li>After a scalling activity happens ASG will not take any action for certain time (Cool down period). Default 300 sec</li>
+        <li>Use ready-to-use AMI to reduce configuration time in order to be serving request faster and reduce cooldown period.</li>
+      </ul>
+    </div>
+
+    <h2 id="cldwatch">AWS CloudWatch</h2>
+    <div id="cwdetails">
+      <h5>Cloud Watch Metrics</h5>
+      <ul>
+        <li>CloudWatch provides metrics for every service in AWS.</li>
+        <li>Metric is variable to monitor (CPUUtilization, NetworkIn..)</li>
+        <li>Metric belogs to Namespaces.</li>
+        <li>Dimention is an attribute of metric (instance id, environment, etc..)</li>
+        <li>Up to 30 dimentions per metric.</li>
+        <li>Metrics have timestamps.</li>
+        <li>Can create CloudWatch dashboards of metrics.</li>
+        <li>Can create CloudWatch Custom Metrics (for the RAM for example)</li>
+      </ul>
+      <h5>CloudWatch Metric Stream</h5>
+      <ul>
+        <li>Contineously stream CloudWatch metrics to a destination of your choice, with near-real-time delivery and low latency. <br>
+          - Amazon Kenisis Data Firehouse (and then its destinations) <br>
+          - 3rd party service providers: Datadog, Dynatrace, New Relic, Splunk, Sumo Logic...
+        </li>
+        <li>Options to filter metrics to only stream a subset of them.</li>
+      </ul>
+
+      <h5>CloudWatch Logs</h5>
+      <ul>
+        <li>Log groups: arbitary name, usually representing an applicaiton.</li>
+        <li>Log stream: instances with application / log files / containers.</li>
+        <li>Can define log expireation policies (never expire, 1 day to 10 years)</li>
+        <li>CouldWatch Logs can send logs to: <br>
+          - Amazon S3 (exports) <br>
+          - Kenisis Data Streams <br>
+          - Kenisis Data Firehouse <br>
+          - AWS Lambda. <br>
+          - OpenSearch.
+        </li>
+        <li>Logs are encrypted by default.</li>
+        <li>Can setup KMS-based encryption with your own key.</li>
+        <li>Sources: <br>
+          - SDK, CloudWatch Logs Agent, CloudWatch Unitfied Agent <br>
+          - Elastic Beanstalk: collection of logs from application. <br>
+          - ECS: collection from containers. <br>
+          - AWS Lambda: collection from function logs <br>
+          - VPC Flow logs: VPC specific logs <br>
+          - API Gateway <br>
+          - CloudTrail based on filter <br>
+          - Route 53: Log DNS queries. <br>
+        </li>
+      </ul>
+
+      <h5>CloudWatch Logs Insights</h5>
+      <ul>
+        <li>Search and analyze log data stored in CloudWatch logs.</li>
+        <li>Example: find a specific IP inside a log, count occurances of "ERROR" in your logs.</li>
+        <li>Provides a purpose-built query language <br>
+          - Automatically discovers fields from AWS service and JSON log events. <br>
+          - Fetch desired event fields, filter based on conditions, calcuate aggregate statistics, soft events, limit number of events ... <br>
+          - Can save queries and add them to CloudWatch Dashboards
+        </li>
+        <li>Can query multiple Log Groups in different AWS accounts.</li>
+        <li>It's query engine, not a real-time engine.</li>
+      </ul>
+
+      <h5>CloudWatch Logs - S3 Export</h5>
+      <ul>
+        <li>Log data can take up to 12 hours to become available for export.</li>
+        <li>The API call is CreateExportTask</li>
+        <li>Not near-real time or real-time ... use Log subsriptions instead</li>
+      </ul>
+
+      <h5>CloudWatch Log Subscriptoin</h5>
+      <ul>
+        <li>Get a real-time events from CloudWatch Logs for processing and analysis. </li>
+        <li>Send to Kenesis Data Streams, Kenisis Data Firehouse, or Lambda.</li>
+        <li>Subscription Fileter : filter which logs are events delivered to your destination.</li>
+        <li>Corss-Account Subscription - send log envets to resources in a different AWS account (KDS, KDF)</li>
+      </ul>
+
+      <h5>CloudWatch Logs for EC2</h5>
+      <ul>
+        <li>By default, no logs from EC2 machine will go to CloudWatch.</li>
+        <li>You need to run a CloudWatch agent on EC2 to push the log files you want.</li>
+        <li>Meke sure IAM permissions are correct.</li>
+        <li>The CloudWatch log agen can be setup on-promises too.</li>
+      </ul>
+
+      <h5>CloudWatch Logs Agent & Unified Agent</h5>
+      <ul>
+        <li>CloudWatch Logs Agent: <br>
+          - Old version of the agent <br>
+          - Can only send to CloudWatch logs.
+        </li>
+        <li>
+          CloudWatch Unified Agent: <br>
+          - Collect additional system-level metrics such as RAM, processes etc <br>
+          - Collect logs to send to CloudWatch Logs. <br>
+          - Centralized configuration using SSM Parameter Store.
+        </li>
+      </ul>
+
+      <h5>CloudWatch Unified Agent - Metrics</h5>
+      <ul>
+        <li>Collected directly on your Linux server / EC2 instances</li>
+        <li>CPU (active, guest, idle, system, user, steal)</li>
+        <li>Disk metrics (free, used, total), Disk IO (writes, reads, bytes, iops)</li>
+        <li>RAM (free, inactive, used, total, cached)</li>
+        <li>Netstat (number of TCP and UDP connections, net packets, bytes)</li>
+        <li>Processes (total, dead, bloqued, idele, running, sleep)</li>
+        <li>Swap Space (free, used, used %)</li>
+        <li>Reminder: out-of-the box metrics for EC2 - disk, CPU, network (high level)</li>
+      </ul>
+
+      <h5>CloudWatch Alarms</h5>
+      <ul>
+        <li>Alams are used to trigger notifications for any metric</li>
+        <li>Various options (samplig, % max, min, etc...)</li>
+        <li>Alarm States: OK, INSUFFICIENT_DATA, ALARM </li>
+        <li>Period: <br>
+          - Length of the time in seconds to evalute the metric <br>
+          - High resolution custom metrics: 10 sec, 30 sec or multiple of 60 sec.
+        </li>
+        <li>Alarm Targets: <br>
+          - Stop, Terminate, Reboot, or Recover an EC2 Instance. <br>
+          - Trigger Auto Scalling Action <br>
+          - Send Notification to SNS (from which you can do pretty much anything.)
+        </li>
+        <li>Composit Alarms: <br>
+          - CloudWatch Alarms are on a single metric <br>
+          - Composit Alarms are monitoring the state of multiple other alarms. (AND and OR conditions). <br>
+          - Helpful to reduce "alarm noise" by creating complex composit alarms. 
+        </li>
+        <li>Alarms can be created based on CloudWatch Log Metrics Filters.</li>
+        <li>To test Alarms set Alarm state to "ALARM" with AWS CLI</li>
+      </ul>
+
+      <h5>CloudWatch - Container Insights</h5>
+      <ul>
+        <li>Collect, aggregate, summarize metrics and logs from containers.</li>
+        <li>Available for containers on ECS, EKS, Kubernates on EC2, Fargate (both for EKS and ECS).</li>
+        <li>In Amazon EKS and Kubernates, CloudWatch Insights is using a containerized version of the CloudWatch Agent to discover containers.</li>
+      </ul>
+      
+      <h5>CloudWatch - Lambda Insights</h5>
+      <ul>
+        <li>Monitoring and troubleshooting solution for serverless applications running on AWS Lamda.</li>
+        <li>Collects, aggregates, and summarizes system-level metrics including CPU time, memory, disk and network.</li>
+        <li>Collects, aggregates, and summarizes diagnostic information such as cold starts and Lambda worker shutdowns.</li>
+        <li>Lambda Insights is provided as Lambda Layer.</li>
+      </ul>
+
+      <h5>CloudWatch - Contributor Insights</h5>
+      <ul>
+        <li>Analyze log data and create time series that display contributor data. <br>
+          - See metric about the top-N contributors. <br>
+          - The total number of unique contributors, and their usage. 
+        </li>
+        <li>This helps to find top talkers and understand who or what is impacting system performance.</li>
+        <li>Works for any AWS-generated logs (VPC, DNS, etc..)</li>
+        <li>For example, you can find the bad hosts, identify the heaviest network users, or find the URL that generate the most errors.</li>
+        <li>You can build your rules from scratch, or you can also use sample rules that AWS has created - leverages your CloudWatch Logs.</li>
+        <li>CouldWatch also provides built-in rules that you can use to analyze metrics from other AWS services.</li>
+      </ul>
+    
+      <h5>CloudWatch - Application Insights</h5>
+      <ul>
+        <li>Provides Automated dashboards that show potential problems with monitored applications, to help isolate ongoing issues.</li>
+        <li>Your applications run on Amazon EC2 instances with selected technologies only (Java, .Net, Microsoft IIS Web Server, databases.. ) </li>
+        <li>You can use other AWS resources such as Amazon EBS, RDS, ELB, ASG, Lambda, SQS, DynamoDB, S3 Bucket, ECS, EKS, SNS, API Gateway...</li>
+        <li>Powered by SageMaker</li>
+        <li>Enhanced visibility into your application health to reduce the time it will take you to troubleshoot and repair your applications.</li>
+        <li>Findings and alerts are sent to Amazon EventBridge and SSM OpsCenter.</li>
+      </ul>
+    </div>
+
+  
+
+    <h2 id="eventbd">Amazon EventBridge </h2>
+    <div id="ebdetails">
+      <ul>
+        <li>Formely called as CloudWatch Events</li>
+        <li>Schedule: Cron jobs (schedule scripts) <br>
+          Ex: Schedule every hour  and Trigger script on Lambda function.
+        </li>
+        <li>Event Pattern: Enter rules to react to a service doing something. <br>
+          Ex: IAM Root User Sign In Event and send SNS Topic with Email Notification.
+        </li>
+        <li>Trigger Lambda functions, send SQS/SNS messages.</li>
+        <li>Event buses can be accessed by other AWS accounts using Resource-based Policies.</li>
+        <li>You can archive events (all/filter) sent to an event bus (indefinitely or set period)</li>
+        <li>Ability to replay archived events.</li>
+      </ul>
+      <h5>EventBridge - Schema Registry</h5>
+      <ul>
+        <li>EventBridge can analyze the events in your bus and infer the schema.</li>
+        <li>The Schema Registry allow you to generate code for your application, that will know in advance how data is structured in the event bus.</li>
+        <li>Schema can be versioned.</li>
+      </ul>
+      <h5>EventBridge - Resource-based Policy</h5>
+      <ul>
+        <li>Manage permissions for a specific Event Bus <br>
+          Ex: allow/deny events from another AWS account or AWS region <br>
+        </li>
+        <li>Use cases: aggregate all events from your AWS Organization in a single AWS account or AWS region.</li>
+      </ul>
+      
+    </div>
+
+    <h2 id="cloudtrail">AWS CloudTrail </h2>
+    <div id="ctdetails">
+      <ul>
+        <li>Provides governance, compliance and audit for you AWS Account</li>
+        <li>CloudTrail is enabled by default.</li>
+        <li>Get a history of events / API calls made within you AWS account by Console / SDK / CLI / AWS services</li>
+        <li>Can put logs from CloudTrail into CloudWatch Logs or S3</li>
+        <li>A trail can be applied to All Regions (default) or a single Region.</li>
+        <li>If a resource is deleted in AWS, investigate CloudTrail first.</li>
+      </ul>
+
+      <h5>CloudTrail Events</h5>
+      <ul>
+        <li>Management Events <br>
+          - Operations that are performed on resources in your AWS account. <br>
+            Ex: Configure Security (IAM AttachRolePolicy) <br>
+                Configring rules for a routing data (Amazon EC2 CreateSubnet) <br>
+                Setting up logging (AWS CloudTrail CreateTrail) <br>
+          - By default, trails are configured to log management events. <br>
+          - Can seperate Read Events from Write Events.
+        </li>
+        <li>Data Events: <br>
+          - By default, date events are not logged (because high volume operations) <br>
+          - Amazon S3 object-level activity (can separate Readn and Write Events) <br>
+          - AWS Lambda function execuiton activity (the Invoke API)
+        </li>        
+      </ul>
+      <h5>CloudTrail Insights</h5>
+      <ul>
+        <li>Enable Cloud Trail Insights to detect unusual activity in your account <br>
+          - inaccurate resource provisioning <br>
+          - hitting service limits <br>
+          - Bursts of AWS IAM actions <br>
+          - Gaps in periodic maintenance activity.
+        </li>
+        <li>CloudTrail insights analyze normal management events to create a baseline. And then contineously analyze write events to detect unusal patterns <br>
+          - Anomalies appear in the CloudTrail console. <br>
+          - Event is sent to Amazon S3 <br>
+          - An EventBridge event is generated (for automated needs)
+        </li>
+      </ul>
+
+      <h5>CloudTrial Event Retention</h5>
+      <ul>
+        <li>Events are stored for 90 days in CloudTrail.</li>
+        <li>To keep events beyond this period, log them to S3 and use Athena.</li>
+      </ul>
+      <ul>
+        <li>Integrate CloudTrail with EventBridge to send notiifcations.</li>
+      </ul>
+    </div>
+   
+    <h2 id="config">AWS Config </h2>
+    <div id="cfdetails">
+      <ul>
+        <li>Helps with auditing and recording compliance of your AWS resources.</li>
+        <li>Helps record configurations and change over time.</li>
+        <li>Questions that can be solved by  AWS config: <br>
+          - Is there any unrestricted SSH access to my security groups? <br>
+          - Do my bucket has any public access? <br>
+          - How has my ALB configuraiton changed over time?
+        </li>
+        <li>You can recieve alerts (SNS notifications) for any changes.</li>
+        <li>AWS Config is per-region service.</li>
+        <li>Can be aggregated across regions and accounts.</li>
+        <li>Possibility of storing the configuration data into S3 (analyzed by Athena)</li>
+      </ul>
+
+      <h5>Config Rules</h5>
+      <ul>
+        <li>Can use AWS managed config rules (over 75)</li>
+        <li>Can make custom config rules (must be defined in AWS lambda) <br>
+          - Ex: evaluate if each EBS disk is of type gp2. <br>
+          - EX: evaluate if each EC2 instance is t2.micro.
+        </li>
+        <li>Rules can be evaluated / triggered: <br>
+          - For each config change <br>
+          - And / or: at regular time intervals.
+        </li>
+        <li>AWS Config Rule does not prevent actions from happening (no deny)</li>
+        <li>Pricing: no free tier, $0.003 per configuration item recorded per region, $0.001 per config rule evaluatio per region.</li>
+      </ul>
+
+      <h5>Config Resource</h5>
+      <ul>
+        <li>View compliance of a resource over time.</li>
+        <li>View configuraiton of a resource over time</li>
+        <li>View CloudTrail API calls of a resource over time</li>
+      </ul>
+
+      <h5>Config Rule - Remediations</h5>
+      <ul>
+        <li>Automate Remediation of non-compiant resources using SSM Automation Documents.</li>
+        <li>Use AWS-Managed Automation Documents or create custom Automation Documents. <br>
+          Tip: you can create Custom Automation Documents that invoke Lambda function. 
+        </li>
+        <li>You can set Remediation Retries if the resource is still non-compliant after auto-remediation</li>
+      </ul>
+
+      <h5>AWS Config - Notifications</h5>
+      <ul>
+        <li>Use EventBridge to trigger notifications when AWS resources are non-compliant.</li>
+        <li>Ability to send configuration changes and compliance state notifiations to SNS</li>
+      </ul>
+
+    </div>
+
+    <h2 id="cldfrom">AWS CloudFromation </h2>
+    <div id="cldformdetails">
+      <ul>
+        <li>A declarative way of outlining your AWS Infrastructure, for any resources (most of them are supported)</li>
+        <li>Infrastructure as code <br>
+          - No resources are manually created, which is excellent for control. <br>
+          - Changes to the infrastructure are reviewed through code.
+        </li>
+        <li>Cost: <br>
+          - East resource within the stack is tagged with an identifier so you can easily see how much a stack costs you. <br>
+          - You can estimate the cost of your resources using the CloudFormation template. <br>
+          - Savings strategy: In Dev, you could automatically delete the resources with template at 5PM and recreate them at 8AM, safely. 
+        </li>
+        <li>Productivity <br>
+          - Ability to destroy and re-create an infrastructure on the cloud on the fly. <br>
+          - Automated generation of Diagram for your tempates! <br>
+          - Declarative programming ( no need to figure out ordering and orchestration)
+        </li>
+        <li>Don't re-invent the wheel <br>
+          - Leverage existing templates on the web. <br>
+          - Leverage the documentation 
+        </li>
+        <li>Supports (almost) all AWS Resources <br>
+          Use "custom resources" for resources that are not supported.
+        </li>
+
+      </ul>
+    </div>
+
+    <h2 id="sysmgr">AWS System Manager</h2>
+    <div id="sysmgrdetails">
+      <h5>SSM Session Manager</h5>
+      <ul>
+        <li>Allow you to start a secure shell on your EC2 and on-promises servers.</li>
+        <li>No SSH access, bastion hosts, or SSH keys needed</li>
+        <li>No port 22 needed (better security)</li>
+        <li>Supports Linux, MacOS and Windows</li>
+        <li>Send Session log data to S3 or CloudWatch Logs. </li>
+      </ul>
+
+      <h5>Run Command</h5>
+      <ul>
+        <li>Execute a document (= script) or just run a command</li>
+        <li>Run command cross multiple instances (using resource groups)</li>
+        <li>No need for SSH</li>
+        <li>Command Output  can be shown in the AWS Console, sent to S3 bucket or CloudWatch Logs.</li>
+        <li>Send notifications to SNS about command status (In progress, Success, Failed,..)</li>
+        <li>Integrated with IAM & CloudTrail</li>
+        <li>Can be invoked using EventBridge.</li>
+      </ul>
+
+      <h5>Patch Manager</h5>
+      <ul>
+        <li>Automates the process of patching managed instances.</li>
+        <li>OS update, applicaiton updates, security updates</li>
+        <li>Supports EC2 instances and on-promises servers</li>
+        <li>Supports Linux, macOS, and Windows</li>
+        <li>Patch on-demand or on a schedule using Maintenance window</li>
+        <li>Scan instances and generate patch compliance report (missing patches)</li>
+      </ul>
+
+      <h5>Maintenance Window</h5>
+      <ul>
+        <li>Defines a schedule for when to perform actions on your instances. Ex: OS Patching, updating drivers, installing softwares...</li>
+        <li>Maintenace window contains: schedule, Durataion, set of registered instances, Set of registered tasks.</li>
+      </ul>
+
+      <h5>Automation</h5>
+      <ul>
+        <li>Simplifies common maintenance and deployment tasks of EC2 instances and other AWS resources. <br>
+          Ex: restart instances, create an AMI, EBS snapshots
+        </li>
+        <li>Automation Runbook - SSM Documentation to define actions performed on your EC2 instances and AWS resources (pre-defined or custom)</li>
+        <li>Can be triggered using: <br>
+          - Manually using AWS Console, AWS CLI or SDK <br>
+          - Amazon EventBridge <br>
+          - On a schedule using Maintenance Windows <br>
+          - By AWS Config rule remediations.
+        </li>
+      </ul>
+    </div>
+
+
+    <h2 id="wellarc">AWS Well-Architected Tool</h2>
+    <div id="wellarcdetails">
+      <h5>6 Pillars</h5>
+      <ol>
+        <li>Operation Excellence</li>
+        <li>Security</li>
+        <li>Reliability</li>
+        <li>Performance Efficiency</li>
+        <li>Cost Optimization</li>
+        <li>Sustainability</li>
+      </ol>
+      <ul><li>They are not something to balance, or trade-off, they are a synergy.</li></ul>
+
+      <ul>
+        <li>AWS Well-Architected Tool is free tool to review your architecture aginst 6 pillars Well-Architected framework and adopt achitectural best practices.</li>
+        <li>How does it work? <br>
+          - Select your workloads and answer questions. <br>
+          - Review your answers avainst 6 pillars. <br>
+          - Obtain advice: get vedios and documentations, generate a report, see the results in a dashboard.
+        </li>
+      </ul>
+    </div>
+
+    <h2 id="trustadv">AWS Trusted Advisor</h2>
+    <div id="trustadvdetails">
+      <ol>
+        <li>No need to install anything - high level AWS account assessment.</li>
+        <li>Analyze your AWS accounts and provides recommendations on 5 categories 
+          <ol>
+            <li>Cost Optimization</li>
+            <li>Performance</li>
+            <li>Security</li>
+            <li>Fault tolerance</li>
+            <li>Service limits</li>
+          </ol>
+        </li>
+      </ol>
+
+      <h5>7 Core Checks (Basic & Developer Support Plan)</h5>
+      <ul>
+        <li>S3 bucket Permissions</li>
+        <li>Security Groups - Specific Ports Unrestricted</li>
+        <li>IAM Use (one IAM user minimum)</li>
+        <li>MFA on Root Account</li>
+        <li>EBS Public Snapshots</li>
+        <li>RDS public Snapshots</li>
+        <li>Service Limits</li>
+      </ul>
+
+      <h5>Full Checks (Business & Enterprose Support plan)</h5>
+      <ul>
+        <li>Full Checks available on the 5 categories.</li>
+        <li>Ability to set CloudWatch alarms when reaching limits.</li>
+        <li>Programmatic Access using AWS Support API</li>
+      </ul>
+    </div>
+
+  
+  
+  </body>
+</html>
