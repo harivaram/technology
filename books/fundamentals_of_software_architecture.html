@@ -93,9 +93,171 @@
                 </ul>
 
             </li>
-
         </ul>
+    </div>
+    <div id="chapter2">
+        <h2>Architectural Thinking</h2>
+        <ul>
+            <li>An architect sees things differently from a developer's point of view, much in the same way a meteorologist might see clouds differently from an artist's point of view. This is called <i>architectual thinking</i>.</li>
+            <li>There are four main aspects of thinking like ana architect. <br>
+                <ol>
+                    <li>Understanding the difference between architecture and design and knowing how to colloborate with development teams to make the architecture work.</li>
+                    <li>Having a wide breadth of techinical knowledge while still maintaining a certain level of technical depeth, allowing the achitect to see solutions and possiblities that others do not see.</li>
+                    <li>Understanding, analyzing, and reconciling trade-offs between various soluitons and technologies.</li>
+                    <li>Understanding the importance of business drivers and how they translate to architectural concerns.</li>
+                </ol>
+            </li>
+            <li>Architecture is the stuff you can't Google.</li>
+            <li>There are no right or wrong answers in architecture - only trade-offs.</li>
+            <li>Programmers know the benefit of everything and the trade-offs of nothing. Architects need to understand both.</li>
+        </ul>
+    </div>
 
+    <div id="chapter3">
+        <h2>Modularity</h2>
+        <ul>
+            <li><i>95% of the words [about software architecture] are spent extolling the benefits of "modularity" and that little, if anything, is said about how to achieve it.</i> _ Glenford J. Myers (1978)</li>
+            <li>Modularity is an organizing principle. We use modularity to describe a logical grouping of related code, which could be a group of classes in an object-oriented language or functions in a structured or functional language.</li>
+            <li><i>Cohesion</i> refers to what extent the parts of a module should be conatined within the same module. In another words, it is a measure of how related the parts are to one another.</li>
+            <li><i>"Attempting to devide a cohesive module would only result in increased coupling and decreased readability"</i> _ Larry Constantine</li>
+            <li>Type of Cohesion: 
+                <ul>
+                    <li>Functional cohesion</li>
+                    <li>Sequential cohesion</li>
+                    <li>Communicational cohesion</li>
+                    <li>Procedural cohesion</li>
+                    <li>Temporal cohesion</li>
+                    <li>Logical cohesion</li>
+                    <li>Coincidental cohesion</li>
+                </ul>
+            </li>
+            <li>The Chidamber and Kemerer Lack of Cohesion in Method (LCOM) metric measures the stuctural cohesion of a module, typically a component. <br>
+                <i>LCOM = The sum of sets of methods not shared via sharing fields.</i>
+            </li>
+            <li>Book: <i>Structured Design: Fundamentals of a Discipline of Computer Program and System Design (Prentice-Hall)</i></li>
+            <li><i>Afferent coupling</i> measures the number of incoming connections to a code artifact (componenet, class,  function, and so on).</li>
+            <li><i>Efferent coupling</i> measures the outgoing connections to other artifacts.</li>
+            <li><i>Abstractness</i> is the ratio of abstract artifacts (abstract classes, interfaces, and so on) to concrete artifacts (implementation). It represents a measure of abstractness versus implementation <br>
+                <i><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi><mo>&#xA0;</mo><mo>=</mo><mfrac><mrow><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mo>&#xA0;</mo><mo>&#xA0;</mo></munderover><msup><mi>m</mi><mi>a</mi></msup></mrow><mrow><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow/><mrow/></munderover><msup><mi>m</mi><mi>c</mi></msup></mrow></mfrac></math></i>
+            </li>
+            <li><i>Instability</i> is defined as the ratio of efferent coupling to the sum of both efferent and afferent coupling. <br>
+                <i><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mfrac><mrow><msup><mi>C</mi><mi>e</mi></msup></mrow><mrow><msup><mi>C</mi><mi>e</mi></msup><mo>+</mo><msup><mi>C</mi><mi>a</mi></msup></mrow></mfrac></math></i>
+            </li>
+            <li>The instalibity metric determines the volatility of the code base. A code base that exhibits high degree of instablitlity breaks more easily when changed because of high coupling.</li>
+            <li><i>Distance from the Main Sequence</i>, a derived metric based on instability and abstractness. <br>
+                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>D</mi><mo>&#xA0;</mo><mo>=</mo><mo>|</mo><mi>A</mi><mo>+</mo><mi>I</mi><mo>-</mo><mn>1</mn><mo>|</mo></math>
+                The closer to the line, the better balanced the class. Classes that fall too far into the uppoer-righthand corner enter into what architects call the <i>zone of uselessness</i>: code that is too abstract becomes difficult to use. Converly, code that falls into the lower-left hand corner enters the <i>zone of pain</i>: code with too much implementation and not enough abstraction becomes brittle and hard to maintain.
+            </li>
+            <li><i>Connascence</i>: Two components are connascent if a change in one would require the other to be modified in order to maintain the overall correctness of the system.</li>
+            <li>Static Connascence: 
+                <ul>
+                    <li>Connascence of Name (CoN)</li>
+                    <li>Connascence of Type (CoT)</li>
+                    <li>Connascence of Meaning (CoM) or Connascence of Convention (CoC)</li>
+                    <li>Connascence of Position (CoP)</li>
+                    <li>Connascence of Algorithm (CoA)</li>
+                </ul>
+            </li>
+            <li>Dynamic Connascence: 
+                <ul>
+                    <li>Connascence of Execution (CoE)</li>
+                    <li>Connascence of Timing (CoT)</li>
+                    <li>Connascence of Value (CoV)</li>
+                    <li>Connascence of Identity (CoI)</li>
+                </ul>
+            </li>
+            <li>Connascence properties
+                <ul>
+                    <li>Strength</li>
+                    <li>Locality</li>
+                    <li>Degree</li>
+                </ul>
+            </li>
+            <li>Page-Jones offeres three guidelines for using connascence to improve systems modularity.
+                <ol>
+                    <li>Minimize overall connascence by breaking the system into encapsulated elements.</li>
+                    <li>Minimize any remaining connascence that crosses encapsulation boundaries.</li>
+                    <li>Maximize the connascence within encapsulation boundaries.</li>
+                </ol>
+            </li>
+            <li>Jim Weirich repopularized the concept of connascence and offers two great pieces of advice: <br>
+                <ul>
+                    <li>Rule of Degree: convert strong forms of connascence into weaker forms of connascence.</li>
+                    <li>Rule of Locality: as the distance between software elements increases, use weaker forms of connascence.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="chapter4">
+        <h2>Architecture Characteristics Defined</h2>
+        <ul>
+            <li>Architect may collaborate on defining the domain or business requirements, but one key responsibility entails defining, discovering, and otherwise analyzing all the things the software must do that isn't directly related to the domain functionality: <i>architectural characteristics</i>.</li>
+            <li>An architecture characteristics meets the three criteria: <br>
+                <ul>
+                    <li>Specifies a nondomain design consideration.</li>
+                    <li>Influences some structural aspect of the design.</li>
+                    <li>Is critical or important to application success.</li>
+                </ul>
+            </li>
+            <li>Operational Architecture Characteristics:
+                <ul>
+                    <li><i>Availability</i>: How long the system will need to be available (if 24/7, steps need to be in place to allow the system to be up and running quickly in case of any failure).</li>
+                    <li><i>Continuity</i>: Disaster recovery capability.</li>
+                    <li><i>Performance</i>: Includes stress testing, peak analysis, analysis of the frequency of functions used, capacity required, and response time. Performance acceptance sometime requires an excercise of its own, taking months to complete.</li>
+                    <li><i>Recoverability</i>: Business continuity requirements (e.g., in case of a disaster, how quickly is the system required to be online again?). This will effect the backup strategy and requirements for duplicated hardware.</li>
+                    <li><i>Reliability/Safety</i>: Assess if the system needs to be fail-safe, or if it is mission critical in a way that affects lives. If it fails, will it cost the company large sums of money?</li>
+                    <li><i>Robustnes</i>: Ability to handle error and boundary conditions while running if the internet connections goes down or if there's a power outage or hardware failure.</li>
+                    <li><i>Scalability</i>: Ability for the system to perform and operate as the number of users or requests increases.</li>
+                </ul>
+            </li>
+            <li>Structural Architectural Characteristics:
+                <ul>
+                    <li><i>Configurability</i>: Ability for the end users to easily change aspects of the software's configuration (through usable interfaces)</li>
+                    <li><i>Extensibility</i>: How important it is to plug new pieces of functionality in.</li>
+                    <li><i>Installability</i>: Ease of system installation on all necessary platforms.</li>
+                    <li><i>Leverageability/reuse</i>: Ability to leverage common componenets across multiple products.</li>
+                    <li><i>Localization</i>: Support for multiple languages on entry/query screens in data fields; on reports, multibyte character requirements and units of measure or currencies.</li>
+                    <li><i>Maintainability</i>: How easy it is to apply changes and enhance the system?</li>
+                    <li><i>Portability</i>: Does the system need to run on more than one platfor? (For example, does the frontend need to run against Oracle as well as SAP DB?)</li>
+                    <li><i>Supportability</i>: What level of technical support is needed by the application? What level of logging and other facilities are required to debug errors in the system?</li>
+                </ul>
+            </li>
+            <li>Cross-Cutting Architecture Characteristics:
+                <ul>
+                    <li><i>Accessibility</i>: Access to all your users, including those with disabilities like colorblindness or hearing loss.</li>
+                    <li><i>Archivability</i>: Willl the data need to be archived or deleted after a period of time? (For example, customer accounts are to be deleted after three months or marked as obsolete and archived to a secondary database for future access.)</li>
+                    <li><i>Authentication</i>: Security requirements to ensure users are who they say they are.</li>
+                    <li><i>Authorization</i>: Security requirements to ensure users can access only certain functions within the application (by use case, subsystem, webpages, business rule, field level etc.)</li>
+                    <li><i>Legal</i>: What legistlative constraints is the system operating in (data protection, Sarbanes Oxley, GDPR, etc.)? What reservation rights does the company require? Any regulations regarding the way the application is to be built or deployed?</li>
+                    <li><i>Privacy</i>: Ability to hide transactions from internal company employees (encrypted transactions so even DBAs and network architects cannot see them.)</li>
+                    <li><i>Security</i>: Does the data need to be encrypted in the database? Encrypted for network communication between internal system? What typ of authentication needs to be in place for remote user access?</li>
+                    <li><i>Supportability</i>: What level of technical support is needed by the application? What level of logging and other facilities are required to debug errors in the system.</li>
+                    <li><i>Usability/Achievability</i>: Level of training required for users to achieve their goals with the application/solution. Usability requirements need to be treated as seriously as any other architectural issue.</li>
+                </ul>
+            </li>
+            <li>Never shoot for the <i>best</i> architecture, but rather the <i>least worst</i> architecture.</li>
+        </ul>
+    </div>
+
+    <div id=""chapter5>
+        <h2>Identifying Archiatectural Characteristics</h2>
+        <ul>
+            <li>An architect uncovers architectural characteristics in a least three ways
+                <ol>
+                    <li>By extracting from domain concerns</li>
+                    <li>From Requirements (Implicit & Explicit)</li>
+                    <li>From Implicit domain knowledge</li>
+                </ol>
+                
+            </li>
+            <li><b></b>Domain Concerts - Architectural Characteristics </b><br>
+                <i>Mergers and acquisitions</i> - Interoperability, Scalability, Adapatability, Extensibility <br>
+                <i>Time to market</i> - Agility, testability, deployability <br>
+                <i>User satisfaction</i> - Performance, Availability, fault tolerance, testability, deployability, agility, security <br>
+                <i>Competative advantage</i> - Agility, testability, deployability, scalability, availability, fault tolerance. <br>
+                <i>Time and budget</i> - Simplicity, feasibility.
+            </li>
+        </ul>
     </div>
 
   </body>
